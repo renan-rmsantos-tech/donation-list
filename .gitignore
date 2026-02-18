@@ -1,0 +1,34 @@
+# Next.js
+.next/
+out/
+build/
+
+# Environment
+.env.local
+.env.*.local
+
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing
+.nyc_output/
+coverage/
+.vitest
+
+# Supabase
+supabase/.branches/
+supabase/.temp/
