@@ -84,6 +84,7 @@ describe('Donation Actions', () => {
         currentAmount: 0,
         isFulfilled: false,
         isPublished: true,
+  imagePath: null,
         createdAt: new Date(),
         updatedAt: new Date(),
       });
@@ -110,6 +111,7 @@ describe('Donation Actions', () => {
         currentAmount: 0,
         isFulfilled: false,
         isPublished: true,
+  imagePath: null,
         createdAt: new Date(),
         updatedAt: new Date(),
       });
@@ -136,6 +138,7 @@ describe('Donation Actions', () => {
         currentAmount: 10000,
         isFulfilled: false,
         isPublished: true,
+  imagePath: null,
         createdAt: new Date(),
         updatedAt: new Date(),
       });
@@ -162,6 +165,7 @@ describe('Donation Actions', () => {
         currentAmount: 0,
         isFulfilled: false,
         isPublished: true,
+  imagePath: null,
         createdAt: new Date(),
         updatedAt: new Date(),
       });
@@ -217,6 +221,7 @@ describe('Donation Actions', () => {
         currentAmount: 0,
         isFulfilled: false,
         isPublished: true,
+  imagePath: null,
         createdAt: new Date(),
         updatedAt: new Date(),
       });
@@ -243,6 +248,7 @@ describe('Donation Actions', () => {
         currentAmount: 0,
         isFulfilled: true,
         isPublished: true,
+  imagePath: null,
         createdAt: new Date(),
         updatedAt: new Date(),
       });
@@ -269,6 +275,7 @@ describe('Donation Actions', () => {
         currentAmount: 0,
         isFulfilled: false,
         isPublished: true,
+  imagePath: null,
         createdAt: new Date(),
         updatedAt: new Date(),
       });
@@ -295,6 +302,7 @@ describe('Donation Actions', () => {
         currentAmount: 0,
         isFulfilled: false,
         isPublished: true,
+  imagePath: null,
         createdAt: new Date(),
         updatedAt: new Date(),
       });

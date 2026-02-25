@@ -5,14 +5,56 @@ import { db } from '@/lib/db';
 import { products, productCategories } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 import { ZodError } from 'zod';
-import { createProductSchema, updateProductSchema } from './schemas';
+import { createProductSchema, updateProductSchema, generateProductPhotoUploadUrlSchema } from './schemas';
 import { validateSession } from '@/lib/auth/session';
+import { generateSignedUploadUrl } from '@/lib/storage/supabase';
+import { generateStoragePath } from '@/lib/utils/format';
 
 interface ActionResult<T> {
   success: boolean;
   data?: T;
   error?: string;
   details?: unknown;
+}
+
+export async function generateProductPhotoUploadUrl(
+  input: unknown
+): Promise<ActionResult<{ signedUrl: string; path: string }>> {
+  try {
+    const isAdmin = await validateSession();
+    if (!isAdmin) {
+      return {
+        success: false,
+        error: 'UNAUTHORIZED',
+      };
+    }
+
+    const validated = generateProductPhotoUploadUrlSchema.parse(input);
+
+    const path = generateStoragePath('product-photos', validated.fileExtension);
+    const { signedUrl } = await generateSignedUploadUrl('product-photos', path);
+
+    return {
+      success: true,
+      data: { signedUrl, path },
+    };
+  } catch (error) {
+    console.error('generateProductPhotoUploadUrl error:', error);
+
+    if (error instanceof ZodError) {
+      return {
+        success: false,
+        error: 'VALIDATION_ERROR',
+        details: error.flatten(),
+      };
+    }
+
+    return {
+      success: false,
+      error: 'STORAGE_ERROR',
+      details: { message: 'Failed to generate signed upload URL' },
+    };
+  }
 }
 
 export async function createProduct(
@@ -41,6 +83,7 @@ export async function createProduct(
             : undefined,
         currentAmount: 0,
         isPublished: validated.isPublished ?? true,
+        imagePath: validated.imagePath ?? undefined,
       })
       .returning({ id: products.id });
 
@@ -116,6 +159,7 @@ export async function updateProduct(
       updates.targetAmount = validated.targetAmount;
     }
     if (validated.isPublished !== undefined) updates.isPublished = validated.isPublished;
+    if (validated.imagePath !== undefined) updates.imagePath = validated.imagePath;
 
     await db.update(products).set(updates).where(eq(products.id, id));
 

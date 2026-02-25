@@ -1,0 +1,1811 @@
+
+> church-donations@0.1.0 test
+> vitest run
+
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v1.6.1 /Users/renansantos/Projects/rmtech/donation-list
+
+ ✓ src/features/donations/schemas.test.ts  (18 tests) 10ms
+ ✓ src/features/products/schemas.test.ts  (31 tests) 13ms
+ ✓ src/features/categories/schemas.test.ts  (7 tests) 6ms
+stderr | src/features/dashboard/queries.test.ts > getDashboardStats > edge cases > should return zeros on database error
+getDashboardStats error: Error: DB connection failed
+    at /Users/renansantos/Projects/rmtech/donation-list/src/features/dashboard/queries.test.ts:285:44
+    at runTest (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:781:11)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runFiles (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:958:5)
+    at startTests (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:967:3)
+    at file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/vitest/dist/chunks/runtime-runBaseTests.oAvMKtQC.js:116:7
+    at withEnv (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/vitest/dist/chunks/runtime-runBaseTests.oAvMKtQC.js:83:5)
+    at run (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/vitest/dist/chunks/runtime-runBaseTests.oAvMKtQC.js:105:3)
+
+ ✓ src/features/dashboard/queries.test.ts  (14 tests) 23ms
+ ✓ src/features/categories/actions.test.ts  (9 tests) 13ms
+stderr | src/features/categories/actions.test.ts > Category Actions > createCategory > should reject invalid payload
+createCategory error: ZodError: [
+  {
+    "code": "too_small",
+    "minimum": 1,
+    "type": "string",
+    "inclusive": true,
+    "exact": false,
+    "message": "Name is required",
+    "path": [
+      "name"
+    ]
+  }
+]
+    at Object.get error [as error] (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/zod/v3/types.js:39:31)
+    at ZodObject.parse (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/zod/v3/types.js:114:22)
+    at Module.createCategory (/Users/renansantos/Projects/rmtech/donation-list/src/features/categories/actions.ts:27:44)
+    at /Users/renansantos/Projects/rmtech/donation-list/src/features/categories/actions.test.ts:47:22
+    at runTest (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:781:11)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runFiles (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:958:5)
+    at startTests (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:967:3) {
+  issues: [
+    {
+      code: 'too_small',
+      minimum: 1,
+      type: 'string',
+      inclusive: true,
+      exact: false,
+      message: 'Name is required',
+      path: [Array]
+    }
+  ],
+  addIssue: [Function (anonymous)],
+  addIssues: [Function (anonymous)]
+}
+
+stderr | src/features/categories/actions.test.ts > Category Actions > createCategory > should return DUPLICATE_NAME on unique constraint
+createCategory error: Error: unique constraint violated
+    at Object.returning (/Users/renansantos/Projects/rmtech/donation-list/src/features/categories/actions.test.ts:74:28)
+    at Module.createCategory (/Users/renansantos/Projects/rmtech/donation-list/src/features/categories/actions.ts:32:8)
+    at /Users/renansantos/Projects/rmtech/donation-list/src/features/categories/actions.test.ts:78:22
+    at runTest (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:781:11)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runFiles (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:958:5)
+    at startTests (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:967:3)
+    at file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/vitest/dist/chunks/runtime-runBaseTests.oAvMKtQC.js:116:7
+
+stderr | src/features/categories/actions.test.ts > Category Actions > updateCategory > should reject invalid payload
+updateCategory error: ZodError: [
+  {
+    "code": "too_small",
+    "minimum": 1,
+    "type": "string",
+    "inclusive": true,
+    "exact": false,
+    "message": "Name is required",
+    "path": [
+      "name"
+    ]
+  }
+]
+    at Object.get error [as error] (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/zod/v3/types.js:39:31)
+    at ZodObject.parse (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/zod/v3/types.js:114:22)
+    at Module.updateCategory (/Users/renansantos/Projects/rmtech/donation-list/src/features/categories/actions.ts:71:44)
+    at /Users/renansantos/Projects/rmtech/donation-list/src/features/categories/actions.test.ts:96:22
+    at runTest (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:781:11)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runFiles (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:958:5)
+    at startTests (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:967:3) {
+  issues: [
+    {
+      code: 'too_small',
+      minimum: 1,
+      type: 'string',
+      inclusive: true,
+      exact: false,
+      message: 'Name is required',
+      path: [Array]
+    }
+  ],
+  addIssue: [Function (anonymous)],
+  addIssues: [Function (anonymous)]
+}
+
+stderr | src/features/products/actions.test.ts > Product Actions > createProduct > should reject monetary product without targetAmount
+createProduct error: ZodError: [
+  {
+    "code": "custom",
+    "message": "Target amount is required for monetary products",
+    "path": [
+      "targetAmount"
+    ]
+  }
+]
+    at Object.get error [as error] (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/zod/v3/types.js:39:31)
+    at ZodEffects.parse (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/zod/v3/types.js:114:22)
+    at Module.createProduct (/Users/renansantos/Projects/rmtech/donation-list/src/features/products/actions.ts:72:43)
+    at /Users/renansantos/Projects/rmtech/donation-list/src/features/products/actions.test.ts:61:22
+    at runTest (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:781:11)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runFiles (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:958:5)
+    at startTests (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:967:3) {
+  issues: [
+    {
+      code: 'custom',
+      message: 'Target amount is required for monetary products',
+      path: [Array]
+    }
+  ],
+  addIssue: [Function (anonymous)],
+  addIssues: [Function (anonymous)]
+}
+
+stderr | src/features/products/actions.test.ts > Product Actions > generateProductPhotoUploadUrl > should reject invalid file extension
+generateProductPhotoUploadUrl error: ZodError: [
+  {
+    "validation": "regex",
+    "code": "invalid_string",
+    "message": "Only JPEG and PNG files are accepted",
+    "path": [
+      "fileExtension"
+    ]
+  }
+]
+    at Object.get error [as error] (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/zod/v3/types.js:39:31)
+    at ZodObject.parse (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/zod/v3/types.js:114:22)
+    at Module.generateProductPhotoUploadUrl (/Users/renansantos/Projects/rmtech/donation-list/src/features/products/actions.ts:32:59)
+    at /Users/renansantos/Projects/rmtech/donation-list/src/features/products/actions.test.ts:365:22
+    at runTest (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:781:11)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runFiles (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:958:5)
+    at startTests (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:967:3) {
+  issues: [
+    {
+      validation: 'regex',
+      code: 'invalid_string',
+      message: 'Only JPEG and PNG files are accepted',
+      path: [Array]
+    }
+  ],
+  addIssue: [Function (anonymous)],
+  addIssues: [Function (anonymous)]
+}
+
+stderr | src/features/products/actions.test.ts > Product Actions > generateProductPhotoUploadUrl > should handle storage errors gracefully
+generateProductPhotoUploadUrl error: Error: Storage error
+    at /Users/renansantos/Projects/rmtech/donation-list/src/features/products/actions.test.ts:394:9
+    at file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:135:14
+    at file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:60:26
+    at runTest (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:781:17)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runFiles (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:958:5)
+    at startTests (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:967:3)
+    at file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/vitest/dist/chunks/runtime-runBaseTests.oAvMKtQC.js:116:7
+
+stderr | src/features/products/actions.test.ts > Product Actions > generateProductPhotoUploadUrl > should return VALIDATION_ERROR for missing fileExtension
+generateProductPhotoUploadUrl error: ZodError: [
+  {
+    "code": "invalid_type",
+    "expected": "string",
+    "received": "undefined",
+    "path": [
+      "fileExtension"
+    ],
+    "message": "Required"
+  }
+]
+    at Object.get error [as error] (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/zod/v3/types.js:39:31)
+    at ZodObject.parse (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/zod/v3/types.js:114:22)
+    at Module.generateProductPhotoUploadUrl (/Users/renansantos/Projects/rmtech/donation-list/src/features/products/actions.ts:32:59)
+    at /Users/renansantos/Projects/rmtech/donation-list/src/features/products/actions.test.ts:406:22
+    at runTest (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:781:11)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runFiles (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:958:5)
+    at startTests (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:967:3) {
+  issues: [
+    {
+      code: 'invalid_type',
+      expected: 'string',
+      received: 'undefined',
+      path: [Array],
+      message: 'Required'
+    }
+  ],
+  addIssue: [Function (anonymous)],
+  addIssues: [Function (anonymous)]
+}
+
+ ✓ src/features/products/actions.test.ts  (22 tests) 19ms
+stderr | src/features/products/queries.test.ts > Product Queries > getPublishedProducts > should return empty array on error
+getPublishedProducts error: Error: DB Error
+    at /Users/renansantos/Projects/rmtech/donation-list/src/features/products/queries.test.ts:59:67
+    at file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:135:14
+    at file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:60:26
+    at runTest (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:781:17)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runFiles (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:958:5)
+    at startTests (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:967:3)
+    at file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/vitest/dist/chunks/runtime-runBaseTests.oAvMKtQC.js:116:7
+
+stderr | src/features/products/queries.test.ts > Product Queries > getAllProducts > should return empty array on error
+getAllProducts error: Error: DB Error
+    at /Users/renansantos/Projects/rmtech/donation-list/src/features/products/queries.test.ts:93:67
+    at file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:135:14
+    at file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:60:26
+    at runTest (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:781:17)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runFiles (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:958:5)
+    at startTests (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:967:3)
+    at file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/vitest/dist/chunks/runtime-runBaseTests.oAvMKtQC.js:116:7
+
+stderr | src/features/products/queries.test.ts > Product Queries > getProductById > should return null on error
+getProductById error: Error: DB Error
+    at /Users/renansantos/Projects/rmtech/donation-list/src/features/products/queries.test.ts:133:68
+    at file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:135:14
+    at file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:60:26
+    at runTest (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:781:17)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runFiles (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:958:5)
+    at startTests (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:967:3)
+    at file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/vitest/dist/chunks/runtime-runBaseTests.oAvMKtQC.js:116:7
+
+stderr | src/features/products/queries.test.ts > Product Queries > getPublishedProductById > should return null on error
+getPublishedProductById error: Error: DB Error
+    at /Users/renansantos/Projects/rmtech/donation-list/src/features/products/queries.test.ts:186:68
+    at file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:135:14
+    at file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:60:26
+    at runTest (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:781:17)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runFiles (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:958:5)
+    at startTests (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:967:3)
+    at file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/vitest/dist/chunks/runtime-runBaseTests.oAvMKtQC.js:116:7
+
+stderr | src/features/products/queries.test.ts > Product Queries > getProductsByCategory > should return empty array on error
+getProductsByCategory error: Error: DB Error
+    at /Users/renansantos/Projects/rmtech/donation-list/src/features/products/queries.test.ts:253:76
+    at file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:135:14
+    at file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:60:26
+    at runTest (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:781:17)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runFiles (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:958:5)
+    at startTests (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:967:3)
+    at file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/vitest/dist/chunks/runtime-runBaseTests.oAvMKtQC.js:116:7
+
+ ✓ src/features/products/queries.test.ts  (14 tests) 17ms
+stderr | src/features/donations/actions.test.ts > Donation Actions > createMonetaryDonation > should reject invalid input
+createMonetaryDonation error: ZodError: [
+  {
+    "validation": "uuid",
+    "code": "invalid_string",
+    "message": "Invalid product ID",
+    "path": [
+      "productId"
+    ]
+  }
+]
+    at Object.get error [as error] (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/zod/v3/types.js:39:31)
+    at ZodObject.parse (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/zod/v3/types.js:114:22)
+    at Module.createMonetaryDonation (/Users/renansantos/Projects/rmtech/donation-list/src/features/donations/actions.ts:38:52)
+    at /Users/renansantos/Projects/rmtech/donation-list/src/features/donations/actions.test.ts:50:28
+    at file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:135:14
+    at file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:60:26
+    at runTest (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:781:17)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15) {
+  issues: [
+    {
+      validation: 'uuid',
+      code: 'invalid_string',
+      message: 'Invalid product ID',
+      path: [Array]
+    }
+  ],
+  addIssue: [Function (anonymous)],
+  addIssues: [Function (anonymous)]
+}
+
+stderr | src/features/donations/actions.test.ts > Donation Actions > createMonetaryDonation > should reject missing receipt path
+createMonetaryDonation error: ZodError: [
+  {
+    "code": "too_small",
+    "minimum": 1,
+    "type": "string",
+    "inclusive": true,
+    "exact": false,
+    "message": "Receipt path is required",
+    "path": [
+      "receiptPath"
+    ]
+  }
+]
+    at Object.get error [as error] (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/zod/v3/types.js:39:31)
+    at ZodObject.parse (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/zod/v3/types.js:114:22)
+    at Module.createMonetaryDonation (/Users/renansantos/Projects/rmtech/donation-list/src/features/donations/actions.ts:38:52)
+    at /Users/renansantos/Projects/rmtech/donation-list/src/features/donations/actions.test.ts:117:28
+    at runTest (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:781:11)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runFiles (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:958:5)
+    at startTests (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:967:3) {
+  issues: [
+    {
+      code: 'too_small',
+      minimum: 1,
+      type: 'string',
+      inclusive: true,
+      exact: false,
+      message: 'Receipt path is required',
+      path: [Array]
+    }
+  ],
+  addIssue: [Function (anonymous)],
+  addIssues: [Function (anonymous)]
+}
+
+stderr | src/features/donations/actions.test.ts > Donation Actions > createPhysicalPledge > should reject invalid input
+createPhysicalPledge error: ZodError: [
+  {
+    "validation": "uuid",
+    "code": "invalid_string",
+    "message": "Invalid product ID",
+    "path": [
+      "productId"
+    ]
+  }
+]
+    at Object.get error [as error] (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/zod/v3/types.js:39:31)
+    at ZodObject.parse (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/zod/v3/types.js:114:22)
+    at Module.createPhysicalPledge (/Users/renansantos/Projects/rmtech/donation-list/src/features/donations/actions.ts:124:50)
+    at /Users/renansantos/Projects/rmtech/donation-list/src/features/donations/actions.test.ts:183:28
+    at file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:135:14
+    at file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:60:26
+    at runTest (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:781:17)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15) {
+  issues: [
+    {
+      validation: 'uuid',
+      code: 'invalid_string',
+      message: 'Invalid product ID',
+      path: [Array]
+    }
+  ],
+  addIssue: [Function (anonymous)],
+  addIssues: [Function (anonymous)]
+}
+
+stderr | src/features/donations/actions.test.ts > Donation Actions > generateUploadUrl > should reject invalid input
+generateUploadUrl error: [
+  {
+    "received": "invalid-bucket",
+    "code": "invalid_enum_value",
+    "options": [
+      "receipts",
+      "pix-qr"
+    ],
+    "path": [
+      "bucket"
+    ],
+    "message": "Invalid bucket"
+  }
+] ZodError: [
+  {
+    "received": "invalid-bucket",
+    "code": "invalid_enum_value",
+    "options": [
+      "receipts",
+      "pix-qr"
+    ],
+    "path": [
+      "bucket"
+    ],
+    "message": "Invalid bucket"
+  }
+]
+    at Object.get error [as error] (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/zod/v3/types.js:39:31)
+    at ZodObject.parse (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/zod/v3/types.js:114:22)
+    at Module.generateUploadUrl (/Users/renansantos/Projects/rmtech/donation-list/src/features/donations/actions.ts:208:47)
+    at /Users/renansantos/Projects/rmtech/donation-list/src/features/donations/actions.test.ts:316:28
+    at file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:135:14
+    at file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:60:26
+    at runTest (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:781:17)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runSuite (file:///Users/renansantos/Projects/rmtech/donation-list/node_modules/@vitest/runner/dist/index.js:909:15) {
+  issues: [
+    {
+      received: 'invalid-bucket',
+      code: 'invalid_enum_value',
+      options: [Array],
+      path: [Array],
+      message: 'Invalid bucket'
+    }
+  ],
+  addIssue: [Function (anonymous)],
+  addIssues: [Function (anonymous)]
+}
+
+ ✓ src/features/donations/actions.test.ts  (15 tests) 19ms
+ ✓ src/features/pix/schemas.test.ts  (4 tests) 3ms
+ ✓ src/features/pix/actions.test.ts  (3 tests) 5ms
+stderr | src/app/admin/(protected)/dashboard/page.test.tsx > DashboardPage > Rendering > should render dashboard heading
+`ReactDOMTestUtils.act` is deprecated in favor of `React.act`. Import `act` from `react` instead of `react-dom/test-utils`. See https://react.dev/warnings/react-dom-test-utils for more info.
+
+ ❯ src/app/admin/(protected)/dashboard/page.test.tsx  (8 tests | 8 failed) 10ms
+   ❯ src/app/admin/(protected)/dashboard/page.test.tsx > DashboardPage > Rendering > should render dashboard heading
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/app/admin/(protected)/dashboard/page.test.tsx > DashboardPage > Rendering > should display total monetary donations metric
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/app/admin/(protected)/dashboard/page.test.tsx > DashboardPage > Rendering > should display physical fulfilled metric
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/app/admin/(protected)/dashboard/page.test.tsx > DashboardPage > Rendering > should display physical pending metric
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/app/admin/(protected)/dashboard/page.test.tsx > DashboardPage > Empty state > should display empty state message when no data
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/app/admin/(protected)/dashboard/page.test.tsx > DashboardPage > Empty state > should not display empty state when any metric has data
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/app/admin/(protected)/dashboard/page.test.tsx > DashboardPage > Mixed data > should display all metrics with mixed monetary and physical data
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/app/admin/(protected)/dashboard/page.test.tsx > DashboardPage > Data fetching > should call getDashboardStats
+     → React.act is not a function
+stderr | src/features/products/components/__tests__/ProgressBar.test.tsx > ProgressBar component > should display progress label
+`ReactDOMTestUtils.act` is deprecated in favor of `React.act`. Import `act` from `react` instead of `react-dom/test-utils`. See https://react.dev/warnings/react-dom-test-utils for more info.
+
+ ❯ src/features/products/components/__tests__/ProgressBar.test.tsx  (16 tests | 16 failed) 37ms
+   ❯ src/features/products/components/__tests__/ProgressBar.test.tsx > ProgressBar component > should display progress label
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/features/products/components/__tests__/ProgressBar.test.tsx > ProgressBar component > should display partial funding percentage for monetary products
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/features/products/components/__tests__/ProgressBar.test.tsx > ProgressBar component > should display 100% when fully funded
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/features/products/components/__tests__/ProgressBar.test.tsx > ProgressBar component > should display 0% when no progress
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/features/products/components/__tests__/ProgressBar.test.tsx > ProgressBar component > should cap at 100% when overfunded
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/features/products/components/__tests__/ProgressBar.test.tsx > ProgressBar component > should display current and target amounts
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/features/products/components/__tests__/ProgressBar.test.tsx > ProgressBar utilities > calculateProgressPercentage > should return 0% when current is 0
+     → React.act is not a function
+   ❯ src/features/products/components/__tests__/ProgressBar.test.tsx > ProgressBar utilities > calculateProgressPercentage > should return 50% when current is half of target
+     → React.act is not a function
+   ❯ src/features/products/components/__tests__/ProgressBar.test.tsx > ProgressBar utilities > calculateProgressPercentage > should return 100% when current equals target
+     → React.act is not a function
+   ❯ src/features/products/components/__tests__/ProgressBar.test.tsx > ProgressBar utilities > calculateProgressPercentage > should cap at 100% when current exceeds target
+     → React.act is not a function
+   ❯ src/features/products/components/__tests__/ProgressBar.test.tsx > ProgressBar utilities > calculateProgressPercentage > should return 0% when target is 0 or negative
+     → React.act is not a function
+   ❯ src/features/products/components/__tests__/ProgressBar.test.tsx > ProgressBar utilities > calculateProgressPercentage > should round percentage correctly
+     → React.act is not a function
+   ❯ src/features/products/components/__tests__/ProgressBar.test.tsx > ProgressBar utilities > formatCurrency > should format cents as BRL currency
+     → React.act is not a function
+   ❯ src/features/products/components/__tests__/ProgressBar.test.tsx > ProgressBar utilities > formatCurrency > should format zero correctly
+     → React.act is not a function
+   ❯ src/features/products/components/__tests__/ProgressBar.test.tsx > ProgressBar utilities > formatCurrency > should handle cents correctly
+     → React.act is not a function
+   ❯ src/features/products/components/__tests__/ProgressBar.test.tsx > ProgressBar utilities > formatCurrency > should format large amounts
+     → React.act is not a function
+stderr | src/features/products/components/__tests__/ProductCard.test.tsx > ProductCard > Required donor-facing fields > should display product name
+`ReactDOMTestUtils.act` is deprecated in favor of `React.act`. Import `act` from `react` instead of `react-dom/test-utils`. See https://react.dev/warnings/react-dom-test-utils for more info.
+
+ ❯ src/features/products/components/__tests__/ProductCard.test.tsx  (11 tests | 11 failed) 24ms
+   ❯ src/features/products/components/__tests__/ProductCard.test.tsx > ProductCard > Required donor-facing fields > should display product name
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/features/products/components/__tests__/ProductCard.test.tsx > ProductCard > Required donor-facing fields > should display product description
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/features/products/components/__tests__/ProductCard.test.tsx > ProductCard > Required donor-facing fields > should display category context when present
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/features/products/components/__tests__/ProductCard.test.tsx > ProductCard > Required donor-facing fields > should not display categories label when product has no categories
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/features/products/components/__tests__/ProductCard.test.tsx > ProductCard > Monetary product progress > should display progress bar for monetary products
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/features/products/components/__tests__/ProductCard.test.tsx > ProductCard > Monetary product progress > should display full funding state for fully funded monetary product
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/features/products/components/__tests__/ProductCard.test.tsx > ProductCard > Physical product status > should display Fulfilled badge for fulfilled physical product
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/features/products/components/__tests__/ProductCard.test.tsx > ProductCard > Physical product status > should display Needed badge for unfulfilled physical product
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/features/products/components/__tests__/ProductCard.test.tsx > ProductCard > Donation type > should display Monetary type for monetary products
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/features/products/components/__tests__/ProductCard.test.tsx > ProductCard > Donation type > should display Physical type for physical products
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/features/products/components/__tests__/ProductCard.test.tsx > ProductCard > Navigation > should link to product detail page
+     → React.act is not a function
+     → React.act is not a function
+stderr | src/features/products/components/__tests__/ProductGrid.test.tsx > ProductGrid > Empty state > should display default empty message when no products
+`ReactDOMTestUtils.act` is deprecated in favor of `React.act`. Import `act` from `react` instead of `react-dom/test-utils`. See https://react.dev/warnings/react-dom-test-utils for more info.
+
+ ❯ src/features/products/components/__tests__/ProductGrid.test.tsx  (7 tests | 7 failed) 17ms
+   ❯ src/features/products/components/__tests__/ProductGrid.test.tsx > ProductGrid > Empty state > should display default empty message when no products
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/features/products/components/__tests__/ProductGrid.test.tsx > ProductGrid > Empty state > should display custom empty message when provided
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/features/products/components/__tests__/ProductGrid.test.tsx > ProductGrid > Product listing > should render monetary and physical products
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/features/products/components/__tests__/ProductGrid.test.tsx > ProductGrid > Product listing > should display product descriptions
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/features/products/components/__tests__/ProductGrid.test.tsx > ProductGrid > Product listing > should display category context for products
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/features/products/components/__tests__/ProductGrid.test.tsx > ProductGrid > Product listing > should display donation type labels
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/features/products/components/__tests__/ProductGrid.test.tsx > ProductGrid > Product listing > should render links to product detail pages
+     → React.act is not a function
+     → React.act is not a function
+stderr | src/app/(public)/page.test.tsx > CatalogPage > Rendering > should render catalog page heading
+`ReactDOMTestUtils.act` is deprecated in favor of `React.act`. Import `act` from `react` instead of `react-dom/test-utils`. See https://react.dev/warnings/react-dom-test-utils for more info.
+
+ ❯ src/app/(public)/page.test.tsx  (13 tests | 13 failed) 26ms
+   ❯ src/app/(public)/page.test.tsx > CatalogPage > Rendering > should render catalog page heading
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/app/(public)/page.test.tsx > CatalogPage > Rendering > should display category filter section
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/app/(public)/page.test.tsx > CatalogPage > Rendering > should display products section
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/app/(public)/page.test.tsx > CatalogPage > Rendering > should display all-categories filter button
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/app/(public)/page.test.tsx > CatalogPage > Category Filtering > should display all products when no category selected
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/app/(public)/page.test.tsx > CatalogPage > Category Filtering > should display filtered products when category selected
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/app/(public)/page.test.tsx > CatalogPage > Category Filtering > should show empty message when no products in selected category
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/app/(public)/page.test.tsx > CatalogPage > Category Filtering > should show empty message when no products available
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/app/(public)/page.test.tsx > CatalogPage > Product display > should display monetary products with progress indicators
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/app/(public)/page.test.tsx > CatalogPage > Product display > should display physical products with fulfilled badge
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/app/(public)/page.test.tsx > CatalogPage > Product display > should display product categories
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/app/(public)/page.test.tsx > CatalogPage > Empty states > should handle empty catalog
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/app/(public)/page.test.tsx > CatalogPage > Empty states > should handle missing category associations
+     → React.act is not a function
+     → React.act is not a function
+stderr | src/features/donations/components/__tests__/PhysicalPledgeForm.test.tsx > PhysicalPledgeForm > should render form with required fields
+`ReactDOMTestUtils.act` is deprecated in favor of `React.act`. Import `act` from `react` instead of `react-dom/test-utils`. See https://react.dev/warnings/react-dom-test-utils for more info.
+
+ ❯ src/features/donations/components/__tests__/PhysicalPledgeForm.test.tsx  (3 tests | 3 failed) 12ms
+   ❯ src/features/donations/components/__tests__/PhysicalPledgeForm.test.tsx > PhysicalPledgeForm > should render form with required fields
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/features/donations/components/__tests__/PhysicalPledgeForm.test.tsx > PhysicalPledgeForm > should show success toast after successful submission
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/features/donations/components/__tests__/PhysicalPledgeForm.test.tsx > PhysicalPledgeForm > should show error toast on failed submission
+     → React.act is not a function
+     → React.act is not a function
+ ❯ src/app/(public)/products/[id]/page.test.tsx  (0 test)
+stderr | src/features/dashboard/components/__tests__/DashboardStatsCards.test.tsx > DashboardStatsCards > should render all three metric cards
+`ReactDOMTestUtils.act` is deprecated in favor of `React.act`. Import `act` from `react` instead of `react-dom/test-utils`. See https://react.dev/warnings/react-dom-test-utils for more info.
+
+ ❯ src/features/dashboard/components/__tests__/DashboardStatsCards.test.tsx  (5 tests | 5 failed) 11ms
+   ❯ src/features/dashboard/components/__tests__/DashboardStatsCards.test.tsx > DashboardStatsCards > should render all three metric cards
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/features/dashboard/components/__tests__/DashboardStatsCards.test.tsx > DashboardStatsCards > should format monetary amount in pt-BR locale
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/features/dashboard/components/__tests__/DashboardStatsCards.test.tsx > DashboardStatsCards > should display physical counts
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/features/dashboard/components/__tests__/DashboardStatsCards.test.tsx > DashboardStatsCards > should show empty state when all metrics are zero
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/features/dashboard/components/__tests__/DashboardStatsCards.test.tsx > DashboardStatsCards > should not show empty state when any metric has value
+     → React.act is not a function
+     → React.act is not a function
+stderr | src/features/donations/components/__tests__/MonetaryDonationForm.test.tsx > MonetaryDonationForm > should render PIX payment details when settings available
+`ReactDOMTestUtils.act` is deprecated in favor of `React.act`. Import `act` from `react` instead of `react-dom/test-utils`. See https://react.dev/warnings/react-dom-test-utils for more info.
+
+ ❯ src/features/donations/components/__tests__/MonetaryDonationForm.test.tsx  (3 tests | 3 failed) 12ms
+   ❯ src/features/donations/components/__tests__/MonetaryDonationForm.test.tsx > MonetaryDonationForm > should render PIX payment details when settings available
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/features/donations/components/__tests__/MonetaryDonationForm.test.tsx > MonetaryDonationForm > should show warning when PIX settings not configured
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/features/donations/components/__tests__/MonetaryDonationForm.test.tsx > MonetaryDonationForm > should display remaining amount
+     → React.act is not a function
+     → React.act is not a function
+stderr | src/app/admin/(protected)/layout.test.tsx > ProtectedAdminLayout > Access protection > should render children when authenticated
+`ReactDOMTestUtils.act` is deprecated in favor of `React.act`. Import `act` from `react` instead of `react-dom/test-utils`. See https://react.dev/warnings/react-dom-test-utils for more info.
+
+ ❯ src/app/admin/(protected)/layout.test.tsx  (4 tests | 2 failed) 7ms
+   ❯ src/app/admin/(protected)/layout.test.tsx > ProtectedAdminLayout > Access protection > should render children when authenticated
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/app/admin/(protected)/layout.test.tsx > ProtectedAdminLayout > Navigation > should include dashboard link in nav
+     → React.act is not a function
+     → React.act is not a function
+stderr | src/app/admin/layout.test.tsx > AdminLayout > should render children without auth check
+`ReactDOMTestUtils.act` is deprecated in favor of `React.act`. Import `act` from `react` instead of `react-dom/test-utils`. See https://react.dev/warnings/react-dom-test-utils for more info.
+
+ ❯ src/app/admin/layout.test.tsx  (1 test | 1 failed) 4ms
+   ❯ src/app/admin/layout.test.tsx > AdminLayout > should render children without auth check
+     → React.act is not a function
+     → React.act is not a function
+stderr | src/features/products/components/__tests__/FulfilledBadge.test.tsx > FulfilledBadge > should render Fulfilled badge for fulfilled state
+`ReactDOMTestUtils.act` is deprecated in favor of `React.act`. Import `act` from `react` instead of `react-dom/test-utils`. See https://react.dev/warnings/react-dom-test-utils for more info.
+
+ ❯ src/features/products/components/__tests__/FulfilledBadge.test.tsx  (4 tests | 4 failed) 6ms
+   ❯ src/features/products/components/__tests__/FulfilledBadge.test.tsx > FulfilledBadge > should render Fulfilled badge for fulfilled state
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/features/products/components/__tests__/FulfilledBadge.test.tsx > FulfilledBadge > should render Needed badge for pending state
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/features/products/components/__tests__/FulfilledBadge.test.tsx > FulfilledBadge > should apply green styling for fulfilled state
+     → React.act is not a function
+     → React.act is not a function
+   ❯ src/features/products/components/__tests__/FulfilledBadge.test.tsx > FulfilledBadge > should apply orange styling for pending state
+     → React.act is not a function
+     → React.act is not a function
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/app/(public)/products/[id]/page.test.tsx [ src/app/(public)/products/[id]/page.test.tsx ]
+Error: DATABASE_URL environment variable is not set
+ ❯ src/lib/db/index.ts:6:9
+      4| 
+      5| if (!process.env.DATABASE_URL) {
+      6|   throw new Error('DATABASE_URL environment variable is not set');
+       |         ^
+      7| }
+      8| 
+ ❯ src/features/donations/actions.ts:2:31
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/136]⎯
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 73 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/app/(public)/page.test.tsx > CatalogPage > Rendering > should render catalog page heading
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/app/(public)/page.test.tsx:87:7
+     85|         searchParams: Promise.resolve({}),
+     86|       });
+     87|       render(Page);
+       |       ^
+     88|       expect(screen.getByText('Doações para o Colégio São José')).toBe…
+     89|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/136]⎯
+
+ FAIL  src/app/(public)/page.test.tsx > CatalogPage > Rendering > should render catalog page heading
+ FAIL  src/app/(public)/page.test.tsx > CatalogPage > Rendering > should display category filter section
+ FAIL  src/app/(public)/page.test.tsx > CatalogPage > Rendering > should display products section
+ FAIL  src/app/(public)/page.test.tsx > CatalogPage > Rendering > should display all-categories filter button
+ FAIL  src/app/(public)/page.test.tsx > CatalogPage > Category Filtering > should display all products when no category selected
+ FAIL  src/app/(public)/page.test.tsx > CatalogPage > Category Filtering > should display filtered products when category selected
+ FAIL  src/app/(public)/page.test.tsx > CatalogPage > Category Filtering > should show empty message when no products in selected category
+ FAIL  src/app/(public)/page.test.tsx > CatalogPage > Category Filtering > should show empty message when no products available
+ FAIL  src/app/(public)/page.test.tsx > CatalogPage > Product display > should display monetary products with progress indicators
+ FAIL  src/app/(public)/page.test.tsx > CatalogPage > Product display > should display physical products with fulfilled badge
+ FAIL  src/app/(public)/page.test.tsx > CatalogPage > Product display > should display product categories
+ FAIL  src/app/(public)/page.test.tsx > CatalogPage > Empty states > should handle empty catalog
+ FAIL  src/app/(public)/page.test.tsx > CatalogPage > Empty states > should handle missing category associations
+ FAIL  src/app/admin/layout.test.tsx > AdminLayout > should render children without auth check
+ FAIL  src/app/admin/(protected)/layout.test.tsx > ProtectedAdminLayout > Access protection > should render children when authenticated
+ FAIL  src/app/admin/(protected)/layout.test.tsx > ProtectedAdminLayout > Navigation > should include dashboard link in nav
+ FAIL  src/app/admin/(protected)/dashboard/page.test.tsx > DashboardPage > Rendering > should render dashboard heading
+ FAIL  src/app/admin/(protected)/dashboard/page.test.tsx > DashboardPage > Rendering > should display total monetary donations metric
+ FAIL  src/app/admin/(protected)/dashboard/page.test.tsx > DashboardPage > Rendering > should display physical fulfilled metric
+ FAIL  src/app/admin/(protected)/dashboard/page.test.tsx > DashboardPage > Rendering > should display physical pending metric
+ FAIL  src/app/admin/(protected)/dashboard/page.test.tsx > DashboardPage > Empty state > should display empty state message when no data
+ FAIL  src/app/admin/(protected)/dashboard/page.test.tsx > DashboardPage > Empty state > should not display empty state when any metric has data
+ FAIL  src/app/admin/(protected)/dashboard/page.test.tsx > DashboardPage > Mixed data > should display all metrics with mixed monetary and physical data
+ FAIL  src/app/admin/(protected)/dashboard/page.test.tsx > DashboardPage > Data fetching > should call getDashboardStats
+ FAIL  src/features/donations/components/__tests__/MonetaryDonationForm.test.tsx > MonetaryDonationForm > should render PIX payment details when settings available
+ FAIL  src/features/donations/components/__tests__/MonetaryDonationForm.test.tsx > MonetaryDonationForm > should show warning when PIX settings not configured
+ FAIL  src/features/donations/components/__tests__/MonetaryDonationForm.test.tsx > MonetaryDonationForm > should display remaining amount
+ FAIL  src/features/donations/components/__tests__/PhysicalPledgeForm.test.tsx > PhysicalPledgeForm > should render form with required fields
+ FAIL  src/features/donations/components/__tests__/PhysicalPledgeForm.test.tsx > PhysicalPledgeForm > should show success toast after successful submission
+ FAIL  src/features/donations/components/__tests__/PhysicalPledgeForm.test.tsx > PhysicalPledgeForm > should show error toast on failed submission
+ FAIL  src/features/dashboard/components/__tests__/DashboardStatsCards.test.tsx > DashboardStatsCards > should render all three metric cards
+ FAIL  src/features/dashboard/components/__tests__/DashboardStatsCards.test.tsx > DashboardStatsCards > should format monetary amount in pt-BR locale
+ FAIL  src/features/dashboard/components/__tests__/DashboardStatsCards.test.tsx > DashboardStatsCards > should display physical counts
+ FAIL  src/features/dashboard/components/__tests__/DashboardStatsCards.test.tsx > DashboardStatsCards > should show empty state when all metrics are zero
+ FAIL  src/features/dashboard/components/__tests__/DashboardStatsCards.test.tsx > DashboardStatsCards > should not show empty state when any metric has value
+ FAIL  src/features/products/components/__tests__/FulfilledBadge.test.tsx > FulfilledBadge > should render Fulfilled badge for fulfilled state
+ FAIL  src/features/products/components/__tests__/FulfilledBadge.test.tsx > FulfilledBadge > should render Needed badge for pending state
+ FAIL  src/features/products/components/__tests__/FulfilledBadge.test.tsx > FulfilledBadge > should apply green styling for fulfilled state
+ FAIL  src/features/products/components/__tests__/FulfilledBadge.test.tsx > FulfilledBadge > should apply orange styling for pending state
+ FAIL  src/features/products/components/__tests__/ProductCard.test.tsx > ProductCard > Required donor-facing fields > should display product name
+ FAIL  src/features/products/components/__tests__/ProductCard.test.tsx > ProductCard > Required donor-facing fields > should display product description
+ FAIL  src/features/products/components/__tests__/ProductCard.test.tsx > ProductCard > Required donor-facing fields > should display category context when present
+ FAIL  src/features/products/components/__tests__/ProductCard.test.tsx > ProductCard > Required donor-facing fields > should not display categories label when product has no categories
+ FAIL  src/features/products/components/__tests__/ProductCard.test.tsx > ProductCard > Monetary product progress > should display progress bar for monetary products
+ FAIL  src/features/products/components/__tests__/ProductCard.test.tsx > ProductCard > Monetary product progress > should display full funding state for fully funded monetary product
+ FAIL  src/features/products/components/__tests__/ProductCard.test.tsx > ProductCard > Physical product status > should display Fulfilled badge for fulfilled physical product
+ FAIL  src/features/products/components/__tests__/ProductCard.test.tsx > ProductCard > Physical product status > should display Needed badge for unfulfilled physical product
+ FAIL  src/features/products/components/__tests__/ProductCard.test.tsx > ProductCard > Donation type > should display Monetary type for monetary products
+ FAIL  src/features/products/components/__tests__/ProductCard.test.tsx > ProductCard > Donation type > should display Physical type for physical products
+ FAIL  src/features/products/components/__tests__/ProductCard.test.tsx > ProductCard > Navigation > should link to product detail page
+ FAIL  src/features/products/components/__tests__/ProductGrid.test.tsx > ProductGrid > Empty state > should display default empty message when no products
+ FAIL  src/features/products/components/__tests__/ProductGrid.test.tsx > ProductGrid > Empty state > should display custom empty message when provided
+ FAIL  src/features/products/components/__tests__/ProductGrid.test.tsx > ProductGrid > Product listing > should render monetary and physical products
+ FAIL  src/features/products/components/__tests__/ProductGrid.test.tsx > ProductGrid > Product listing > should display product descriptions
+ FAIL  src/features/products/components/__tests__/ProductGrid.test.tsx > ProductGrid > Product listing > should display category context for products
+ FAIL  src/features/products/components/__tests__/ProductGrid.test.tsx > ProductGrid > Product listing > should display donation type labels
+ FAIL  src/features/products/components/__tests__/ProductGrid.test.tsx > ProductGrid > Product listing > should render links to product detail pages
+ FAIL  src/features/products/components/__tests__/ProgressBar.test.tsx > ProgressBar component > should display progress label
+ FAIL  src/features/products/components/__tests__/ProgressBar.test.tsx > ProgressBar component > should display partial funding percentage for monetary products
+ FAIL  src/features/products/components/__tests__/ProgressBar.test.tsx > ProgressBar component > should display 100% when fully funded
+ FAIL  src/features/products/components/__tests__/ProgressBar.test.tsx > ProgressBar component > should display 0% when no progress
+ FAIL  src/features/products/components/__tests__/ProgressBar.test.tsx > ProgressBar component > should cap at 100% when overfunded
+ FAIL  src/features/products/components/__tests__/ProgressBar.test.tsx > ProgressBar component > should display current and target amounts
+ FAIL  src/features/products/components/__tests__/ProgressBar.test.tsx > ProgressBar utilities > calculateProgressPercentage > should return 0% when current is 0
+ FAIL  src/features/products/components/__tests__/ProgressBar.test.tsx > ProgressBar utilities > calculateProgressPercentage > should return 50% when current is half of target
+ FAIL  src/features/products/components/__tests__/ProgressBar.test.tsx > ProgressBar utilities > calculateProgressPercentage > should return 100% when current equals target
+ FAIL  src/features/products/components/__tests__/ProgressBar.test.tsx > ProgressBar utilities > calculateProgressPercentage > should cap at 100% when current exceeds target
+ FAIL  src/features/products/components/__tests__/ProgressBar.test.tsx > ProgressBar utilities > calculateProgressPercentage > should return 0% when target is 0 or negative
+ FAIL  src/features/products/components/__tests__/ProgressBar.test.tsx > ProgressBar utilities > calculateProgressPercentage > should round percentage correctly
+ FAIL  src/features/products/components/__tests__/ProgressBar.test.tsx > ProgressBar utilities > formatCurrency > should format cents as BRL currency
+ FAIL  src/features/products/components/__tests__/ProgressBar.test.tsx > ProgressBar utilities > formatCurrency > should format zero correctly
+ FAIL  src/features/products/components/__tests__/ProgressBar.test.tsx > ProgressBar utilities > formatCurrency > should handle cents correctly
+ FAIL  src/features/products/components/__tests__/ProgressBar.test.tsx > ProgressBar utilities > formatCurrency > should format large amounts
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ node_modules/@testing-library/react/dist/pure.js:306:28
+ ❯ cleanup node_modules/@testing-library/react/dist/pure.js:302:22
+ ❯ node_modules/@testing-library/react/dist/index.js:28:25
+     26|   if (typeof afterEach === 'function') {
+     27|     afterEach(() => {
+     28|       (0, _pure.cleanup)();
+       |                         ^
+     29|     });
+     30|   } else if (typeof teardown === 'function') {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/136]⎯
+
+ FAIL  src/app/(public)/page.test.tsx > CatalogPage > Rendering > should display category filter section
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/app/(public)/page.test.tsx:95:7
+     93|         searchParams: Promise.resolve({}),
+     94|       });
+     95|       render(Page);
+       |       ^
+     96|       expect(screen.getByText('Filtrar por categoria')).toBeInTheDocum…
+     97|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/136]⎯
+
+ FAIL  src/app/(public)/page.test.tsx > CatalogPage > Rendering > should display products section
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/app/(public)/page.test.tsx:103:7
+    101|         searchParams: Promise.resolve({}),
+    102|       });
+    103|       render(Page);
+       |       ^
+    104|       expect(screen.getByText('Produtos')).toBeInTheDocument();
+    105|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/136]⎯
+
+ FAIL  src/app/(public)/page.test.tsx > CatalogPage > Rendering > should display all-categories filter button
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/app/(public)/page.test.tsx:111:7
+    109|         searchParams: Promise.resolve({}),
+    110|       });
+    111|       render(Page);
+       |       ^
+    112|       expect(screen.getByRole('link', { name: 'Todas as categorias' })…
+    113|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/136]⎯
+
+ FAIL  src/app/(public)/page.test.tsx > CatalogPage > Category Filtering > should display all products when no category selected
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/app/(public)/page.test.tsx:121:7
+    119|         searchParams: Promise.resolve({}),
+    120|       });
+    121|       render(Page);
+       |       ^
+    122|       expect(getPublishedProducts).toHaveBeenCalled();
+    123|       expect(getProductsByCategory).not.toHaveBeenCalled();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/136]⎯
+
+ FAIL  src/app/(public)/page.test.tsx > CatalogPage > Category Filtering > should display filtered products when category selected
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/app/(public)/page.test.tsx:132:7
+    130|         searchParams: Promise.resolve({ category: 'cat-1' }),
+    131|       });
+    132|       render(Page);
+       |       ^
+    133|       expect(getProductsByCategory).toHaveBeenCalledWith('cat-1');
+    134|       expect(screen.getByText('Test Product')).toBeInTheDocument();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/136]⎯
+
+ FAIL  src/app/(public)/page.test.tsx > CatalogPage > Category Filtering > should show empty message when no products in selected category
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/app/(public)/page.test.tsx:143:7
+    141|         searchParams: Promise.resolve({ category: 'cat-1' }),
+    142|       });
+    143|       render(Page);
+       |       ^
+    144|       expect(screen.getByText('Nenhum produto encontrado nesta categor…
+    145|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/136]⎯
+
+ FAIL  src/app/(public)/page.test.tsx > CatalogPage > Category Filtering > should show empty message when no products available
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/app/(public)/page.test.tsx:152:7
+    150|         searchParams: Promise.resolve({}),
+    151|       });
+    152|       render(Page);
+       |       ^
+    153|       expect(screen.getByText('Nenhum produto disponível no momento.')…
+    154|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/136]⎯
+
+ FAIL  src/app/(public)/page.test.tsx > CatalogPage > Product display > should display monetary products with progress indicators
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/app/(public)/page.test.tsx:162:7
+    160|         searchParams: Promise.resolve({}),
+    161|       });
+    162|       render(Page);
+       |       ^
+    163|       expect(screen.getByText('Test Product')).toBeInTheDocument();
+    164|       expect(screen.getByText('Progresso')).toBeInTheDocument();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/136]⎯
+
+ FAIL  src/app/(public)/page.test.tsx > CatalogPage > Product display > should display physical products with fulfilled badge
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/app/(public)/page.test.tsx:171:7
+    169|         searchParams: Promise.resolve({}),
+    170|       });
+    171|       render(Page);
+       |       ^
+    172|       expect(screen.getByText('Physical Product')).toBeInTheDocument();
+    173|       expect(screen.getByText('Necessário')).toBeInTheDocument();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/136]⎯
+
+ FAIL  src/app/(public)/page.test.tsx > CatalogPage > Product display > should display product categories
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/app/(public)/page.test.tsx:180:7
+    178|         searchParams: Promise.resolve({}),
+    179|       });
+    180|       render(Page);
+       |       ^
+    181|       expect(screen.getByText(/Categorias: Sacristy/)).toBeInTheDocume…
+    182|       expect(screen.getByText(/Categorias: Garden/)).toBeInTheDocument…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/136]⎯
+
+ FAIL  src/app/(public)/page.test.tsx > CatalogPage > Empty states > should handle empty catalog
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/app/(public)/page.test.tsx:192:7
+    190|         searchParams: Promise.resolve({}),
+    191|       });
+    192|       render(Page);
+       |       ^
+    193|       expect(screen.getByText('Nenhum produto disponível no momento.')…
+    194|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/136]⎯
+
+ FAIL  src/app/(public)/page.test.tsx > CatalogPage > Empty states > should handle missing category associations
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/app/(public)/page.test.tsx:205:7
+    203|         searchParams: Promise.resolve({}),
+    204|       });
+    205|       render(Page);
+       |       ^
+    206|       expect(screen.getByText('Test Product')).toBeInTheDocument();
+    207|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/136]⎯
+
+ FAIL  src/app/admin/layout.test.tsx > AdminLayout > should render children without auth check
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/app/admin/layout.test.tsx:8:27
+      6|   it('should render children without auth check', async () => {
+      7|     const Layout = await AdminLayout({ children: <div data-testid="adm…
+      8|     const { container } = render(Layout);
+       |                           ^
+      9|     expect(container.querySelector('[data-testid="admin-child"]')).toB…
+     10|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/136]⎯
+
+ FAIL  src/app/admin/(protected)/layout.test.tsx > ProtectedAdminLayout > Access protection > should render children when authenticated
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/app/admin/(protected)/layout.test.tsx:60:29
+     58|     it('should render children when authenticated', async () => {
+     59|       const Layout = await ProtectedAdminLayout({ children: <div data-…
+     60|       const { container } = render(Layout);
+       |                             ^
+     61|       expect(container.querySelector('[data-testid="admin-child"]')).t…
+     62|       expect(redirect).not.toHaveBeenCalled();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/136]⎯
+
+ FAIL  src/app/admin/(protected)/layout.test.tsx > ProtectedAdminLayout > Navigation > should include dashboard link in nav
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/app/admin/(protected)/layout.test.tsx:69:29
+     67|     it('should include dashboard link in nav', async () => {
+     68|       const Layout = await ProtectedAdminLayout({ children: <div>Child…
+     69|       const { container } = render(Layout);
+       |                             ^
+     70|       const dashboardLink = container.querySelector('a[href="/admin/da…
+     71|       expect(dashboardLink).toBeInTheDocument();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/136]⎯
+
+ FAIL  src/app/admin/(protected)/dashboard/page.test.tsx > DashboardPage > Rendering > should render dashboard heading
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/app/admin/(protected)/dashboard/page.test.tsx:23:7
+     21|     it('should render dashboard heading', async () => {
+     22|       const Page = await DashboardPage();
+     23|       render(Page);
+       |       ^
+     24|       expect(screen.getByRole('heading', { level: 1, name: 'Painel' })…
+     25|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[19/136]⎯
+
+ FAIL  src/app/admin/(protected)/dashboard/page.test.tsx > DashboardPage > Rendering > should display total monetary donations metric
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/app/admin/(protected)/dashboard/page.test.tsx:34:7
+     32|       });
+     33|       const Page = await DashboardPage();
+     34|       render(Page);
+       |       ^
+     35|       expect(screen.getByText('Total de Doações Monetárias Arrecadadas…
+     36|       expect(screen.getByText(/R\$\s*500,00/)).toBeInTheDocument();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[20/136]⎯
+
+ FAIL  src/app/admin/(protected)/dashboard/page.test.tsx > DashboardPage > Rendering > should display physical fulfilled metric
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/app/admin/(protected)/dashboard/page.test.tsx:46:7
+     44|       });
+     45|       const Page = await DashboardPage();
+     46|       render(Page);
+       |       ^
+     47|       expect(screen.getByText('Doações Físicas Atendidas')).toBeInTheD…
+     48|       expect(screen.getByText('3')).toBeInTheDocument();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[21/136]⎯
+
+ FAIL  src/app/admin/(protected)/dashboard/page.test.tsx > DashboardPage > Rendering > should display physical pending metric
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/app/admin/(protected)/dashboard/page.test.tsx:58:7
+     56|       });
+     57|       const Page = await DashboardPage();
+     58|       render(Page);
+       |       ^
+     59|       expect(screen.getByText('Doações Físicas Pendentes')).toBeInTheD…
+     60|       expect(screen.getByText('5')).toBeInTheDocument();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[22/136]⎯
+
+ FAIL  src/app/admin/(protected)/dashboard/page.test.tsx > DashboardPage > Empty state > should display empty state message when no data
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/app/admin/(protected)/dashboard/page.test.tsx:72:7
+     70|       });
+     71|       const Page = await DashboardPage();
+     72|       render(Page);
+       |       ^
+     73|       expect(
+     74|         screen.getByText(/Ainda não há dados de doações. As métricas a…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[23/136]⎯
+
+ FAIL  src/app/admin/(protected)/dashboard/page.test.tsx > DashboardPage > Empty state > should not display empty state when any metric has data
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/app/admin/(protected)/dashboard/page.test.tsx:86:7
+     84|       });
+     85|       const Page = await DashboardPage();
+     86|       render(Page);
+       |       ^
+     87|       expect(screen.queryByTestId('dashboard-empty-state')).not.toBeIn…
+     88|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[24/136]⎯
+
+ FAIL  src/app/admin/(protected)/dashboard/page.test.tsx > DashboardPage > Mixed data > should display all metrics with mixed monetary and physical data
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/app/admin/(protected)/dashboard/page.test.tsx:99:7
+     97|       });
+     98|       const Page = await DashboardPage();
+     99|       render(Page);
+       |       ^
+    100|       expect(screen.getByText('Total de Doações Monetárias Arrecadadas…
+    101|       expect(screen.getByText('Doações Físicas Atendidas')).toBeInTheD…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[25/136]⎯
+
+ FAIL  src/features/donations/components/__tests__/MonetaryDonationForm.test.tsx > MonetaryDonationForm > should render PIX payment details when settings available
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/features/donations/components/__tests__/MonetaryDonationForm.test.tsx:16:5
+     14| 
+     15|   it('should render PIX payment details when settings available', () =…
+     16|     render(
+       |     ^
+     17|       <MonetaryDonationForm
+     18|         productId="123e4567-e89b-12d3-a456-426614174000"
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[26/136]⎯
+
+ FAIL  src/features/donations/components/__tests__/MonetaryDonationForm.test.tsx > MonetaryDonationForm > should show warning when PIX settings not configured
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/features/donations/components/__tests__/MonetaryDonationForm.test.tsx:31:5
+     29| 
+     30|   it('should show warning when PIX settings not configured', () => {
+     31|     render(
+       |     ^
+     32|       <MonetaryDonationForm
+     33|         productId="123e4567-e89b-12d3-a456-426614174000"
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[27/136]⎯
+
+ FAIL  src/features/donations/components/__tests__/MonetaryDonationForm.test.tsx > MonetaryDonationForm > should display remaining amount
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/features/donations/components/__tests__/MonetaryDonationForm.test.tsx:46:5
+     44| 
+     45|   it('should display remaining amount', () => {
+     46|     render(
+       |     ^
+     47|       <MonetaryDonationForm
+     48|         productId="123e4567-e89b-12d3-a456-426614174000"
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[28/136]⎯
+
+ FAIL  src/features/donations/components/__tests__/PhysicalPledgeForm.test.tsx > PhysicalPledgeForm > should render form with required fields
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/features/donations/components/__tests__/PhysicalPledgeForm.test.tsx:17:5
+     15| 
+     16|   it('should render form with required fields', () => {
+     17|     render(
+       |     ^
+     18|       <PhysicalPledgeForm productId="123e4567-e89b-12d3-a456-426614174…
+     19|     );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[29/136]⎯
+
+ FAIL  src/features/donations/components/__tests__/PhysicalPledgeForm.test.tsx > PhysicalPledgeForm > should show success toast after successful submission
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/features/donations/components/__tests__/PhysicalPledgeForm.test.tsx:33:5
+     31|     });
+     32| 
+     33|     render(
+       |     ^
+     34|       <PhysicalPledgeForm productId="123e4567-e89b-12d3-a456-426614174…
+     35|     );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[30/136]⎯
+
+ FAIL  src/features/donations/components/__tests__/PhysicalPledgeForm.test.tsx > PhysicalPledgeForm > should show error toast on failed submission
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/features/donations/components/__tests__/PhysicalPledgeForm.test.tsx:58:5
+     56|     });
+     57| 
+     58|     render(
+       |     ^
+     59|       <PhysicalPledgeForm productId="123e4567-e89b-12d3-a456-426614174…
+     60|     );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[31/136]⎯
+
+ FAIL  src/features/dashboard/components/__tests__/DashboardStatsCards.test.tsx > DashboardStatsCards > should render all three metric cards
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/features/dashboard/components/__tests__/DashboardStatsCards.test.tsx:7:5
+      5| describe('DashboardStatsCards', () => {
+      6|   it('should render all three metric cards', () => {
+      7|     render(
+       |     ^
+      8|       <DashboardStatsCards
+      9|         stats={{
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[32/136]⎯
+
+ FAIL  src/features/dashboard/components/__tests__/DashboardStatsCards.test.tsx > DashboardStatsCards > should format monetary amount in pt-BR locale
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/features/dashboard/components/__tests__/DashboardStatsCards.test.tsx:22:5
+     20| 
+     21|   it('should format monetary amount in pt-BR locale', () => {
+     22|     render(
+       |     ^
+     23|       <DashboardStatsCards
+     24|         stats={{
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[33/136]⎯
+
+ FAIL  src/features/dashboard/components/__tests__/DashboardStatsCards.test.tsx > DashboardStatsCards > should display physical counts
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/features/dashboard/components/__tests__/DashboardStatsCards.test.tsx:35:5
+     33| 
+     34|   it('should display physical counts', () => {
+     35|     render(
+       |     ^
+     36|       <DashboardStatsCards
+     37|         stats={{
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[34/136]⎯
+
+ FAIL  src/features/dashboard/components/__tests__/DashboardStatsCards.test.tsx > DashboardStatsCards > should show empty state when all metrics are zero
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/features/dashboard/components/__tests__/DashboardStatsCards.test.tsx:49:5
+     47| 
+     48|   it('should show empty state when all metrics are zero', () => {
+     49|     render(
+       |     ^
+     50|       <DashboardStatsCards
+     51|         stats={{
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[35/136]⎯
+
+ FAIL  src/features/dashboard/components/__tests__/DashboardStatsCards.test.tsx > DashboardStatsCards > should not show empty state when any metric has value
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/features/dashboard/components/__tests__/DashboardStatsCards.test.tsx:65:5
+     63| 
+     64|   it('should not show empty state when any metric has value', () => {
+     65|     render(
+       |     ^
+     66|       <DashboardStatsCards
+     67|         stats={{
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[36/136]⎯
+
+ FAIL  src/features/products/components/__tests__/FulfilledBadge.test.tsx > FulfilledBadge > should render Fulfilled badge for fulfilled state
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/features/products/components/__tests__/FulfilledBadge.test.tsx:7:5
+      5| describe('FulfilledBadge', () => {
+      6|   it('should render Fulfilled badge for fulfilled state', () => {
+      7|     render(<FulfilledBadge isFulfilled={true} />);
+       |     ^
+      8|     expect(screen.getByText('Atendido')).toBeInTheDocument();
+      9|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[37/136]⎯
+
+ FAIL  src/features/products/components/__tests__/FulfilledBadge.test.tsx > FulfilledBadge > should render Needed badge for pending state
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/features/products/components/__tests__/FulfilledBadge.test.tsx:12:5
+     10| 
+     11|   it('should render Needed badge for pending state', () => {
+     12|     render(<FulfilledBadge isFulfilled={false} />);
+       |     ^
+     13|     expect(screen.getByText('Necessário')).toBeInTheDocument();
+     14|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[38/136]⎯
+
+ FAIL  src/features/products/components/__tests__/FulfilledBadge.test.tsx > FulfilledBadge > should apply green styling for fulfilled state
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/features/products/components/__tests__/FulfilledBadge.test.tsx:17:27
+     15| 
+     16|   it('should apply green styling for fulfilled state', () => {
+     17|     const { container } = render(<FulfilledBadge isFulfilled={true} />…
+       |                           ^
+     18|     const badge = container.querySelector('.bg-green-50, .border-green…
+     19|     expect(badge).toBeInTheDocument();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[39/136]⎯
+
+ FAIL  src/features/products/components/__tests__/FulfilledBadge.test.tsx > FulfilledBadge > should apply orange styling for pending state
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/features/products/components/__tests__/FulfilledBadge.test.tsx:23:27
+     21| 
+     22|   it('should apply orange styling for pending state', () => {
+     23|     const { container } = render(<FulfilledBadge isFulfilled={false} /…
+       |                           ^
+     24|     const badge = container.querySelector('.bg-orange-50, .border-oran…
+     25|     expect(badge).toBeInTheDocument();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[40/136]⎯
+
+ FAIL  src/features/products/components/__tests__/ProductCard.test.tsx > ProductCard > Required donor-facing fields > should display product name
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/features/products/components/__tests__/ProductCard.test.tsx:42:7
+     40|   describe('Required donor-facing fields', () => {
+     41|     it('should display product name', () => {
+     42|       render(<ProductCard product={mockMonetaryProduct} />);
+       |       ^
+     43|       expect(screen.getByText('Monetary Product')).toBeInTheDocument();
+     44|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[41/136]⎯
+
+ FAIL  src/features/products/components/__tests__/ProductCard.test.tsx > ProductCard > Required donor-facing fields > should display product description
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/features/products/components/__tests__/ProductCard.test.tsx:47:7
+     45| 
+     46|     it('should display product description', () => {
+     47|       render(<ProductCard product={mockMonetaryProduct} />);
+       |       ^
+     48|       expect(screen.getByText('A monetary donation item')).toBeInTheDo…
+     49|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[42/136]⎯
+
+ FAIL  src/features/products/components/__tests__/ProductCard.test.tsx > ProductCard > Required donor-facing fields > should display category context when present
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/features/products/components/__tests__/ProductCard.test.tsx:52:7
+     50| 
+     51|     it('should display category context when present', () => {
+     52|       render(<ProductCard product={mockMonetaryProduct} />);
+       |       ^
+     53|       expect(screen.getByText(/Categorias: Sacristy/)).toBeInTheDocume…
+     54|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[43/136]⎯
+
+ FAIL  src/features/products/components/__tests__/ProductCard.test.tsx > ProductCard > Required donor-facing fields > should not display categories label when product has no categories
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/features/products/components/__tests__/ProductCard.test.tsx:61:7
+     59|         productCategories: [],
+     60|       };
+     61|       render(<ProductCard product={productNoCategories} />);
+       |       ^
+     62|       expect(screen.queryByText(/Categorias:/)).not.toBeInTheDocument(…
+     63|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[44/136]⎯
+
+ FAIL  src/features/products/components/__tests__/ProductCard.test.tsx > ProductCard > Monetary product progress > should display progress bar for monetary products
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/features/products/components/__tests__/ProductCard.test.tsx:68:7
+     66|   describe('Monetary product progress', () => {
+     67|     it('should display progress bar for monetary products', () => {
+     68|       render(<ProductCard product={mockMonetaryProduct} />);
+       |       ^
+     69|       expect(screen.getByText('Progresso')).toBeInTheDocument();
+     70|       expect(screen.getByText(/50%/)).toBeInTheDocument();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[45/136]⎯
+
+ FAIL  src/features/products/components/__tests__/ProductCard.test.tsx > ProductCard > Monetary product progress > should display full funding state for fully funded monetary product
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/features/products/components/__tests__/ProductCard.test.tsx:78:7
+     76|         currentAmount: 10000,
+     77|       };
+     78|       render(<ProductCard product={fullyFunded} />);
+       |       ^
+     79|       expect(screen.getByText('100%')).toBeInTheDocument();
+     80|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[46/136]⎯
+
+ FAIL  src/features/products/components/__tests__/ProductCard.test.tsx > ProductCard > Physical product status > should display Fulfilled badge for fulfilled physical product
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/features/products/components/__tests__/ProductCard.test.tsx:85:7
+     83|   describe('Physical product status', () => {
+     84|     it('should display Fulfilled badge for fulfilled physical product'…
+     85|       render(<ProductCard product={mockPhysicalProduct} />);
+       |       ^
+     86|       expect(screen.getByText('Atendido')).toBeInTheDocument();
+     87|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[47/136]⎯
+
+ FAIL  src/features/products/components/__tests__/ProductCard.test.tsx > ProductCard > Physical product status > should display Needed badge for unfulfilled physical product
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/features/products/components/__tests__/ProductCard.test.tsx:91:7
+     89|     it('should display Needed badge for unfulfilled physical product',…
+     90|       const unfulfilled = { ...mockPhysicalProduct, isFulfilled: false…
+     91|       render(<ProductCard product={unfulfilled} />);
+       |       ^
+     92|       expect(screen.getByText('Necessário')).toBeInTheDocument();
+     93|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[48/136]⎯
+
+ FAIL  src/features/products/components/__tests__/ProductCard.test.tsx > ProductCard > Donation type > should display Monetary type for monetary products
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/features/products/components/__tests__/ProductCard.test.tsx:98:7
+     96|   describe('Donation type', () => {
+     97|     it('should display Monetary type for monetary products', () => {
+     98|       render(<ProductCard product={mockMonetaryProduct} />);
+       |       ^
+     99|       expect(screen.getByText('Monetária')).toBeInTheDocument();
+    100|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[49/136]⎯
+
+ FAIL  src/features/products/components/__tests__/ProductCard.test.tsx > ProductCard > Donation type > should display Physical type for physical products
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/features/products/components/__tests__/ProductCard.test.tsx:103:7
+    101| 
+    102|     it('should display Physical type for physical products', () => {
+    103|       render(<ProductCard product={mockPhysicalProduct} />);
+       |       ^
+    104|       expect(screen.getByText('Física')).toBeInTheDocument();
+    105|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[50/136]⎯
+
+ FAIL  src/features/products/components/__tests__/ProductCard.test.tsx > ProductCard > Navigation > should link to product detail page
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/features/products/components/__tests__/ProductCard.test.tsx:110:7
+    108|   describe('Navigation', () => {
+    109|     it('should link to product detail page', () => {
+    110|       render(<ProductCard product={mockMonetaryProduct} />);
+       |       ^
+    111|       const link = screen.getByRole('link', { name: /Monetary Product/…
+    112|       expect(link).toHaveAttribute('href', '/products/1');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[51/136]⎯
+
+ FAIL  src/features/products/components/__tests__/ProductGrid.test.tsx > ProductGrid > Empty state > should display default empty message when no products
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/features/products/components/__tests__/ProductGrid.test.tsx:40:7
+     38|   describe('Empty state', () => {
+     39|     it('should display default empty message when no products', () => {
+     40|       render(<ProductGrid products={[]} />);
+       |       ^
+     41|       expect(screen.getByText('Nenhum produto encontrado.')).toBeInThe…
+     42|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[52/136]⎯
+
+ FAIL  src/features/products/components/__tests__/ProductGrid.test.tsx > ProductGrid > Empty state > should display custom empty message when provided
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/features/products/components/__tests__/ProductGrid.test.tsx:45:7
+     43| 
+     44|     it('should display custom empty message when provided', () => {
+     45|       render(
+       |       ^
+     46|         <ProductGrid
+     47|           products={[]}
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[53/136]⎯
+
+ FAIL  src/features/products/components/__tests__/ProductGrid.test.tsx > ProductGrid > Product listing > should render monetary and physical products
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/features/products/components/__tests__/ProductGrid.test.tsx:57:7
+     55|   describe('Product listing', () => {
+     56|     it('should render monetary and physical products', () => {
+     57|       render(
+       |       ^
+     58|         <ProductGrid products={[mockMonetaryProduct, mockPhysicalProdu…
+     59|       );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[54/136]⎯
+
+ FAIL  src/features/products/components/__tests__/ProductGrid.test.tsx > ProductGrid > Product listing > should display product descriptions
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/features/products/components/__tests__/ProductGrid.test.tsx:65:7
+     63| 
+     64|     it('should display product descriptions', () => {
+     65|       render(
+       |       ^
+     66|         <ProductGrid products={[mockMonetaryProduct, mockPhysicalProdu…
+     67|       );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[55/136]⎯
+
+ FAIL  src/features/products/components/__tests__/ProductGrid.test.tsx > ProductGrid > Product listing > should display category context for products
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/features/products/components/__tests__/ProductGrid.test.tsx:73:7
+     71| 
+     72|     it('should display category context for products', () => {
+     73|       render(
+       |       ^
+     74|         <ProductGrid products={[mockMonetaryProduct, mockPhysicalProdu…
+     75|       );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[56/136]⎯
+
+ FAIL  src/features/products/components/__tests__/ProductGrid.test.tsx > ProductGrid > Product listing > should display donation type labels
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/features/products/components/__tests__/ProductGrid.test.tsx:81:7
+     79| 
+     80|     it('should display donation type labels', () => {
+     81|       render(
+       |       ^
+     82|         <ProductGrid products={[mockMonetaryProduct, mockPhysicalProdu…
+     83|       );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[57/136]⎯
+
+ FAIL  src/features/products/components/__tests__/ProductGrid.test.tsx > ProductGrid > Product listing > should render links to product detail pages
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/features/products/components/__tests__/ProductGrid.test.tsx:89:7
+     87| 
+     88|     it('should render links to product detail pages', () => {
+     89|       render(
+       |       ^
+     90|         <ProductGrid products={[mockMonetaryProduct]} />
+     91|       );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[58/136]⎯
+
+ FAIL  src/features/products/components/__tests__/ProgressBar.test.tsx > ProgressBar component > should display progress label
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/features/products/components/__tests__/ProgressBar.test.tsx:8:5
+      6| describe('ProgressBar component', () => {
+      7|   it('should display progress label', () => {
+      8|     render(<ProgressBar currentAmount={5000} targetAmount={10000} />);
+       |     ^
+      9|     expect(screen.getByText('Progresso')).toBeInTheDocument();
+     10|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[59/136]⎯
+
+ FAIL  src/features/products/components/__tests__/ProgressBar.test.tsx > ProgressBar component > should display partial funding percentage for monetary products
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/features/products/components/__tests__/ProgressBar.test.tsx:13:5
+     11| 
+     12|   it('should display partial funding percentage for monetary products'…
+     13|     render(<ProgressBar currentAmount={5000} targetAmount={10000} />);
+       |     ^
+     14|     expect(screen.getByText('50%')).toBeInTheDocument();
+     15|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[60/136]⎯
+
+ FAIL  src/features/products/components/__tests__/ProgressBar.test.tsx > ProgressBar component > should display 100% when fully funded
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/features/products/components/__tests__/ProgressBar.test.tsx:18:5
+     16| 
+     17|   it('should display 100% when fully funded', () => {
+     18|     render(<ProgressBar currentAmount={10000} targetAmount={10000} />);
+       |     ^
+     19|     expect(screen.getByText('100%')).toBeInTheDocument();
+     20|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[61/136]⎯
+
+ FAIL  src/features/products/components/__tests__/ProgressBar.test.tsx > ProgressBar component > should display 0% when no progress
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/features/products/components/__tests__/ProgressBar.test.tsx:23:5
+     21| 
+     22|   it('should display 0% when no progress', () => {
+     23|     render(<ProgressBar currentAmount={0} targetAmount={10000} />);
+       |     ^
+     24|     expect(screen.getByText('0%')).toBeInTheDocument();
+     25|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[62/136]⎯
+
+ FAIL  src/features/products/components/__tests__/ProgressBar.test.tsx > ProgressBar component > should cap at 100% when overfunded
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/features/products/components/__tests__/ProgressBar.test.tsx:28:5
+     26| 
+     27|   it('should cap at 100% when overfunded', () => {
+     28|     render(<ProgressBar currentAmount={15000} targetAmount={10000} />);
+       |     ^
+     29|     expect(screen.getByText('100%')).toBeInTheDocument();
+     30|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[63/136]⎯
+
+ FAIL  src/features/products/components/__tests__/ProgressBar.test.tsx > ProgressBar component > should display current and target amounts
+TypeError: React.act is not a function
+ ❯ exports.act node_modules/react-dom/cjs/react-dom-test-utils.production.js:20:16
+ ❯ node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ Proxy.render node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ src/features/products/components/__tests__/ProgressBar.test.tsx:33:5
+     31| 
+     32|   it('should display current and target amounts', () => {
+     33|     render(<ProgressBar currentAmount={5000} targetAmount={10000} />);
+       |     ^
+     34|     expect(screen.getByText(/de/)).toBeInTheDocument();
+     35|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[64/136]⎯
+
+ Test Files  12 failed | 10 passed (22)
+      Tests  73 failed | 139 passed (212)
+   Start at  23:31:03
+   Duration  2.34s (transform 914ms, setup 1.73s, collect 5.39s, tests 294ms, environment 2.48s, prepare 2.12s)
+

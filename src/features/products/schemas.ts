@@ -18,6 +18,7 @@ export const createProductSchema = z
       .optional(),
     isPublished: z.boolean().optional().default(true),
     categoryIds: z.array(z.string().uuid()).optional().default([]),
+    imagePath: z.string().max(500).nullable().optional(),
   })
   .refine(
     (data) =>
@@ -39,6 +40,7 @@ export const updateProductSchema = z
     targetAmount: z.number().int().positive().nullish(),
     isPublished: z.boolean().optional(),
     categoryIds: z.array(z.string().uuid()).optional(),
+    imagePath: z.string().max(500).nullable().optional(),
   })
   .refine(
     (data) => {
@@ -51,3 +53,13 @@ export const updateProductSchema = z
   );
 
 export type UpdateProductInput = z.infer<typeof updateProductSchema>;
+
+export const generateProductPhotoUploadUrlSchema = z.object({
+  fileExtension: z
+    .string()
+    .min(1)
+    .max(10)
+    .regex(/^(jpg|jpeg|png)$/, 'Only JPEG and PNG files are accepted'),
+});
+
+export type GenerateProductPhotoUploadUrlInput = z.infer<typeof generateProductPhotoUploadUrlSchema>;

@@ -8,6 +8,13 @@
       "when": 1771451828250,
       "tag": "0000_strange_lightspeed",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1771986230719,
+      "tag": "0001_ambitious_zuras",
+      "breakpoints": true
     }
   ]
 }

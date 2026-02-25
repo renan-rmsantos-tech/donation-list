@@ -28,6 +28,7 @@ export const products = pgTable('products', {
   currentAmount: integer('current_amount').default(0).notNull(), // denormalized, BRL cents
   isFulfilled: boolean('is_fulfilled').default(false).notNull(), // for physical items
   isPublished: boolean('is_published').default(true).notNull(),
+  imagePath: text('image_path'), // Supabase Storage path for product photo
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });

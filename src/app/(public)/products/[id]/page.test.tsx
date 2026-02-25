@@ -54,6 +54,7 @@ const mockMonetaryProduct = {
   currentAmount: 5000,
   isFulfilled: false,
   isPublished: true,
+  imagePath: null,
   createdAt: new Date(),
   updatedAt: new Date(),
   productCategories: mockProductCategories,
@@ -68,6 +69,7 @@ const mockPhysicalProduct = {
   currentAmount: 0,
   isFulfilled: true,
   isPublished: true,
+  imagePath: null,
   createdAt: new Date(),
   updatedAt: new Date(),
   productCategories: [
