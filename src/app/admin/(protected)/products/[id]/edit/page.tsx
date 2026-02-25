@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { getCategories } from '@/features/categories/queries';
 import { getProductById } from '@/features/products/queries';
+import { getPublicUrl } from '@/lib/storage/supabase';
 import { ProductForm } from '@/features/products/components/ProductForm';
 
 export default async function EditProductPage({
@@ -18,6 +19,10 @@ export default async function EditProductPage({
     notFound();
   }
 
+  const imageUrl = product.imagePath
+    ? getPublicUrl('product-photos', product.imagePath)
+    : null;
+
   return (
     <div>
       <ProductForm
@@ -30,9 +35,11 @@ export default async function EditProductPage({
           currentAmount: product.currentAmount,
           isFulfilled: product.isFulfilled,
           isPublished: product.isPublished,
+          imagePath: product.imagePath,
           productCategories: product.productCategories,
         }}
         categories={categories}
+        imageUrl={imageUrl}
       />
     </div>
   );

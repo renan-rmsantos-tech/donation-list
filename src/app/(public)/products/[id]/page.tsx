@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getPublishedProductById } from '@/features/products/queries';
@@ -10,6 +11,7 @@ import { PhysicalPledgeForm } from '@/features/donations/components/PhysicalPled
 import { formatCurrency } from '@/lib/utils/format';
 import { BackButton } from '@/components/back-button';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { PlaceholderImage } from '@/components/ui/placeholder-image';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -33,6 +35,10 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
     pixSettings?.qrCodeImagePath
       ? getPublicUrl('pix-qr', pixSettings.qrCodeImagePath)
       : null;
+
+  const productImageUrl = product.imagePath
+    ? getPublicUrl('product-photos', product.imagePath)
+    : null;
 
   const categoryNames = product.productCategories
     .map((pc) => pc.categories.name)
@@ -66,6 +72,22 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
           </CardHeader>
 
           <CardContent className="space-y-8">
+            {/* Product Photo */}
+            <div className="w-full max-w-lg mx-auto aspect-square rounded-lg overflow-hidden border">
+              {productImageUrl ? (
+                <Image
+                  src={productImageUrl}
+                  alt={product.name}
+                  width={600}
+                  height={600}
+                  className="w-full h-full object-cover"
+                  sizes="(max-width: 768px) 100vw, 600px"
+                />
+              ) : (
+                <PlaceholderImage className="w-full h-full" />
+              )}
+            </div>
+
             {/* Description */}
             <div>
               <h2 className="text-xl font-semibold mb-4">Descrição</h2>

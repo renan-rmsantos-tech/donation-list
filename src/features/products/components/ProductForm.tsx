@@ -1,10 +1,11 @@
 'use client';
 
 import Link from 'next/link';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { createProduct, updateProduct } from '../actions';
+import { createProduct, updateProduct, generateProductPhotoUploadUrl } from '../actions';
 import { formatCurrency } from '@/lib/utils/format';
 import { Button } from '@/components/ui/button';
 import { BackButton } from '@/components/back-button';
@@ -28,6 +29,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
+import { ProductPhotoUpload } from './ProductPhotoUpload';
 import { toast } from 'sonner';
 
 const productFormSchema = z
@@ -72,12 +74,16 @@ type ProductFormProps = {
     currentAmount: number;
     isFulfilled: boolean;
     isPublished: boolean;
+    imagePath?: string | null;
     productCategories?: { categoryId: string }[];
   };
+  imageUrl?: string | null;
 };
 
-export function ProductForm({ categories, product }: ProductFormProps) {
+export function ProductForm({ categories, product, imageUrl }: ProductFormProps) {
   const isEdit = !!product;
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
 
   const form = useForm<ProductFormValues>({
     resolver: zodResolver(productFormSchema),
@@ -97,39 +103,103 @@ export function ProductForm({ categories, product }: ProductFormProps) {
   const donationType = form.watch('donationType');
 
   const onSubmit = async (values: ProductFormValues) => {
-    const targetAmountCents =
-      values.donationType === 'monetary' && values.targetAmountDisplay
-        ? Math.round(parseFloat(values.targetAmountDisplay) * 100)
-        : undefined;
+    setIsUploading(true);
 
-    const payload = {
-      name: values.name.trim(),
-      description: values.description.trim(),
-      donationType: values.donationType,
-      targetAmount: targetAmountCents,
-      isPublished: values.isPublished,
-      categoryIds: values.categoryIds,
-    };
+    try {
+      const targetAmountCents =
+        values.donationType === 'monetary' && values.targetAmountDisplay
+          ? Math.round(parseFloat(values.targetAmountDisplay) * 100)
+          : undefined;
 
-    const result = isEdit
-      ? await updateProduct(product.id, payload)
-      : await createProduct(payload);
+      let imagePath: string | undefined;
 
-    if (result.success) {
-      if (isEdit) {
-        toast.success('Produto atualizado com sucesso.');
-      } else if (result.data?.id) {
-        toast.success('Produto criado com sucesso. Redirecionando...');
-        window.location.href = `/admin/products/${result.data.id}/edit`;
+      // Handle file upload if a new file was selected
+      if (selectedFile) {
+        const fileExtension = selectedFile.name.split('.').pop()?.toLowerCase() || 'jpg';
+
+        const uploadUrlResult = await generateProductPhotoUploadUrl({
+          fileExtension,
+        });
+
+        if (!uploadUrlResult.success || !uploadUrlResult.data) {
+          const detail =
+            uploadUrlResult.details &&
+            typeof uploadUrlResult.details === 'object' &&
+            'message' in uploadUrlResult.details
+              ? String(uploadUrlResult.details.message)
+              : null;
+          toast.error(
+            uploadUrlResult.error === 'UNAUTHORIZED'
+              ? 'Sessão expirada. Faça login novamente.'
+              : detail
+                ? `Erro ao preparar upload: ${detail}`
+                : 'Erro ao preparar upload. Tente novamente.'
+          );
+          setIsUploading(false);
+          return;
+        }
+
+        // Upload file to Supabase
+        try {
+          const response = await fetch(uploadUrlResult.data.signedUrl, {
+            method: 'PUT',
+            body: selectedFile,
+            headers: {
+              'Content-Type': selectedFile.type,
+            },
+          });
+
+          if (!response.ok) {
+            toast.error('Erro ao enviar foto. Tente novamente.');
+            setIsUploading(false);
+            return;
+          }
+
+          imagePath = uploadUrlResult.data.path;
+        } catch {
+          toast.error('Erro ao enviar foto. Tente novamente.');
+          setIsUploading(false);
+          return;
+        }
       }
-    } else {
-      toast.error(
-        result.error === 'VALIDATION_ERROR'
-          ? 'Verifique os campos. Valor alvo é obrigatório para produtos monetários.'
-          : result.error === 'UNAUTHORIZED'
-            ? 'Sessão expirada. Faça login novamente.'
-            : 'Erro ao salvar. Tente novamente.'
-      );
+
+      const payload: Record<string, unknown> = {
+        name: values.name.trim(),
+        description: values.description.trim(),
+        donationType: values.donationType,
+        targetAmount: targetAmountCents,
+        isPublished: values.isPublished,
+        categoryIds: values.categoryIds,
+      };
+
+      if (imagePath !== undefined) {
+        payload.imagePath = imagePath;
+      }
+
+      const result = isEdit
+        ? await updateProduct(product.id, payload)
+        : await createProduct(payload);
+
+      if (result.success) {
+        if (isEdit) {
+          toast.success('Produto atualizado com sucesso.');
+          setSelectedFile(null);
+        } else if (result.data?.id) {
+          toast.success('Produto criado com sucesso. Redirecionando...');
+          setSelectedFile(null);
+          window.location.href = `/admin/products/${result.data.id}/edit`;
+        }
+      } else {
+        toast.error(
+          result.error === 'VALIDATION_ERROR'
+            ? 'Verifique os campos. Valor alvo é obrigatório para produtos monetários.'
+            : result.error === 'UNAUTHORIZED'
+              ? 'Sessão expirada. Faça login novamente.'
+              : 'Erro ao salvar. Tente novamente.'
+        );
+      }
+    } finally {
+      setIsUploading(false);
     }
   };
 
@@ -284,8 +354,16 @@ export function ProductForm({ categories, product }: ProductFormProps) {
             )}
           />
 
+          <ProductPhotoUpload
+            currentImageUrl={imageUrl ?? null}
+            onFileSelect={setSelectedFile}
+            selectedFile={selectedFile}
+          />
+
           <div className="flex gap-2">
-            <Button type="submit">{isEdit ? 'Salvar' : 'Criar'}</Button>
+            <Button type="submit" disabled={isUploading}>
+              {isUploading ? 'Enviando...' : isEdit ? 'Salvar' : 'Criar'}
+            </Button>
             <Button type="button" variant="outline" asChild>
               <Link href="/admin/products">Cancelar</Link>
             </Button>
