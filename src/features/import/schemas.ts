@@ -52,7 +52,10 @@ export const bulkCreateProductSchema = z.object({
         categoryId: z.string().uuid('ID da categoria é inválido'),
         photoUrl: z
           .string()
-          .url('URL de foto é inválida'),
+          .refine(
+            (url) => url === '' || url.startsWith('https://'),
+            'URL de foto é inválida'
+          ),
         isPublished: z.boolean().optional().default(true),
       })
       .refine(

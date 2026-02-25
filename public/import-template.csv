@@ -1,0 +1,4 @@
+nome,categoria,valor,tipo
+Impressora,Tecnologia,500.00,monetario
+Cadeiras,Móveis,150.00,monetario
+Livros,Educação,75.50,fisico

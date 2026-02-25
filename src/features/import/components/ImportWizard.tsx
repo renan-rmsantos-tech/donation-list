@@ -9,6 +9,9 @@ import {
 } from '../lib/wizard-reducer';
 import { StepUploadCsv } from './StepUploadCsv';
 import { StepReviewItems } from './StepReviewItems';
+import { StepReviewPhotos } from './StepReviewPhotos';
+import { StepConfirmCreate } from './StepConfirmCreate';
+import { ImportSummary } from './ImportSummary';
 import { Card } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 
@@ -24,6 +27,7 @@ const STEPS = [
   { id: 'review-items', label: 'Revisar Itens', number: 2 },
   { id: 'review-photos', label: 'Revisar Fotos', number: 3 },
   { id: 'confirm', label: 'Confirmar', number: 4 },
+  { id: 'summary', label: 'Resumo', number: 5 },
 ] as const;
 
 export function ImportWizard({ categories }: ImportWizardProps) {
@@ -50,7 +54,7 @@ export function ImportWizard({ categories }: ImportWizardProps) {
       </div>
 
       {/* Step Indicators */}
-      <div className="grid grid-cols-4 gap-2">
+      <div className="grid grid-cols-5 gap-2">
         {STEPS.map((step) => {
           const isActive = state.step === step.id;
           const isCompleted =
@@ -104,21 +108,32 @@ export function ImportWizard({ categories }: ImportWizardProps) {
         )}
 
         {state.step === 'review-photos' && (
-          <div className="text-center py-12 text-gray-500">
-            <p className="text-lg">Step 3 - Revisar Fotos (em desenvolvimento)</p>
-          </div>
+          <StepReviewPhotos
+            items={state.items}
+            onSetPhotoOptions={(action) => dispatch(action)}
+            onSelectPhoto={(action) => dispatch(action)}
+            onNavigate={handleNavigate}
+          />
         )}
 
         {state.step === 'confirm' && (
-          <div className="text-center py-12 text-gray-500">
-            <p className="text-lg">Step 4 - Confirmar e Criar (em desenvolvimento)</p>
-          </div>
+          <StepConfirmCreate
+            items={state.items}
+            results={state.results}
+            isProcessing={state.isProcessing}
+            processingIndex={state.processingIndex}
+            onSetProcessing={(action) => dispatch(action)}
+            onAddResult={(action) => dispatch(action)}
+            onNavigate={handleNavigate}
+          />
         )}
 
         {state.step === 'summary' && (
-          <div className="text-center py-12 text-gray-500">
-            <p className="text-lg">Resumo da Importação (em desenvolvimento)</p>
-          </div>
+          <ImportSummary
+            results={state.results}
+            onReset={(action) => dispatch(action)}
+            onNavigate={handleNavigate}
+          />
         )}
       </Card>
     </div>

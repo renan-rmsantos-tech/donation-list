@@ -59,6 +59,12 @@ export default async function ProtectedAdminLayout({
                 </Link>
               </Button>
               <Separator orientation="vertical" className="h-5 bg-primary-foreground/30" />
+              <Button variant="ghost" size="sm" asChild>
+                <Link href="/admin/import" className="text-primary-foreground hover:bg-primary-foreground/10">
+                  Importar
+                </Link>
+              </Button>
+              <Separator orientation="vertical" className="h-5 bg-primary-foreground/30" />
               <form action={adminLogout} className="inline">
                 <Button
                   type="submit"

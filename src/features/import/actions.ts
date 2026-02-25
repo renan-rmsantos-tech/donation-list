@@ -248,24 +248,27 @@ export async function bulkCreateProducts(
       try {
         console.log(`bulkCreateProducts: item ${i + 1}/${validated.items.length} - processing ${item.name}`);
 
-        const photoResult = await downloadAndUploadPhoto({
-          photoUrl: item.photoUrl,
-          productName: item.name,
-        });
-
         let imagePath: string | undefined;
-        if (photoResult.success && photoResult.data) {
-          imagePath = photoResult.data.imagePath;
-        } else {
-          const errorMsg = 'Erro ao enviar foto';
-          results.push({
-            rowIndex,
-            name: item.name,
-            success: false,
-            error: errorMsg,
+
+        if (item.photoUrl) {
+          const photoResult = await downloadAndUploadPhoto({
+            photoUrl: item.photoUrl,
+            productName: item.name,
           });
-          console.log(`bulkCreateProducts: item ${i + 1}/${validated.items.length} - failed: ${errorMsg}`);
-          continue;
+
+          if (photoResult.success && photoResult.data) {
+            imagePath = photoResult.data.imagePath;
+          } else {
+            const errorMsg = 'Erro ao enviar foto';
+            results.push({
+              rowIndex,
+              name: item.name,
+              success: false,
+              error: errorMsg,
+            });
+            console.log(`bulkCreateProducts: item ${i + 1}/${validated.items.length} - failed: ${errorMsg}`);
+            continue;
+          }
         }
 
         const productResult = await createProduct({
