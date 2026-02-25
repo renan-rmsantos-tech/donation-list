@@ -267,6 +267,64 @@ describe('ProductDetailPage', () => {
     });
   });
 
+
+  describe('Product Photo Display', () => {
+    it('should display product photo when imagePath provided', async () => {
+      const productWithImage = {
+        ...mockMonetaryProduct,
+        imagePath: 'product-photos/2024-02-18-abc123.jpg',
+      };
+      vi.mocked(getPublishedProductById).mockResolvedValue(productWithImage);
+      const Page = await ProductDetailPage({
+        params: Promise.resolve({ id: '1' }),
+      });
+      render(Page);
+      const img = screen.getByRole('img', { name: 'Test Monetary Product' });
+      expect(img).toBeInTheDocument();
+      expect(img).toHaveAttribute('src', expect.stringContaining('product-photos'));
+    });
+
+    it('should display placeholder when no imagePath provided', async () => {
+      vi.mocked(getPublishedProductById).mockResolvedValue(mockMonetaryProduct);
+      const Page = await ProductDetailPage({
+        params: Promise.resolve({ id: '1' }),
+      });
+      render(Page);
+      expect(screen.getByText('Test Monetary Product')).toBeInTheDocument();
+    });
+
+    it('should use correct sizing for product photo display', async () => {
+      const productWithImage = {
+        ...mockMonetaryProduct,
+        imagePath: 'product-photos/2024-02-18-abc123.jpg',
+      };
+      vi.mocked(getPublishedProductById).mockResolvedValue(productWithImage);
+      const Page = await ProductDetailPage({
+        params: Promise.resolve({ id: '1' }),
+      });
+      render(Page);
+      const img = screen.getByRole('img', { name: 'Test Monetary Product' });
+      expect(img).toHaveAttribute('width', '600');
+      expect(img).toHaveAttribute('height', '600');
+      expect(img).toHaveClass('object-cover');
+    });
+
+    it('should pass correct sizes prop for responsive image loading', async () => {
+      const productWithImage = {
+        ...mockMonetaryProduct,
+        imagePath: 'product-photos/2024-02-18-abc123.jpg',
+      };
+      vi.mocked(getPublishedProductById).mockResolvedValue(productWithImage);
+      const Page = await ProductDetailPage({
+        params: Promise.resolve({ id: '1' }),
+      });
+      render(Page);
+      const img = screen.getByRole('img', { name: 'Test Monetary Product' });
+      expect(img).toHaveAttribute('sizes', expect.stringContaining('600px'));
+      expect(img).toHaveAttribute('sizes', expect.stringContaining('100vw'));
+    });
+  });
+
   describe('Categories display', () => {
     it('should display product categories', async () => {
       vi.mocked(getPublishedProductById).mockResolvedValue(mockMonetaryProduct);

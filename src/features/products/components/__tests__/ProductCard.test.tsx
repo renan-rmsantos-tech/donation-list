@@ -105,6 +105,51 @@ describe('ProductCard', () => {
     });
   });
 
+  describe('Product Photo Display', () => {
+    it('should render next/image when product has imagePath', () => {
+      const productWithImage = {
+        ...mockMonetaryProduct,
+        imagePath: 'product-photos/2024-02-18-abc123.jpg',
+      };
+      render(<ProductCard product={productWithImage} />);
+      const img = screen.getByRole('img', { name: 'Monetary Product' });
+      expect(img).toBeInTheDocument();
+      expect(img).toHaveAttribute('src', expect.stringContaining('product-photos'));
+    });
+
+    it('should render PlaceholderImage when product has no imagePath', () => {
+      render(<ProductCard product={mockMonetaryProduct} />);
+      const container = screen.getByText('Monetary Product')
+        .closest('.block')
+        ?.querySelector('[class*="aspect-square"]');
+      expect(container).toBeInTheDocument();
+      // Check for SVG (camera icon) in the placeholder
+      const svg = container?.querySelector('svg');
+      expect(svg).toBeInTheDocument();
+    });
+
+    it('should use correct object-fit styling for images', () => {
+      const productWithImage = {
+        ...mockMonetaryProduct,
+        imagePath: 'product-photos/2024-02-18-abc123.jpg',
+      };
+      render(<ProductCard product={productWithImage} />);
+      const img = screen.getByRole('img', { name: 'Monetary Product' });
+      expect(img).toHaveClass('object-cover');
+    });
+
+    it('should pass correct sizes prop for responsive loading', () => {
+      const productWithImage = {
+        ...mockMonetaryProduct,
+        imagePath: 'product-photos/2024-02-18-abc123.jpg',
+      };
+      render(<ProductCard product={productWithImage} />);
+      const img = screen.getByRole('img', { name: 'Monetary Product' });
+      expect(img).toHaveAttribute('sizes', expect.stringContaining('100vw'));
+      expect(img).toHaveAttribute('sizes', expect.stringContaining('33vw'));
+    });
+  });
+
   describe('Navigation', () => {
     it('should link to product detail page', () => {
       render(<ProductCard product={mockMonetaryProduct} />);
