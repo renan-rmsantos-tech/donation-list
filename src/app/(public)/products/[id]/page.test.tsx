@@ -127,7 +127,7 @@ describe('ProductDetailPage', () => {
         params: Promise.resolve({ id: '1' }),
       });
       render(Page);
-      expect(screen.getByText('Monetária')).toBeInTheDocument();
+      expect(screen.getByText('Dinheiro')).toBeInTheDocument();
     });
 
     it('should render Physical Donation badge for physical products', async () => {
@@ -136,7 +136,7 @@ describe('ProductDetailPage', () => {
         params: Promise.resolve({ id: '2' }),
       });
       render(Page);
-      expect(screen.getByText('Física')).toBeInTheDocument();
+      expect(screen.getByText('Material')).toBeInTheDocument();
     });
   });
 
@@ -211,7 +211,7 @@ describe('ProductDetailPage', () => {
         params: Promise.resolve({ id: '1' }),
       });
       render(Page);
-      expect(screen.getByText('Faça uma Doação Monetária')).toBeInTheDocument();
+      expect(screen.getByText('Faça uma Doação em Dinheiro')).toBeInTheDocument();
       expect(screen.getByText('Enviar Doação')).toBeInTheDocument();
     });
 

@@ -59,7 +59,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
                 <div className="flex items-center gap-3 mb-2">
                   <h1 className="text-3xl font-bold">{product.name}</h1>
                   <Badge variant="secondary" className="shrink-0">
-                    {product.donationType === 'monetary' ? 'Monetária' : 'Física'}
+                    {product.donationType === 'monetary' ? 'Dinheiro' : 'Material'}
                   </Badge>
                 </div>
                 {categoryNames && (

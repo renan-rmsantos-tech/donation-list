@@ -83,8 +83,8 @@ describe('ProductGrid', () => {
       render(
         <ProductGrid products={[mockMonetaryProduct, mockPhysicalProduct]} />
       );
-      expect(screen.getAllByText('Monetária').length).toBeGreaterThan(0);
-      expect(screen.getAllByText('Física').length).toBeGreaterThan(0);
+      expect(screen.getAllByText('Dinheiro').length).toBeGreaterThan(0);
+      expect(screen.getAllByText('Material').length).toBeGreaterThan(0);
     });
 
     it('should render links to product detail pages', () => {

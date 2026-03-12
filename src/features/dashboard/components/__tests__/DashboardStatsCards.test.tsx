@@ -13,9 +13,9 @@ describe('DashboardStatsCards', () => {
         }}
       />
     );
-    expect(screen.getByText('Total de Doações Monetárias Arrecadadas')).toBeInTheDocument();
-    expect(screen.getByText('Doações Físicas Atendidas')).toBeInTheDocument();
-    expect(screen.getByText('Doações Físicas Pendentes')).toBeInTheDocument();
+    expect(screen.getByText('Total de Doações em Dinheiro Arrecadadas')).toBeInTheDocument();
+    expect(screen.getByText('Doações de Material Atendidas')).toBeInTheDocument();
+    expect(screen.getByText('Doações de Material Pendentes')).toBeInTheDocument();
   });
 
   it('should format monetary amount in pt-BR locale', () => {

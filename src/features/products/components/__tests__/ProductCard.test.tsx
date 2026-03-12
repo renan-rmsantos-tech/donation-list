@@ -96,12 +96,12 @@ describe('ProductCard', () => {
   describe('Donation type', () => {
     it('should display Monetary type for monetary products', () => {
       render(<ProductCard product={mockMonetaryProduct} />);
-      expect(screen.getByText('Monetária')).toBeInTheDocument();
+      expect(screen.getByText('Dinheiro')).toBeInTheDocument();
     });
 
     it('should display Physical type for physical products', () => {
       render(<ProductCard product={mockPhysicalProduct} />);
-      expect(screen.getByText('Física')).toBeInTheDocument();
+      expect(screen.getByText('Material')).toBeInTheDocument();
     });
   });
 

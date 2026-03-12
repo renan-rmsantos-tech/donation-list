@@ -32,7 +32,7 @@ describe('DashboardPage', () => {
       });
       const Page = await DashboardPage();
       render(Page);
-      expect(screen.getByText('Total de Doações Monetárias Arrecadadas')).toBeInTheDocument();
+      expect(screen.getByText('Total de Doações em Dinheiro Arrecadadas')).toBeInTheDocument();
       expect(screen.getByText(/R\$\s*500,00/)).toBeInTheDocument();
     });
 
@@ -44,7 +44,7 @@ describe('DashboardPage', () => {
       });
       const Page = await DashboardPage();
       render(Page);
-      expect(screen.getByText('Doações Físicas Atendidas')).toBeInTheDocument();
+      expect(screen.getByText('Doações de Material Atendidas')).toBeInTheDocument();
       expect(screen.getByText('3')).toBeInTheDocument();
     });
 
@@ -56,7 +56,7 @@ describe('DashboardPage', () => {
       });
       const Page = await DashboardPage();
       render(Page);
-      expect(screen.getByText('Doações Físicas Pendentes')).toBeInTheDocument();
+      expect(screen.getByText('Doações de Material Pendentes')).toBeInTheDocument();
       expect(screen.getByText('5')).toBeInTheDocument();
     });
   });
@@ -97,9 +97,9 @@ describe('DashboardPage', () => {
       });
       const Page = await DashboardPage();
       render(Page);
-      expect(screen.getByText('Total de Doações Monetárias Arrecadadas')).toBeInTheDocument();
-      expect(screen.getByText('Doações Físicas Atendidas')).toBeInTheDocument();
-      expect(screen.getByText('Doações Físicas Pendentes')).toBeInTheDocument();
+      expect(screen.getByText('Total de Doações em Dinheiro Arrecadadas')).toBeInTheDocument();
+      expect(screen.getByText('Doações de Material Atendidas')).toBeInTheDocument();
+      expect(screen.getByText('Doações de Material Pendentes')).toBeInTheDocument();
       expect(screen.getByText(/R\$\s*250,00/)).toBeInTheDocument();
       expect(screen.getByText('2')).toBeInTheDocument();
       expect(screen.getByText('3')).toBeInTheDocument();

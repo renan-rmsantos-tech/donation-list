@@ -20,7 +20,7 @@ export function DashboardStatsCards({ stats }: DashboardStatsCardsProps) {
         <Card>
           <CardHeader>
             <h2 className="text-sm font-medium text-muted-foreground">
-              Total de Doações Monetárias Arrecadadas
+              Total de Doações em Dinheiro Arrecadadas
             </h2>
           </CardHeader>
           <CardContent>
@@ -33,7 +33,7 @@ export function DashboardStatsCards({ stats }: DashboardStatsCardsProps) {
         <Card>
           <CardHeader>
             <h2 className="text-sm font-medium text-muted-foreground">
-              Doações Físicas Atendidas
+              Doações de Material Atendidas
             </h2>
           </CardHeader>
           <CardContent>
@@ -44,7 +44,7 @@ export function DashboardStatsCards({ stats }: DashboardStatsCardsProps) {
         <Card>
           <CardHeader>
             <h2 className="text-sm font-medium text-muted-foreground">
-              Doações Físicas Pendentes
+              Doações de Material Pendentes
             </h2>
           </CardHeader>
           <CardContent>

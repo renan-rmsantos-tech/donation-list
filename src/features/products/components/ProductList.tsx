@@ -79,8 +79,8 @@ export function ProductList({ products }: { products: Product[] }) {
                   <TableCell className="px-4">{product.name}</TableCell>
                   <TableCell className="px-4">
                     {product.donationType === 'monetary'
-                      ? 'Monetária'
-                      : 'Física'}
+                      ? 'Dinheiro'
+                      : 'Material'}
                   </TableCell>
                   <TableCell className="px-4">
                     {product.donationType === 'monetary'

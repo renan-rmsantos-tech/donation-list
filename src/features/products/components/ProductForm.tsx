@@ -259,8 +259,8 @@ export function ProductForm({ categories, product, imageUrl }: ProductFormProps)
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="monetary">Monetária</SelectItem>
-                    <SelectItem value="physical">Física</SelectItem>
+                    <SelectItem value="monetary">Dinheiro</SelectItem>
+                    <SelectItem value="physical">Material</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />

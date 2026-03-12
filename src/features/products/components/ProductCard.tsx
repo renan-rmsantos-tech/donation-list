@@ -46,7 +46,7 @@ export function ProductCard({ product }: ProductCardProps) {
           <div className="flex items-start justify-between gap-2">
             <h3 className="text-lg font-semibold line-clamp-2">{product.name}</h3>
             <Badge variant="secondary">
-              {product.donationType === 'monetary' ? 'Monetária' : 'Física'}
+              {product.donationType === 'monetary' ? 'Dinheiro' : 'Material'}
             </Badge>
           </div>
           <p className="text-sm text-muted-foreground line-clamp-3">

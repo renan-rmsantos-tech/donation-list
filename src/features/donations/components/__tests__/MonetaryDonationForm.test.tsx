@@ -22,7 +22,7 @@ describe('MonetaryDonationForm', () => {
         copiaEColaCode="00020126..."
       />
     );
-    expect(screen.getByText('Faça uma Doação Monetária')).toBeInTheDocument();
+    expect(screen.getByText('Faça uma Doação em Dinheiro')).toBeInTheDocument();
     expect(screen.getByText('Dados de Pagamento PIX')).toBeInTheDocument();
     expect(screen.getByText('Enviar Doação')).toBeInTheDocument();
   });

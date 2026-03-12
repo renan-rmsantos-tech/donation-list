@@ -122,7 +122,7 @@ export function MonetaryDonationForm({
   return (
     <Card className="border-primary/30 bg-primary/5">
       <CardHeader>
-        <h2 className="text-xl font-semibold">Faça uma Doação Monetária</h2>
+        <h2 className="text-xl font-semibold">Faça uma Doação em Dinheiro</h2>
         <p className="text-sm text-muted-foreground">
           Escolha o valor que deseja contribuir e complete a transferência via
           PIX. Envie o comprovante de pagamento para confirmar sua doação.
