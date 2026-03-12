@@ -21,24 +21,24 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
   ]);
 
   return (
-    <main className="container mx-auto px-4 py-8">
+    <main className="container max-w-5xl mx-auto px-4 py-8">
       <div className="mb-8 flex flex-col items-start gap-4 sm:flex-row sm:items-start sm:justify-between">
-        <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-start">
-        <Image
-          src="/logo.png"
-          alt="Colégio São José"
-          width={120}
-          height={120}
-          className="shrink-0"
-          priority
-        />
-        <div>
-          <h1 className="text-4xl font-bold mb-2">Doações para o Colégio São José</h1>
-        <p className="text-muted-foreground">
-          Fazer uma descrição aqui.
-        </p>
-        </div>
-        <ThemeToggle className="sm:ml-auto" />
+        <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-start w-full">
+          <Image
+            src="/logo.png"
+            alt="Colégio São José"
+            width={120}
+            height={120}
+            className="shrink-0"
+            priority
+          />
+          <div>
+            <h1 className="text-4xl font-bold mb-2">Doações para o Colégio São José</h1>
+            <p className="text-muted-foreground">
+              Fazer uma descrição aqui.
+            </p>
+          </div>
+          <ThemeToggle className="sm:ml-auto mt-4 sm:mt-0" />
         </div>
       </div>
 

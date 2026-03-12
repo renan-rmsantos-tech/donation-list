@@ -45,7 +45,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
     .join(', ');
 
   return (
-    <main className="container mx-auto px-4 py-8">
+    <main className="container max-w-5xl mx-auto px-4 py-8">
       <div className="mb-8 flex items-center justify-between">
         <BackButton href="/">Voltar ao catálogo</BackButton>
         <ThemeToggle />
