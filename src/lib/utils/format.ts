@@ -1,4 +1,45 @@
 /**
+ * Parse Brazilian Real string to number
+ * @param value String like "1.500,50" or "500,50" or "500"
+ * @returns Parsed number (e.g. 1500.5, 500.5, 500)
+ */
+export const parseBRLToNumber = (value: string): number => {
+  if (!value || typeof value !== 'string') return 0;
+  const trimmed = value.trim().replace(/\s/g, '');
+  if (!trimmed) return 0;
+  const cleaned = trimmed.replace(/[R$\s]/g, '');
+  const hasComma = cleaned.includes(',');
+  if (hasComma) {
+    // Brazilian: 1.234,56 -> 1234.56
+    const [intPart, decPart] = cleaned.split(',');
+    const intNum = (intPart?.replace(/\D/g, '') ?? '') || '0';
+    const decNum = (decPart?.replace(/\D/g, '') ?? '').slice(0, 2) || '0';
+    return parseFloat(`${intNum}.${decNum}`) || 0;
+  }
+  if (cleaned.includes('.')) {
+    const [intPart, decPart] = cleaned.split('.');
+    // 500.50 -> decimal; 1.500 -> thousands
+    if (decPart && decPart.length <= 2) {
+      return parseFloat(cleaned) || 0;
+    }
+    return parseFloat(cleaned.replace(/\./g, '')) || 0;
+  }
+  return parseFloat(cleaned.replace(',', '.')) || 0;
+};
+
+/**
+ * Format number to Brazilian Real display (without R$)
+ * @param value Number in reais
+ * @returns Formatted string (e.g. "1.500,50")
+ */
+export const formatToBRLDisplay = (value: number): string => {
+  return value.toLocaleString('pt-BR', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+};
+
+/**
  * Format an amount in cents to currency
  * @param cents Amount in cents (integer)
  * @param locale Optional locale (default: pt-BR). Use 'en-US' for US English formatting.

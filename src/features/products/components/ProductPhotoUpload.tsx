@@ -68,15 +68,9 @@ export function ProductPhotoUpload({
           A foto pode ser adicionada depois. Se não enviar, será exibida uma imagem padrão.
         </p>
         <div className="mt-2 p-4 bg-muted/30 rounded-lg">
-          <p className="text-sm text-muted-foreground mb-4">
-            Dicas para uma foto de qualidade:
+          <p className="text-sm text-muted-foreground">
+            Tamanho mínimo: 800x800 pixels. Máximo: 5MB.
           </p>
-          <ul className="text-sm text-muted-foreground space-y-1 mb-4">
-            <li>• Use boa iluminação</li>
-            <li>• Formato quadrado recomendado</li>
-            <li>• Tamanho mínimo recomendado: 800x800 pixels</li>
-            <li>• Máximo: 5MB</li>
-          </ul>
         </div>
       </div>
 

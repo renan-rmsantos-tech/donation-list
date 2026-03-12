@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { createProduct, updateProduct, generateProductPhotoUploadUrl } from '../actions';
-import { formatCurrency } from '@/lib/utils/format';
+import { formatCurrency, formatToBRLDisplay, parseBRLToNumber } from '@/lib/utils/format';
 import { Button } from '@/components/ui/button';
 import { BackButton } from '@/components/back-button';
 import { Input } from '@/components/ui/input';
@@ -48,8 +48,7 @@ const productFormSchema = z
     (data) =>
       data.donationType !== 'monetary' ||
       (data.targetAmountDisplay &&
-        !Number.isNaN(parseFloat(data.targetAmountDisplay)) &&
-        parseFloat(data.targetAmountDisplay) > 0),
+        parseBRLToNumber(data.targetAmountDisplay) > 0),
     {
       message: 'Valor alvo é obrigatório para produtos monetários',
       path: ['targetAmountDisplay'],
@@ -93,7 +92,7 @@ export function ProductForm({ categories, product, imageUrl }: ProductFormProps)
       donationType: product?.donationType ?? 'monetary',
       targetAmountDisplay:
         product?.donationType === 'monetary' && product?.targetAmount
-          ? String(product.targetAmount / 100)
+          ? formatToBRLDisplay(product.targetAmount / 100)
           : '',
       isPublished: product?.isPublished ?? true,
       categoryIds: product?.productCategories?.map((pc) => pc.categoryId) ?? [],
@@ -108,7 +107,7 @@ export function ProductForm({ categories, product, imageUrl }: ProductFormProps)
     try {
       const targetAmountCents =
         values.donationType === 'monetary' && values.targetAmountDisplay
-          ? Math.round(parseFloat(values.targetAmountDisplay) * 100)
+          ? Math.round(parseBRLToNumber(values.targetAmountDisplay) * 100)
           : undefined;
 
       let imagePath: string | undefined;
@@ -274,15 +273,26 @@ export function ProductForm({ categories, product, imageUrl }: ProductFormProps)
               name="targetAmountDisplay"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Valor alvo (R$)</FormLabel>
+                  <FormLabel>Valor alvo</FormLabel>
                   <FormControl>
-                    <Input
-                      type="number"
-                      step="0.01"
-                      min="0"
-                      placeholder="Ex: 500.00"
-                      {...field}
-                    />
+                    <div className="flex items-center rounded-md border border-input bg-background px-3 has-[:focus-within]:outline-none has-[:focus-within]:ring-2 has-[:focus-within]:ring-ring has-[:focus-within]:ring-offset-2">
+                      <span className="text-muted-foreground mr-2">R$</span>
+                      <Input
+                        type="text"
+                        inputMode="decimal"
+                        placeholder="0,00"
+                        className="border-0 p-0 shadow-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                        value={field.value ?? ''}
+                        onChange={(e) => field.onChange(e.target.value)}
+                        onBlur={(e) => {
+                          const num = parseBRLToNumber(e.target.value);
+                          if (num > 0) {
+                            field.onChange(formatToBRLDisplay(num));
+                          }
+                          field.onBlur();
+                        }}
+                      />
+                    </div>
                   </FormControl>
                   {product?.donationType === 'monetary' &&
                     product?.targetAmount && (
