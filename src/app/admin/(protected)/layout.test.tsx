@@ -67,9 +67,10 @@ describe('ProtectedAdminLayout', () => {
     it('should include dashboard link in nav', async () => {
       const Layout = await ProtectedAdminLayout({ children: <div>Child</div> });
       const { container } = render(Layout);
-      const dashboardLink = container.querySelector('a[href="/admin/dashboard"]');
-      expect(dashboardLink).toBeInTheDocument();
-      expect(dashboardLink?.textContent).toContain('Painel');
+      const dashboardLinks = container.querySelectorAll('a[href="/admin/dashboard"]');
+      expect(dashboardLinks.length).toBeGreaterThan(0);
+      const painelLink = Array.from(dashboardLinks).find((el) => el.textContent?.includes('Painel'));
+      expect(painelLink).toBeInTheDocument();
     });
   });
 });

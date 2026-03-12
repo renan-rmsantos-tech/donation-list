@@ -119,12 +119,9 @@ describe('ProductCard', () => {
 
     it('should render PlaceholderImage when product has no imagePath', () => {
       render(<ProductCard product={mockMonetaryProduct} />);
-      const container = screen.getByText('Monetary Product')
-        .closest('.block')
-        ?.querySelector('[class*="aspect-square"]');
-      expect(container).toBeInTheDocument();
-      // Check for SVG (camera icon) in the placeholder
-      const svg = container?.querySelector('svg');
+      expect(screen.queryByRole('img', { name: 'Monetary Product' })).not.toBeInTheDocument();
+      const link = screen.getByRole('link', { name: /Monetary Product/ });
+      const svg = link.querySelector('svg');
       expect(svg).toBeInTheDocument();
     });
 
