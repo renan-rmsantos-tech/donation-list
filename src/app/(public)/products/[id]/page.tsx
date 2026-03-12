@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { getPublishedProductById } from '@/features/products/queries';
 import { getPixSettings } from '@/features/pix/queries';
 import { getPublicUrl } from '@/lib/storage/supabase';
+import { PRODUCT_PLACEHOLDER_IMAGE } from '@/lib/constants';
 import { ProgressBar } from '@/features/products/components/ProgressBar';
 import { FulfilledBadge } from '@/features/products/components/FulfilledBadge';
 import { MonetaryDonationForm } from '@/features/donations/components/MonetaryDonationForm';
@@ -11,7 +12,6 @@ import { PhysicalPledgeForm } from '@/features/donations/components/PhysicalPled
 import { formatCurrency } from '@/lib/utils/format';
 import { BackButton } from '@/components/back-button';
 import { ThemeToggle } from '@/components/theme-toggle';
-import { PlaceholderImage } from '@/components/ui/placeholder-image';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -38,7 +38,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
 
   const productImageUrl = product.imagePath
     ? getPublicUrl('product-photos', product.imagePath)
-    : null;
+    : PRODUCT_PLACEHOLDER_IMAGE;
 
   const categoryNames = product.productCategories
     .map((pc) => pc.categories.name)
@@ -74,18 +74,14 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
           <CardContent className="space-y-8">
             {/* Product Photo */}
             <div className="w-full max-w-lg mx-auto aspect-square rounded-lg overflow-hidden border">
-              {productImageUrl ? (
-                <Image
-                  src={productImageUrl}
-                  alt={product.name}
-                  width={600}
-                  height={600}
-                  className="w-full h-full object-cover"
-                  sizes="(max-width: 768px) 100vw, 600px"
-                />
-              ) : (
-                <PlaceholderImage className="w-full h-full" />
-              )}
+              <Image
+                src={productImageUrl}
+                alt={product.imagePath ? product.name : 'Produto sem foto'}
+                width={600}
+                height={600}
+                className="w-full h-full object-cover"
+                sizes="(max-width: 768px) 100vw, 600px"
+              />
             </div>
 
             {/* Description */}

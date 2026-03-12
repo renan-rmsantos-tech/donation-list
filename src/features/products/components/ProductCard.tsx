@@ -5,8 +5,8 @@ import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge';
 import { ProgressBar } from './ProgressBar';
 import { FulfilledBadge } from './FulfilledBadge';
-import { PlaceholderImage } from '@/components/ui/placeholder-image';
 import { getPublicUrl } from '@/lib/storage/supabase';
+import { PRODUCT_PLACEHOLDER_IMAGE } from '@/lib/constants';
 
 type Product = typeof products.$inferSelect;
 
@@ -25,25 +25,21 @@ export function ProductCard({ product }: ProductCardProps) {
 
   const imageUrl = product.imagePath
     ? getPublicUrl('product-photos', product.imagePath)
-    : null;
+    : PRODUCT_PLACEHOLDER_IMAGE;
 
   return (
     <Link href={`/products/${product.id}`} className="block h-full">
       <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer flex flex-col">
         {/* Product Photo/Placeholder */}
         <div className="w-full aspect-square bg-muted/50 rounded-t-lg overflow-hidden flex items-center justify-center">
-          {imageUrl ? (
-            <Image
-              src={imageUrl}
-              alt={product.name}
-              width={300}
-              height={300}
-              className="w-full h-full object-cover"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 300px"
-            />
-          ) : (
-            <PlaceholderImage className="w-full h-full" />
-          )}
+          <Image
+            src={imageUrl}
+            alt={product.imagePath ? product.name : 'Produto sem foto'}
+            width={300}
+            height={300}
+            className="w-full h-full object-cover"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 300px"
+          />
         </div>
 
         <CardHeader className="flex-1">

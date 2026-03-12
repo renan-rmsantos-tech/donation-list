@@ -5,7 +5,8 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
-import { PlaceholderImage } from '@/components/ui/placeholder-image';
+import Image from 'next/image';
+import { PRODUCT_PLACEHOLDER_IMAGE } from '@/lib/constants';
 
 interface ProductPhotoUploadProps {
   currentImageUrl: string | null;
@@ -62,7 +63,10 @@ export function ProductPhotoUpload({
   return (
     <div className="space-y-4">
       <div>
-        <Label htmlFor="productPhoto">Foto do Produto</Label>
+        <Label htmlFor="productPhoto">Foto do Produto (opcional)</Label>
+        <p className="mt-1 text-sm text-muted-foreground">
+          A foto pode ser adicionada depois. Se não enviar, será exibida uma imagem padrão.
+        </p>
         <div className="mt-2 p-4 bg-muted/30 rounded-lg">
           <p className="text-sm text-muted-foreground mb-4">
             Dicas para uma foto de qualidade:
@@ -110,8 +114,14 @@ export function ProductPhotoUpload({
       )}
 
       {!previewUrl && (
-        <div className="w-48 h-48 rounded-lg border border-dashed border-muted-foreground/50">
-          <PlaceholderImage className="w-full h-full" />
+        <div className="w-48 h-48 rounded-lg border border-dashed border-muted-foreground/50 overflow-hidden">
+          <Image
+            src={PRODUCT_PLACEHOLDER_IMAGE}
+            alt="Imagem padrão"
+            width={192}
+            height={192}
+            className="w-full h-full object-cover"
+          />
         </div>
       )}
     </div>
