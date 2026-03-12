@@ -203,9 +203,7 @@ Ao usar **Supabase hospedado** com `DATABASE_URL` apontando para o pooler em mod
 - **Buckets**: Crie manualmente no Supabase Dashboard → Storage:
   - `receipts` (privado)
   - `pix-qr` (público)
-- **RLS "new row violates row-level security policy"**: Rode o SQL em `supabase/storage-rls-fix.sql` no SQL Editor do Supabase
-- **Roles e permissões do banco**: Execute `supabase/roles-and-permissions.sql` no SQL Editor para configurar RLS nas tabelas (catalog público, doações, etc.)
-- **Local**: Rode `npx supabase db reset` para aplicar o `supabase/seed.sql` que cria os buckets
+- **RLS ou permissões**: Execute `supabase/seed.sql` no SQL Editor do Supabase (ou rode `npx supabase db reset` localmente). O script unificado cria buckets, políticas de storage, RLS das tabelas e seed de dados.
 - **Variáveis**: Confirme `NEXT_PUBLIC_SUPABASE_URL` e `SUPABASE_SERVICE_ROLE_KEY` no `.env.local` ou Vercel
 - **Projeto pausado**: Projetos Supabase no free tier pausam após inatividade — restaure no dashboard
 
