@@ -21,6 +21,7 @@ import {
 } from '@/lib/storage/supabase';
 import { generateStoragePath } from '@/lib/utils/format';
 import { validateSession, getSession } from '@/lib/auth/session';
+import { sendDonationConfirmation } from './notifications';
 
 interface ActionResult<T> {
   success: boolean;
@@ -34,7 +35,9 @@ interface ActionResult<T> {
  */
 export async function createMonetaryDonation(
   input: unknown
-): Promise<ActionResult<{ donationId: string }>> {
+): Promise<
+  ActionResult<{ donationId: string; notificationSent: boolean }>
+> {
   try {
     const validated = createMonetaryDonationSchema.parse(input);
 
@@ -72,7 +75,7 @@ export async function createMonetaryDonation(
         donorEmail: validated.donorEmail,
         receiptPath: validated.receiptPath,
       })
-      .returning({ id: donations.id });
+      .returning({ id: donations.id, createdAt: donations.createdAt });
 
     // Update product current amount
     await db
@@ -87,9 +90,34 @@ export async function createMonetaryDonation(
     revalidatePath('/admin');
     revalidatePath('/admin/dashboard');
 
+    const notificationResult = await sendDonationConfirmation({
+      donorName: validated.donorName?.trim() || 'Doador(a)',
+      donorEmail: validated.donorEmail,
+      productName: product.name,
+      donationType: 'monetary',
+      donationDate: donationResult[0].createdAt.toISOString(),
+      amount: validated.amount,
+    });
+
+    if (!notificationResult.success) {
+      return {
+        success: true,
+        data: {
+          donationId: donationResult[0].id,
+          notificationSent: false,
+        },
+        details: {
+          notification: notificationResult,
+        },
+      };
+    }
+
     return {
       success: true,
-      data: { donationId: donationResult[0].id },
+      data: {
+        donationId: donationResult[0].id,
+        notificationSent: true,
+      },
     };
   } catch (error) {
     console.error('createMonetaryDonation error:', error);
@@ -114,7 +142,9 @@ export async function createMonetaryDonation(
  */
 export async function createPhysicalPledge(
   input: unknown
-): Promise<ActionResult<{ donationId: string }>> {
+): Promise<
+  ActionResult<{ donationId: string; notificationSent: boolean }>
+> {
   try {
     const validated = createPhysicalPledgeSchema.parse(input);
 
@@ -147,7 +177,7 @@ export async function createPhysicalPledge(
         donorPhone: validated.donorPhone,
         donorEmail: validated.donorEmail,
       })
-      .returning({ id: donations.id });
+      .returning({ id: donations.id, createdAt: donations.createdAt });
 
     // Update product fulfilled status
     await db
@@ -162,9 +192,33 @@ export async function createPhysicalPledge(
     revalidatePath('/admin');
     revalidatePath('/admin/dashboard');
 
+    const notificationResult = await sendDonationConfirmation({
+      donorName: validated.donorName,
+      donorEmail: validated.donorEmail,
+      productName: product.name,
+      donationType: 'physical',
+      donationDate: pledgeResult[0].createdAt.toISOString(),
+    });
+
+    if (!notificationResult.success) {
+      return {
+        success: true,
+        data: {
+          donationId: pledgeResult[0].id,
+          notificationSent: false,
+        },
+        details: {
+          notification: notificationResult,
+        },
+      };
+    }
+
     return {
       success: true,
-      data: { donationId: pledgeResult[0].id },
+      data: {
+        donationId: pledgeResult[0].id,
+        notificationSent: true,
+      },
     };
   } catch (error) {
     console.error('createPhysicalPledge error:', error);

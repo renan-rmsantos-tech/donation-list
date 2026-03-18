@@ -6,8 +6,13 @@ import {
 } from './actions';
 
 // Mock the database and external services
-const mockInsertReturning = vi.fn().mockResolvedValue([{ id: 'donation-uuid-123' }]);
+const mockInsertReturning = vi
+  .fn()
+  .mockResolvedValue([
+    { id: 'donation-uuid-123', createdAt: new Date('2026-03-18T00:00:00.000Z') },
+  ]);
 const mockUpdateWhere = vi.fn().mockResolvedValue(undefined);
+const mockSendDonationConfirmation = vi.fn().mockResolvedValue({ success: true });
 
 vi.mock('@/lib/db', () => ({
   db: {
@@ -37,12 +42,20 @@ vi.mock('next/cache', () => ({
   revalidatePath: vi.fn(),
 }));
 
+vi.mock('./notifications', () => ({
+  sendDonationConfirmation: (...args: unknown[]) =>
+    mockSendDonationConfirmation(...args),
+}));
+
 describe('Donation Actions', () => {
   beforeEach(async () => {
     const { db } = await import('@/lib/db');
     vi.mocked(db.query.products.findFirst).mockReset();
-    mockInsertReturning.mockResolvedValue([{ id: 'donation-uuid-123' }]);
+    mockInsertReturning.mockResolvedValue([
+      { id: 'donation-uuid-123', createdAt: new Date('2026-03-18T00:00:00.000Z') },
+    ]);
     mockUpdateWhere.mockResolvedValue(undefined);
+    mockSendDonationConfirmation.mockResolvedValue({ success: true });
   });
 
   describe('createMonetaryDonation', () => {
@@ -211,6 +224,55 @@ describe('Donation Actions', () => {
 
       expect(result.success).toBe(true);
       expect(result.data?.donationId).toBe('donation-uuid-123');
+      expect(result.data?.notificationSent).toBe(true);
+      expect(mockSendDonationConfirmation).toHaveBeenCalledWith(
+        expect.objectContaining({
+          donorEmail: 'test@example.com',
+          donationType: 'monetary',
+          productName: 'Test Product',
+          amount: 10000,
+        })
+      );
+    });
+
+    it('should keep successful donation and expose notification config failure', async () => {
+      const { db } = await import('@/lib/db');
+
+      vi.mocked(db.query.products.findFirst).mockResolvedValueOnce({
+        id: '123e4567-e89b-12d3-a456-426614174000',
+        name: 'Test Product',
+        description: 'Test',
+        donationType: 'monetary',
+        targetAmount: 50000,
+        currentAmount: 0,
+        isFulfilled: false,
+        isPublished: true,
+        imagePath: null,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+      mockSendDonationConfirmation.mockResolvedValueOnce({
+        success: false,
+        error: 'NOTIFICATION_CONFIG_ERROR',
+      });
+
+      const result = await createMonetaryDonation({
+        productId: '123e4567-e89b-12d3-a456-426614174000',
+        amount: 10000,
+        donorName: 'Test Donor',
+        donorEmail: 'test@example.com',
+        receiptPath: 'receipts/test.jpg',
+      });
+
+      expect(result.success).toBe(true);
+      expect(result.data?.donationId).toBe('donation-uuid-123');
+      expect(result.data?.notificationSent).toBe(false);
+      expect(result.details).toEqual({
+        notification: {
+          success: false,
+          error: 'NOTIFICATION_CONFIG_ERROR',
+        },
+      });
     });
   });
 
@@ -268,6 +330,15 @@ describe('Donation Actions', () => {
 
       expect(result.success).toBe(true);
       expect(result.data?.donationId).toBe('donation-uuid-123');
+      expect(result.data?.notificationSent).toBe(true);
+      expect(mockSendDonationConfirmation).toHaveBeenCalledWith(
+        expect.objectContaining({
+          donorName: 'Test Donor',
+          donorEmail: 'test@example.com',
+          donationType: 'physical',
+          productName: 'Test Product',
+        })
+      );
     });
 
     it('should reject if product already fulfilled', async () => {
@@ -351,6 +422,46 @@ describe('Donation Actions', () => {
 
       expect(result.success).toBe(true);
       expect(result.data?.donationId).toBeDefined();
+      expect(result.data?.notificationSent).toBe(true);
+    });
+
+    it('should keep successful physical pledge and expose notification delivery failure', async () => {
+      const { db } = await import('@/lib/db');
+
+      vi.mocked(db.query.products.findFirst).mockResolvedValueOnce({
+        id: '123e4567-e89b-12d3-a456-426614174000',
+        name: 'Test Product',
+        description: 'Test',
+        donationType: 'physical',
+        targetAmount: null,
+        currentAmount: 0,
+        isFulfilled: false,
+        isPublished: true,
+        imagePath: null,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+      mockSendDonationConfirmation.mockResolvedValueOnce({
+        success: false,
+        error: 'NOTIFICATION_DELIVERY_ERROR',
+      });
+
+      const result = await createPhysicalPledge({
+        productId: '123e4567-e89b-12d3-a456-426614174000',
+        donorName: 'Test Donor',
+        donorPhone: '+5585987654321',
+        donorEmail: 'test@example.com',
+      });
+
+      expect(result.success).toBe(true);
+      expect(result.data?.donationId).toBeDefined();
+      expect(result.data?.notificationSent).toBe(false);
+      expect(result.details).toEqual({
+        notification: {
+          success: false,
+          error: 'NOTIFICATION_DELIVERY_ERROR',
+        },
+      });
     });
   });
 
