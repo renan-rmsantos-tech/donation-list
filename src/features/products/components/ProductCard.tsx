@@ -2,8 +2,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import type { products } from '@/lib/db/schema';
 import { Card, CardFooter, CardHeader } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import { ProgressBar } from './ProgressBar';
-import { FulfilledBadge } from './FulfilledBadge';
 import { getPublicUrl } from '@/lib/storage/supabase';
 import { PRODUCT_PLACEHOLDER_IMAGE } from '@/lib/constants';
 
@@ -18,6 +18,11 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product }: ProductCardProps) {
+  const isGoalReached =
+    product.isFulfilled ||
+    (product.targetAmount != null &&
+      product.currentAmount >= product.targetAmount);
+
   const categoryNames = product.productCategories
     .map((pc) => pc.categories.name)
     .join(', ');
@@ -53,20 +58,27 @@ export function ProductCard({ product }: ProductCardProps) {
           )}
         </CardHeader>
         <CardFooter className="flex flex-col gap-4 pt-4 border-t">
-          <ProgressBar
-            currentAmount={product.currentAmount}
-            targetAmount={product.targetAmount || 0}
-          />
-          <div className="flex flex-col gap-1">
-            {product.isFulfilled && (
-              <FulfilledBadge isFulfilled={product.isFulfilled} />
-            )}
-            {!product.isFulfilled && (
+          {isGoalReached ? (
+            <div className="flex items-center justify-center w-full py-2">
+              <Badge
+                variant="outline"
+                className="border-green-500 text-green-700 bg-green-50 dark:bg-green-950/30 dark:text-green-400 inline-flex items-center gap-2"
+              >
+                <span className="w-2 h-2 rounded-full bg-green-600" />
+                Meta atingida
+              </Badge>
+            </div>
+          ) : (
+            <>
+              <ProgressBar
+                currentAmount={product.currentAmount}
+                targetAmount={product.targetAmount || 0}
+              />
               <p className="text-xs text-muted-foreground">
                 Aceita doação em dinheiro ou em espécie
               </p>
-            )}
-          </div>
+            </>
+          )}
         </CardFooter>
       </Card>
     </Link>
