@@ -123,7 +123,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
                   <AlertDescription>
                     {product.isFulfilled
                       ? 'Este item foi atendido'
-                      : 'Este item ainda é necessário'}
+                      : 'Este item ainda é necessário. Você pode contribuir em dinheiro ou doando o material.'}
                   </AlertDescription>
                 </Alert>
               </div>

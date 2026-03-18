@@ -89,6 +89,14 @@ describe('ProductCard', () => {
       render(<ProductCard product={unfulfilled} />);
       expect(screen.getByText('Necessário')).toBeInTheDocument();
     });
+
+    it('should display donation options hint for unfulfilled product', () => {
+      const unfulfilled = { ...mockPhysicalProduct, isFulfilled: false };
+      render(<ProductCard product={unfulfilled} />);
+      expect(
+        screen.getByText('Aceita doação em dinheiro ou em espécie')
+      ).toBeInTheDocument();
+    });
   });
 
   describe('Product Photo Display', () => {

@@ -175,7 +175,9 @@ describe('ProductDetailPage', () => {
       });
       render(Page);
       expect(screen.getByText('Necessário')).toBeInTheDocument();
-      expect(screen.getByText('Este item ainda é necessário')).toBeInTheDocument();
+      expect(
+        screen.getByText(/Este item ainda é necessário.*contribuir em dinheiro ou doando o material/)
+      ).toBeInTheDocument();
     });
   });
 
