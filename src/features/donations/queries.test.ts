@@ -80,49 +80,59 @@ describe('donations queries', () => {
   });
 
   describe('getProductsForTransfer', () => {
-    it('returns published products when 2+ products and at least one has balance >= R$ 1,00', async () => {
-      mockProductsFindMany.mockResolvedValueOnce([
-        { id: 'p-1', name: 'Produto A', currentAmount: 1000 },
-        { id: 'p-2', name: 'Produto B', currentAmount: 2500 },
-      ]);
+    it('returns sourceProducts with balance >= R$ 1,00 and targetProducts not fulfilled', async () => {
+      mockProductsFindMany
+        .mockResolvedValueOnce([
+          { id: 'p-1', name: 'Produto A', currentAmount: 1000 },
+          { id: 'p-2', name: 'Produto B', currentAmount: 2500 },
+        ])
+        .mockResolvedValueOnce([
+          { id: 'p-1', name: 'Produto A', currentAmount: 1000 },
+          { id: 'p-2', name: 'Produto B', currentAmount: 2500 },
+          { id: 'p-3', name: 'Produto C', currentAmount: 500 },
+        ]);
 
       const result = await getProductsForTransfer();
 
-      expect(result).toHaveLength(2);
-      expect(result[1].currentAmount).toBe(2500);
-      expect(mockProductsFindMany).toHaveBeenCalledTimes(1);
-      expect(mockProductsFindMany.mock.calls[0][0]).toMatchObject({
-        where: expect.anything(),
-      });
+      expect(result.sourceProducts).toHaveLength(2);
+      expect(result.sourceProducts[1].currentAmount).toBe(2500);
+      expect(result.targetProducts).toHaveLength(3);
+      expect(mockProductsFindMany).toHaveBeenCalledTimes(2);
     });
 
-    it('returns empty list when only one product', async () => {
-      mockProductsFindMany.mockResolvedValueOnce([
-        { id: 'p-1', name: 'Produto A', currentAmount: 5000 },
-      ]);
+    it('returns empty sourceProducts when no product has balance >= R$ 1,00', async () => {
+      mockProductsFindMany
+        .mockResolvedValueOnce([])
+        .mockResolvedValueOnce([
+          { id: 'p-1', name: 'Produto A', currentAmount: 0 },
+          { id: 'p-2', name: 'Produto B', currentAmount: 50 },
+        ]);
 
       const result = await getProductsForTransfer();
 
-      expect(result).toEqual([]);
+      expect(result.sourceProducts).toEqual([]);
+      expect(result.targetProducts).toHaveLength(2);
     });
 
-    it('returns empty list when no product has balance >= R$ 1,00', async () => {
-      mockProductsFindMany.mockResolvedValueOnce([
-        { id: 'p-1', name: 'Produto A', currentAmount: 50 },
-        { id: 'p-2', name: 'Produto B', currentAmount: 0 },
-      ]);
+    it('returns empty targetProducts when all products are fulfilled', async () => {
+      mockProductsFindMany
+        .mockResolvedValueOnce([
+          { id: 'p-1', name: 'Produto A', currentAmount: 5000 },
+        ])
+        .mockResolvedValueOnce([]);
 
       const result = await getProductsForTransfer();
 
-      expect(result).toEqual([]);
+      expect(result.sourceProducts).toHaveLength(1);
+      expect(result.targetProducts).toEqual([]);
     });
 
-    it('returns empty list when products query throws', async () => {
+    it('returns empty lists when products query throws', async () => {
       mockProductsFindMany.mockRejectedValueOnce(new Error('db failure'));
 
       const result = await getProductsForTransfer();
 
-      expect(result).toEqual([]);
+      expect(result).toEqual({ sourceProducts: [], targetProducts: [] });
     });
   });
 });

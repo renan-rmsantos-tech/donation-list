@@ -7,10 +7,14 @@ export const metadata = {
 };
 
 export default async function TransfersPage() {
-  const [products, transfers] = await Promise.all([
+  const [{ sourceProducts, targetProducts }, transfers] = await Promise.all([
     getProductsForTransfer(),
     getFundTransfers(),
   ]);
+
+  const canTransfer =
+    sourceProducts.length > 0 &&
+    targetProducts.length >= 2;
 
   return (
     <div className="space-y-8">
@@ -21,13 +25,17 @@ export default async function TransfersPage() {
         </p>
       </div>
 
-      {products.length > 0 ? (
-        <FundTransferForm products={products} />
+      {canTransfer ? (
+        <FundTransferForm
+          sourceProducts={sourceProducts}
+          targetProducts={targetProducts}
+        />
       ) : (
         <div className="rounded-lg border border-dashed p-6 text-center text-muted-foreground">
           <p>
-            É necessário ter pelo menos 2 produtos publicados e ao menos um com
-            saldo disponível (mínimo R$ 1,00) para realizar transferências.
+            {sourceProducts.length === 0
+              ? 'Nenhum produto com saldo disponível (mínimo R$ 1,00) para transferência.'
+              : 'É necessário ter pelo menos 2 produtos que ainda não atingiram a meta para realizar transferências.'}
           </p>
         </div>
       )}

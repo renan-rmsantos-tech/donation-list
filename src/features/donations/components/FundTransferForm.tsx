@@ -24,12 +24,14 @@ type Product = {
 };
 
 type FundTransferFormProps = {
-  products: Product[];
+  sourceProducts: Product[];
+  targetProducts: Product[];
   onSuccess?: () => void;
 };
 
 export function FundTransferForm({
-  products,
+  sourceProducts,
+  targetProducts,
   onSuccess,
 }: FundTransferFormProps) {
   const [sourceProductId, setSourceProductId] = useState('');
@@ -37,7 +39,7 @@ export function FundTransferForm({
   const [amount, setAmount] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const sourceProduct = products.find((p) => p.id === sourceProductId);
+  const sourceProduct = sourceProducts.find((p) => p.id === sourceProductId);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -119,7 +121,7 @@ export function FundTransferForm({
                 <SelectValue placeholder="Selecione o produto de origem" />
               </SelectTrigger>
               <SelectContent>
-                {products.map((product) => (
+                {sourceProducts.map((product) => (
                   <SelectItem key={product.id} value={product.id}>
                     {product.name} ({formatCurrency(product.currentAmount)})
                   </SelectItem>
@@ -135,7 +137,7 @@ export function FundTransferForm({
                 <SelectValue placeholder="Selecione o produto de destino" />
               </SelectTrigger>
               <SelectContent>
-                {products
+                {targetProducts
                   .filter((p) => p.id !== sourceProductId)
                   .map((product) => (
                     <SelectItem key={product.id} value={product.id}>

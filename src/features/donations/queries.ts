@@ -2,7 +2,7 @@
 
 import { db } from '@/lib/db';
 import { donations, products, fundTransfers } from '@/lib/db/schema';
-import { eq, desc } from 'drizzle-orm';
+import { eq, desc, and, gte } from 'drizzle-orm';
 
 export async function getDonationsByProductId(productId: string) {
   try {
@@ -84,25 +84,45 @@ export async function getFundTransfers(filters?: { productId?: string }) {
 
 const MIN_TRANSFER_CENTS = 100; // R$ 1,00
 
-export async function getProductsForTransfer() {
+export type ProductForTransfer = {
+  id: string;
+  name: string;
+  currentAmount: number;
+};
+
+export async function getProductsForTransfer(): Promise<{
+  sourceProducts: ProductForTransfer[];
+  targetProducts: ProductForTransfer[];
+}> {
   try {
-    const availableProducts = await db.query.products.findMany({
-      columns: {
-        id: true,
-        name: true,
-        currentAmount: true,
-      },
-      where: eq(products.isPublished, true),
-    });
+    const [sourceProducts, targetProducts] = await Promise.all([
+      db.query.products.findMany({
+        columns: {
+          id: true,
+          name: true,
+          currentAmount: true,
+        },
+        where: and(
+          eq(products.isPublished, true),
+          gte(products.currentAmount, MIN_TRANSFER_CENTS)
+        ),
+      }),
+      db.query.products.findMany({
+        columns: {
+          id: true,
+          name: true,
+          currentAmount: true,
+        },
+        where: and(
+          eq(products.isPublished, true),
+          eq(products.isFulfilled, false)
+        ),
+      }),
+    ]);
 
-    // Only return products when transfer is possible: 2+ products and at least 1 with balance >= R$ 1,00
-    const hasTransferPossibility =
-      availableProducts.length >= 2 &&
-      availableProducts.some((p) => p.currentAmount >= MIN_TRANSFER_CENTS);
-
-    return hasTransferPossibility ? availableProducts : [];
+    return { sourceProducts, targetProducts };
   } catch (error) {
     console.error('getProductsForTransfer error:', error);
-    return [];
+    return { sourceProducts: [], targetProducts: [] };
   }
 }
