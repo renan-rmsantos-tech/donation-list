@@ -94,7 +94,7 @@ describe('ProductCard', () => {
       const unfulfilled = { ...mockPhysicalProduct, isFulfilled: false };
       render(<ProductCard product={unfulfilled} />);
       expect(
-        screen.getByText('Aceita doação em dinheiro ou em espécie')
+        screen.getByText('Aceita doação em dinheiro ou doação material')
       ).toBeInTheDocument();
     });
   });

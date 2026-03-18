@@ -75,7 +75,7 @@ export function ProductCard({ product }: ProductCardProps) {
                 targetAmount={product.targetAmount || 0}
               />
               <p className="text-xs text-muted-foreground">
-                Aceita doação em dinheiro ou em espécie
+                Aceita doação em dinheiro ou doação material
               </p>
             </>
           )}

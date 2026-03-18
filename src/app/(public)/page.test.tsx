@@ -171,7 +171,7 @@ describe('CatalogPage', () => {
       render(Page);
       expect(screen.getByText('Physical Product')).toBeInTheDocument();
       expect(
-        screen.getAllByText('Aceita doação em dinheiro ou em espécie').length
+        screen.getAllByText('Aceita doação em dinheiro ou doação material').length
       ).toBeGreaterThanOrEqual(1);
     });
 
