@@ -25,6 +25,7 @@ describe('TransfersPage', () => {
     vi.clearAllMocks();
     vi.mocked(getProductsForTransfer).mockResolvedValue([
       { id: 'p-1', name: 'Produto A', currentAmount: 1000 },
+      { id: 'p-2', name: 'Produto B', currentAmount: 2500 },
     ]);
     vi.mocked(getFundTransfers).mockResolvedValue([
       {
@@ -38,14 +39,27 @@ describe('TransfersPage', () => {
     ] as any);
   });
 
-  it('loads required data and renders transfer form + history sections', async () => {
+  it('loads required data and renders transfer form + history sections when products available', async () => {
     const Page = await TransfersPage();
     render(Page);
 
     expect(screen.getByRole('heading', { level: 1, name: 'Transferências de Fundos' })).toBeInTheDocument();
-    expect(screen.getByTestId('fund-transfer-form')).toHaveTextContent('form-products:1');
+    expect(screen.getByTestId('fund-transfer-form')).toHaveTextContent('form-products:2');
     expect(screen.getByTestId('fund-transfer-history')).toHaveTextContent('history-transfers:1');
     expect(getProductsForTransfer).toHaveBeenCalledTimes(1);
     expect(getFundTransfers).toHaveBeenCalledTimes(1);
+  });
+
+  it('shows empty state when no products available for transfer', async () => {
+    vi.mocked(getProductsForTransfer).mockResolvedValue([]);
+
+    const Page = await TransfersPage();
+    render(Page);
+
+    expect(screen.getByRole('heading', { level: 1, name: 'Transferências de Fundos' })).toBeInTheDocument();
+    expect(screen.queryByTestId('fund-transfer-form')).not.toBeInTheDocument();
+    expect(
+      screen.getByText(/É necessário ter pelo menos 2 produtos publicados e ao menos um com saldo disponível/)
+    ).toBeInTheDocument();
   });
 });

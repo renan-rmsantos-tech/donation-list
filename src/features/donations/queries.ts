@@ -82,16 +82,25 @@ export async function getFundTransfers(filters?: { productId?: string }) {
   }
 }
 
+const MIN_TRANSFER_CENTS = 100; // R$ 1,00
+
 export async function getProductsForTransfer() {
   try {
-    const result = await db.query.products.findMany({
+    const availableProducts = await db.query.products.findMany({
       columns: {
         id: true,
         name: true,
         currentAmount: true,
       },
+      where: eq(products.isPublished, true),
     });
-    return result;
+
+    // Only return products when transfer is possible: 2+ products and at least 1 with balance >= R$ 1,00
+    const hasTransferPossibility =
+      availableProducts.length >= 2 &&
+      availableProducts.some((p) => p.currentAmount >= MIN_TRANSFER_CENTS);
+
+    return hasTransferPossibility ? availableProducts : [];
   } catch (error) {
     console.error('getProductsForTransfer error:', error);
     return [];

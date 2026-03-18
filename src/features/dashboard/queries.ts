@@ -4,10 +4,13 @@ import { db } from '@/lib/db';
 import { donations, products } from '@/lib/db/schema';
 import { eq, sum, countDistinct } from 'drizzle-orm';
 
+const MIN_TRANSFER_CENTS = 100; // R$ 1,00
+
 export interface DashboardStats {
   totalMonetaryDonations: number;
   totalPhysicalFulfilled: number;
   totalPhysicalPending: number;
+  hasTransfersAvailable: boolean;
 }
 
 export async function getDashboardStats(): Promise<DashboardStats> {
@@ -31,10 +34,19 @@ export async function getDashboardStats(): Promise<DashboardStats> {
     const totalPhysicalPending =
       physicalResult.find((r) => r.isFulfilled === false)?.count || 0;
 
+    // Check if transfers are available: 2+ products and at least 1 with balance >= R$ 1,00
+    const productsForTransfer = await db.query.products.findMany({
+      columns: { id: true, currentAmount: true },
+    });
+    const hasTransfersAvailable =
+      productsForTransfer.length >= 2 &&
+      productsForTransfer.some((p) => p.currentAmount >= MIN_TRANSFER_CENTS);
+
     return {
       totalMonetaryDonations,
       totalPhysicalFulfilled: Number(totalPhysicalFulfilled),
       totalPhysicalPending: Number(totalPhysicalPending),
+      hasTransfersAvailable,
     };
   } catch (error) {
     console.error('getDashboardStats error:', error);
@@ -42,6 +54,7 @@ export async function getDashboardStats(): Promise<DashboardStats> {
       totalMonetaryDonations: 0,
       totalPhysicalFulfilled: 0,
       totalPhysicalPending: 0,
+      hasTransfersAvailable: false,
     };
   }
 }

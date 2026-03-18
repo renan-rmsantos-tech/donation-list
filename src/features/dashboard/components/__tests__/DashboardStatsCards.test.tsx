@@ -10,6 +10,7 @@ describe('DashboardStatsCards', () => {
           totalMonetaryDonations: 10000,
           totalPhysicalFulfilled: 1,
           totalPhysicalPending: 2,
+          hasTransfersAvailable: false,
         }}
       />
     );
@@ -25,6 +26,7 @@ describe('DashboardStatsCards', () => {
           totalMonetaryDonations: 12345,
           totalPhysicalFulfilled: 0,
           totalPhysicalPending: 0,
+          hasTransfersAvailable: false,
         }}
       />
     );
@@ -38,6 +40,7 @@ describe('DashboardStatsCards', () => {
           totalMonetaryDonations: 0,
           totalPhysicalFulfilled: 5,
           totalPhysicalPending: 3,
+          hasTransfersAvailable: false,
         }}
       />
     );
@@ -52,6 +55,7 @@ describe('DashboardStatsCards', () => {
           totalMonetaryDonations: 0,
           totalPhysicalFulfilled: 0,
           totalPhysicalPending: 0,
+          hasTransfersAvailable: false,
         }}
       />
     );
@@ -68,6 +72,7 @@ describe('DashboardStatsCards', () => {
           totalMonetaryDonations: 1,
           totalPhysicalFulfilled: 0,
           totalPhysicalPending: 0,
+          hasTransfersAvailable: false,
         }}
       />
     );

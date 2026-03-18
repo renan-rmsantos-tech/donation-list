@@ -80,7 +80,7 @@ describe('donations queries', () => {
   });
 
   describe('getProductsForTransfer', () => {
-    it('returns products with current balances for transfer form', async () => {
+    it('returns published products when 2+ products and at least one has balance >= R$ 1,00', async () => {
       mockProductsFindMany.mockResolvedValueOnce([
         { id: 'p-1', name: 'Produto A', currentAmount: 1000 },
         { id: 'p-2', name: 'Produto B', currentAmount: 2500 },
@@ -94,6 +94,27 @@ describe('donations queries', () => {
       expect(mockProductsFindMany.mock.calls[0][0]).toMatchObject({
         where: expect.anything(),
       });
+    });
+
+    it('returns empty list when only one product', async () => {
+      mockProductsFindMany.mockResolvedValueOnce([
+        { id: 'p-1', name: 'Produto A', currentAmount: 5000 },
+      ]);
+
+      const result = await getProductsForTransfer();
+
+      expect(result).toEqual([]);
+    });
+
+    it('returns empty list when no product has balance >= R$ 1,00', async () => {
+      mockProductsFindMany.mockResolvedValueOnce([
+        { id: 'p-1', name: 'Produto A', currentAmount: 50 },
+        { id: 'p-2', name: 'Produto B', currentAmount: 0 },
+      ]);
+
+      const result = await getProductsForTransfer();
+
+      expect(result).toEqual([]);
     });
 
     it('returns empty list when products query throws', async () => {

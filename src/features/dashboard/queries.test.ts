@@ -10,6 +10,11 @@ vi.mock('@/lib/db', () => ({
         groupBy: vi.fn().mockResolvedValue([]),
       }),
     }),
+    query: {
+      products: {
+        findMany: vi.fn().mockResolvedValue([]),
+      },
+    },
   },
 }));
 
@@ -17,6 +22,7 @@ describe('getDashboardStats', () => {
   beforeEach(async () => {
     const { db } = await import('@/lib/db');
     vi.mocked(db.select).mockReset();
+    vi.mocked(db.query.products.findMany).mockResolvedValue([]);
   });
 
   describe('monetary aggregation', () => {
@@ -37,6 +43,7 @@ describe('getDashboardStats', () => {
       const result = await getDashboardStats();
 
       expect(result.totalMonetaryDonations).toBe(15000);
+      expect(result.hasTransfersAvailable).toBe(false);
     });
 
     it('should aggregate multiple monetary donations across products', async () => {
@@ -208,6 +215,7 @@ describe('getDashboardStats', () => {
         totalMonetaryDonations: 0,
         totalPhysicalFulfilled: 0,
         totalPhysicalPending: 0,
+        hasTransfersAvailable: false,
       });
     });
 
@@ -270,6 +278,7 @@ describe('getDashboardStats', () => {
         totalMonetaryDonations: 0,
         totalPhysicalFulfilled: 0,
         totalPhysicalPending: 0,
+        hasTransfersAvailable: false,
       });
     });
   });
@@ -315,6 +324,76 @@ describe('getDashboardStats', () => {
       const result = await getDashboardStats();
 
       expect(result.totalMonetaryDonations).toBe(100000);
+    });
+  });
+
+  describe('hasTransfersAvailable', () => {
+    it('should return true when 2+ products and at least one has balance >= R$ 1,00', async () => {
+      const { db } = await import('@/lib/db');
+      vi.mocked(db.select)
+        .mockReturnValueOnce({
+          from: vi.fn().mockReturnValue({
+            where: vi.fn().mockResolvedValue([{ total: 0 }]),
+          }),
+        })
+        .mockReturnValueOnce({
+          from: vi.fn().mockReturnValue({
+            groupBy: vi.fn().mockResolvedValue([]),
+          }),
+        });
+      vi.mocked(db.query.products.findMany).mockResolvedValue([
+        { id: 'p1', currentAmount: 500 },
+        { id: 'p2', currentAmount: 0 },
+      ]);
+
+      const result = await getDashboardStats();
+
+      expect(result.hasTransfersAvailable).toBe(true);
+    });
+
+    it('should return false when only one product', async () => {
+      const { db } = await import('@/lib/db');
+      vi.mocked(db.select)
+        .mockReturnValueOnce({
+          from: vi.fn().mockReturnValue({
+            where: vi.fn().mockResolvedValue([{ total: 0 }]),
+          }),
+        })
+        .mockReturnValueOnce({
+          from: vi.fn().mockReturnValue({
+            groupBy: vi.fn().mockResolvedValue([]),
+          }),
+        });
+      vi.mocked(db.query.products.findMany).mockResolvedValue([
+        { id: 'p1', currentAmount: 500 },
+      ]);
+
+      const result = await getDashboardStats();
+
+      expect(result.hasTransfersAvailable).toBe(false);
+    });
+
+    it('should return false when no product has balance >= R$ 1,00', async () => {
+      const { db } = await import('@/lib/db');
+      vi.mocked(db.select)
+        .mockReturnValueOnce({
+          from: vi.fn().mockReturnValue({
+            where: vi.fn().mockResolvedValue([{ total: 0 }]),
+          }),
+        })
+        .mockReturnValueOnce({
+          from: vi.fn().mockReturnValue({
+            groupBy: vi.fn().mockResolvedValue([]),
+          }),
+        });
+      vi.mocked(db.query.products.findMany).mockResolvedValue([
+        { id: 'p1', currentAmount: 50 },
+        { id: 'p2', currentAmount: 0 },
+      ]);
+
+      const result = await getDashboardStats();
+
+      expect(result.hasTransfersAvailable).toBe(false);
     });
   });
 });

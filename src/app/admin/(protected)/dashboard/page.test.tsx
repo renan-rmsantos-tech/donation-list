@@ -14,6 +14,7 @@ describe('DashboardPage', () => {
       totalMonetaryDonations: 0,
       totalPhysicalFulfilled: 0,
       totalPhysicalPending: 0,
+      hasTransfersAvailable: false,
     });
   });
 
@@ -29,6 +30,7 @@ describe('DashboardPage', () => {
         totalMonetaryDonations: 50000,
         totalPhysicalFulfilled: 0,
         totalPhysicalPending: 0,
+        hasTransfersAvailable: false,
       });
       const Page = await DashboardPage();
       render(Page);
@@ -41,6 +43,7 @@ describe('DashboardPage', () => {
         totalMonetaryDonations: 0,
         totalPhysicalFulfilled: 3,
         totalPhysicalPending: 0,
+        hasTransfersAvailable: false,
       });
       const Page = await DashboardPage();
       render(Page);
@@ -53,6 +56,7 @@ describe('DashboardPage', () => {
         totalMonetaryDonations: 0,
         totalPhysicalFulfilled: 0,
         totalPhysicalPending: 5,
+        hasTransfersAvailable: false,
       });
       const Page = await DashboardPage();
       render(Page);
@@ -67,6 +71,7 @@ describe('DashboardPage', () => {
         totalMonetaryDonations: 0,
         totalPhysicalFulfilled: 0,
         totalPhysicalPending: 0,
+        hasTransfersAvailable: false,
       });
       const Page = await DashboardPage();
       render(Page);
@@ -81,6 +86,7 @@ describe('DashboardPage', () => {
         totalMonetaryDonations: 100,
         totalPhysicalFulfilled: 0,
         totalPhysicalPending: 0,
+        hasTransfersAvailable: false,
       });
       const Page = await DashboardPage();
       render(Page);
@@ -94,6 +100,7 @@ describe('DashboardPage', () => {
         totalMonetaryDonations: 25000,
         totalPhysicalFulfilled: 2,
         totalPhysicalPending: 3,
+        hasTransfersAvailable: false,
       });
       const Page = await DashboardPage();
       render(Page);
@@ -103,6 +110,39 @@ describe('DashboardPage', () => {
       expect(screen.getByText(/R\$\s*250,00/)).toBeInTheDocument();
       expect(screen.getByText('2')).toBeInTheDocument();
       expect(screen.getByText('3')).toBeInTheDocument();
+    });
+  });
+
+  describe('Transfer alert', () => {
+    it('should display transfer alert when hasTransfersAvailable is true', async () => {
+      vi.mocked(getDashboardStats).mockResolvedValue({
+        totalMonetaryDonations: 0,
+        totalPhysicalFulfilled: 0,
+        totalPhysicalPending: 0,
+        hasTransfersAvailable: true,
+      });
+      const Page = await DashboardPage();
+      render(Page);
+      expect(screen.getByTestId('dashboard-transfer-alert')).toBeInTheDocument();
+      expect(
+        screen.getByText('Há transferências de fundos disponíveis para realizar.')
+      ).toBeInTheDocument();
+      expect(screen.getByRole('link', { name: 'Ir para Transferências' })).toHaveAttribute(
+        'href',
+        '/admin/transfers'
+      );
+    });
+
+    it('should not display transfer alert when hasTransfersAvailable is false', async () => {
+      vi.mocked(getDashboardStats).mockResolvedValue({
+        totalMonetaryDonations: 0,
+        totalPhysicalFulfilled: 0,
+        totalPhysicalPending: 0,
+        hasTransfersAvailable: false,
+      });
+      const Page = await DashboardPage();
+      render(Page);
+      expect(screen.queryByTestId('dashboard-transfer-alert')).not.toBeInTheDocument();
     });
   });
 

@@ -21,7 +21,16 @@ export default async function TransfersPage() {
         </p>
       </div>
 
-      <FundTransferForm products={products} />
+      {products.length > 0 ? (
+        <FundTransferForm products={products} />
+      ) : (
+        <div className="rounded-lg border border-dashed p-6 text-center text-muted-foreground">
+          <p>
+            É necessário ter pelo menos 2 produtos publicados e ao menos um com
+            saldo disponível (mínimo R$ 1,00) para realizar transferências.
+          </p>
+        </div>
+      )}
       <FundTransferHistory transfers={transfers} />
     </div>
   );
