@@ -6,7 +6,6 @@ const mockMonetaryProduct = {
   id: '1',
   name: 'Monetary Product',
   description: 'A monetary donation item',
-  donationType: 'monetary' as const,
   targetAmount: 10000,
   currentAmount: 5000,
   isFulfilled: false,
@@ -23,8 +22,7 @@ const mockPhysicalProduct = {
   id: '2',
   name: 'Physical Product',
   description: 'A physical donation item',
-  donationType: 'physical' as const,
-  targetAmount: null,
+  targetAmount: 5000,
   currentAmount: 0,
   isFulfilled: true,
   isPublished: true,
@@ -90,18 +88,6 @@ describe('ProductCard', () => {
       const unfulfilled = { ...mockPhysicalProduct, isFulfilled: false };
       render(<ProductCard product={unfulfilled} />);
       expect(screen.getByText('Necessário')).toBeInTheDocument();
-    });
-  });
-
-  describe('Donation type', () => {
-    it('should display Monetary type for monetary products', () => {
-      render(<ProductCard product={mockMonetaryProduct} />);
-      expect(screen.getByText('Dinheiro')).toBeInTheDocument();
-    });
-
-    it('should display Physical type for physical products', () => {
-      render(<ProductCard product={mockPhysicalProduct} />);
-      expect(screen.getByText('Material')).toBeInTheDocument();
     });
   });
 

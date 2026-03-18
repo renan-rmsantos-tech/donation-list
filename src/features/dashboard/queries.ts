@@ -20,11 +20,10 @@ export async function getDashboardStats(): Promise<DashboardStats> {
 
     const totalMonetaryDonations = (monetaryResult[0]?.total as unknown as number) || 0;
 
-    // Get physical products fulfilled/pending counts
+    // Get products fulfilled/pending counts (all products)
     const physicalResult = await db
       .select({ isFulfilled: products.isFulfilled, count: countDistinct(products.id) })
       .from(products)
-      .where(eq(products.donationType, 'physical'))
       .groupBy(products.isFulfilled);
 
     const totalPhysicalFulfilled =

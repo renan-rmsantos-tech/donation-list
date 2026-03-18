@@ -7,42 +7,29 @@ import {
 
 describe('Product Schemas', () => {
   describe('createProductSchema', () => {
-    it('should accept valid monetary product with targetAmount', () => {
+    it('should accept valid product with targetAmount', () => {
       const result = createProductSchema.safeParse({
         name: 'Cadeira',
         description: 'Cadeira para igreja',
-        donationType: 'monetary',
         targetAmount: 50000,
         categoryIds: [],
       });
       expect(result.success).toBe(true);
     });
 
-    it('should accept valid physical product without targetAmount', () => {
-      const result = createProductSchema.safeParse({
-        name: 'Vela',
-        description: 'Velas para altar',
-        donationType: 'physical',
-        categoryIds: [],
-      });
-      expect(result.success).toBe(true);
-    });
-
-    it('should reject monetary product without targetAmount', () => {
+    it('should reject product without targetAmount', () => {
       const result = createProductSchema.safeParse({
         name: 'Cadeira',
         description: 'Desc',
-        donationType: 'monetary',
         categoryIds: [],
       });
       expect(result.success).toBe(false);
     });
 
-    it('should reject monetary product with zero targetAmount', () => {
+    it('should reject product with zero targetAmount', () => {
       const result = createProductSchema.safeParse({
         name: 'Cadeira',
         description: 'Desc',
-        donationType: 'monetary',
         targetAmount: 0,
         categoryIds: [],
       });
@@ -53,7 +40,7 @@ describe('Product Schemas', () => {
       const result = createProductSchema.safeParse({
         name: '',
         description: 'Desc',
-        donationType: 'physical',
+        targetAmount: 10000,
         categoryIds: [],
       });
       expect(result.success).toBe(false);
@@ -63,7 +50,7 @@ describe('Product Schemas', () => {
       const result = createProductSchema.safeParse({
         name: 'Produto',
         description: 'Desc',
-        donationType: 'physical',
+        targetAmount: 10000,
         categoryIds: ['not-a-uuid'],
       });
       expect(result.success).toBe(false);
@@ -74,7 +61,7 @@ describe('Product Schemas', () => {
       const result = createProductSchema.safeParse({
         name: 'Produto',
         description: 'Descrição',
-        donationType: 'physical',
+        targetAmount: 10000,
       });
       expect(result.success).toBe(true);
       expect(result.data?.imagePath).toBeUndefined();
@@ -84,7 +71,7 @@ describe('Product Schemas', () => {
       const result = createProductSchema.safeParse({
         name: 'Produto',
         description: 'Descrição',
-        donationType: 'physical',
+        targetAmount: 10000,
         imagePath: 'product-photos/2024-02-18-abc123.jpg',
       });
       expect(result.success).toBe(true);
@@ -95,7 +82,7 @@ describe('Product Schemas', () => {
       const result = createProductSchema.safeParse({
         name: 'Produto',
         description: 'Descrição',
-        donationType: 'physical',
+        targetAmount: 10000,
         imagePath: null,
       });
       expect(result.success).toBe(true);
@@ -106,7 +93,7 @@ describe('Product Schemas', () => {
       const result = createProductSchema.safeParse({
         name: 'Produto',
         description: 'Descrição',
-        donationType: 'physical',
+        targetAmount: 10000,
         imagePath: 'a'.repeat(501),
       });
       expect(result.success).toBe(false);
@@ -116,7 +103,7 @@ describe('Product Schemas', () => {
       const result = createProductSchema.safeParse({
         name: 'Produto',
         description: 'Descrição',
-        donationType: 'physical',
+        targetAmount: 10000,
         imagePath: 'a'.repeat(500),
       });
       expect(result.success).toBe(true);
@@ -131,9 +118,8 @@ describe('Product Schemas', () => {
       expect(result.success).toBe(true);
     });
 
-    it('should accept targetAmount null for physical', () => {
+    it('should accept targetAmount null', () => {
       const result = updateProductSchema.safeParse({
-        donationType: 'physical',
         targetAmount: null,
       });
       expect(result.success).toBe(true);

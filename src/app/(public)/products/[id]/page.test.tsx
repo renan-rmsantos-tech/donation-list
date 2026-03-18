@@ -49,7 +49,6 @@ const mockMonetaryProduct = {
   id: '1',
   name: 'Test Monetary Product',
   description: 'This is a monetary donation product',
-  donationType: 'monetary' as const,
   targetAmount: 10000,
   currentAmount: 5000,
   isFulfilled: false,
@@ -64,8 +63,7 @@ const mockPhysicalProduct = {
   id: '2',
   name: 'Test Physical Product',
   description: 'This is a physical donation item',
-  donationType: 'physical' as const,
-  targetAmount: null,
+  targetAmount: 5000,
   currentAmount: 0,
   isFulfilled: true,
   isPublished: true,
@@ -121,23 +119,6 @@ describe('ProductDetailPage', () => {
       expect(link).toHaveAttribute('href', '/');
     });
 
-    it('should render dual donation badge for monetary products', async () => {
-      vi.mocked(getPublishedProductById).mockResolvedValue(mockMonetaryProduct);
-      const Page = await ProductDetailPage({
-        params: Promise.resolve({ id: '1' }),
-      });
-      render(Page);
-      expect(screen.getByText('Dinheiro + Material')).toBeInTheDocument();
-    });
-
-    it('should render dual donation badge for physical products', async () => {
-      vi.mocked(getPublishedProductById).mockResolvedValue(mockPhysicalProduct);
-      const Page = await ProductDetailPage({
-        params: Promise.resolve({ id: '2' }),
-      });
-      render(Page);
-      expect(screen.getByText('Dinheiro + Material')).toBeInTheDocument();
-    });
   });
 
   describe('Monetary product status', () => {

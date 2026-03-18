@@ -30,9 +30,7 @@ describe('getDashboardStats', () => {
         })
         .mockReturnValueOnce({
           from: vi.fn().mockReturnValue({
-            where: vi.fn().mockReturnValue({
-              groupBy: vi.fn().mockResolvedValue([]),
-            }),
+            groupBy: vi.fn().mockResolvedValue([]),
           }),
         });
 
@@ -51,12 +49,10 @@ describe('getDashboardStats', () => {
         })
         .mockReturnValueOnce({
           from: vi.fn().mockReturnValue({
-            where: vi.fn().mockReturnValue({
-              groupBy: vi.fn().mockResolvedValue([
-                { isFulfilled: false, count: 2 },
-                { isFulfilled: true, count: 1 },
-              ]),
-            }),
+            groupBy: vi.fn().mockResolvedValue([
+              { isFulfilled: false, count: 2 },
+              { isFulfilled: true, count: 1 },
+            ]),
           }),
         });
 
@@ -77,9 +73,7 @@ describe('getDashboardStats', () => {
         })
         .mockReturnValueOnce({
           from: vi.fn().mockReturnValue({
-            where: vi.fn().mockReturnValue({
-              groupBy: vi.fn().mockResolvedValue([]),
-            }),
+            groupBy: vi.fn().mockResolvedValue([]),
           }),
         });
 
@@ -98,9 +92,7 @@ describe('getDashboardStats', () => {
         })
         .mockReturnValueOnce({
           from: vi.fn().mockReturnValue({
-            where: vi.fn().mockReturnValue({
-              groupBy: vi.fn().mockResolvedValue([]),
-            }),
+            groupBy: vi.fn().mockResolvedValue([]),
           }),
         });
 
@@ -121,12 +113,10 @@ describe('getDashboardStats', () => {
         })
         .mockReturnValueOnce({
           from: vi.fn().mockReturnValue({
-            where: vi.fn().mockReturnValue({
-              groupBy: vi.fn().mockResolvedValue([
-                { isFulfilled: true, count: 3 },
-                { isFulfilled: false, count: 5 },
-              ]),
-            }),
+            groupBy: vi.fn().mockResolvedValue([
+              { isFulfilled: true, count: 3 },
+              { isFulfilled: false, count: 5 },
+            ]),
           }),
         });
 
@@ -146,9 +136,7 @@ describe('getDashboardStats', () => {
         })
         .mockReturnValueOnce({
           from: vi.fn().mockReturnValue({
-            where: vi.fn().mockReturnValue({
-              groupBy: vi.fn().mockResolvedValue([{ isFulfilled: false, count: 4 }]),
-            }),
+            groupBy: vi.fn().mockResolvedValue([{ isFulfilled: false, count: 4 }]),
           }),
         });
 
@@ -168,9 +156,7 @@ describe('getDashboardStats', () => {
         })
         .mockReturnValueOnce({
           from: vi.fn().mockReturnValue({
-            where: vi.fn().mockReturnValue({
-              groupBy: vi.fn().mockResolvedValue([{ isFulfilled: true, count: 2 }]),
-            }),
+            groupBy: vi.fn().mockResolvedValue([{ isFulfilled: true, count: 2 }]),
           }),
         });
 
@@ -190,9 +176,7 @@ describe('getDashboardStats', () => {
         })
         .mockReturnValueOnce({
           from: vi.fn().mockReturnValue({
-            where: vi.fn().mockReturnValue({
-              groupBy: vi.fn().mockResolvedValue([]),
-            }),
+            groupBy: vi.fn().mockResolvedValue([]),
           }),
         });
 
@@ -214,9 +198,7 @@ describe('getDashboardStats', () => {
         })
         .mockReturnValueOnce({
           from: vi.fn().mockReturnValue({
-            where: vi.fn().mockReturnValue({
-              groupBy: vi.fn().mockResolvedValue([]),
-            }),
+            groupBy: vi.fn().mockResolvedValue([]),
           }),
         });
 
@@ -239,9 +221,7 @@ describe('getDashboardStats', () => {
         })
         .mockReturnValueOnce({
           from: vi.fn().mockReturnValue({
-            where: vi.fn().mockReturnValue({
-              groupBy: vi.fn().mockResolvedValue([]),
-            }),
+            groupBy: vi.fn().mockResolvedValue([]),
           }),
         });
 
@@ -262,12 +242,10 @@ describe('getDashboardStats', () => {
         })
         .mockReturnValueOnce({
           from: vi.fn().mockReturnValue({
-            where: vi.fn().mockReturnValue({
-              groupBy: vi.fn().mockResolvedValue([
-                { isFulfilled: true, count: 1 },
-                { isFulfilled: false, count: 2 },
-              ]),
-            }),
+            groupBy: vi.fn().mockResolvedValue([
+              { isFulfilled: true, count: 1 },
+              { isFulfilled: false, count: 2 },
+            ]),
           }),
         });
 
@@ -307,12 +285,10 @@ describe('getDashboardStats', () => {
         })
         .mockReturnValueOnce({
           from: vi.fn().mockReturnValue({
-            where: vi.fn().mockReturnValue({
-              groupBy: vi.fn().mockResolvedValue([
-                { isFulfilled: true, count: 1 },
-                { isFulfilled: false, count: 1 },
-              ]),
-            }),
+            groupBy: vi.fn().mockResolvedValue([
+              { isFulfilled: true, count: 1 },
+              { isFulfilled: false, count: 1 },
+            ]),
           }),
         });
 
@@ -332,9 +308,7 @@ describe('getDashboardStats', () => {
         })
         .mockReturnValueOnce({
           from: vi.fn().mockReturnValue({
-            where: vi.fn().mockReturnValue({
-              groupBy: vi.fn().mockResolvedValue([]),
-            }),
+            groupBy: vi.fn().mockResolvedValue([]),
           }),
         });
 

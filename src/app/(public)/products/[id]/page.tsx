@@ -12,7 +12,6 @@ import { formatCurrency } from '@/lib/utils/format';
 import { BackButton } from '@/components/back-button';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 
 interface ProductDetailPageProps {
@@ -55,12 +54,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
           <CardHeader>
             <div className="flex items-start justify-between gap-4">
               <div className="flex-1">
-                <div className="flex items-center gap-3 mb-2">
-                  <h1 className="text-3xl font-bold">{product.name}</h1>
-                  <Badge variant="secondary" className="shrink-0">
-                    Dinheiro + Material
-                  </Badge>
-                </div>
+                <h1 className="text-3xl font-bold mb-2">{product.name}</h1>
                 {categoryNames && (
                   <p className="text-sm text-muted-foreground">
                     Categorias: {categoryNames}

@@ -49,7 +49,7 @@ describe('Product Actions', () => {
       const result = await createProduct({
         name: 'Produto',
         description: 'Desc',
-        donationType: 'physical',
+        targetAmount: 10000,
         categoryIds: [],
       });
 
@@ -57,11 +57,10 @@ describe('Product Actions', () => {
       expect(result.error).toBe('UNAUTHORIZED');
     });
 
-    it('should reject monetary product without targetAmount', async () => {
+    it('should reject product without targetAmount', async () => {
       const result = await createProduct({
         name: 'Produto',
         description: 'Desc',
-        donationType: 'monetary',
         categoryIds: [],
       });
 
@@ -69,7 +68,7 @@ describe('Product Actions', () => {
       expect(result.error).toBe('VALIDATION_ERROR');
     });
 
-    it('should create physical product when valid', async () => {
+    it('should create product with targetAmount when valid', async () => {
       const { db } = await import('@/lib/db');
 
       vi.mocked(db.insert).mockImplementation(
@@ -84,7 +83,7 @@ describe('Product Actions', () => {
       const result = await createProduct({
         name: 'Vela',
         description: 'Velas',
-        donationType: 'physical',
+        targetAmount: 50000,
         categoryIds: [],
       });
 
@@ -92,7 +91,7 @@ describe('Product Actions', () => {
       expect(result.data?.id).toBe('prod-123');
     });
 
-    it('should create monetary product with targetAmount', async () => {
+    it('should create product with targetAmount', async () => {
       const { db } = await import('@/lib/db');
 
       vi.mocked(db.insert).mockImplementation(
@@ -107,7 +106,6 @@ describe('Product Actions', () => {
       const result = await createProduct({
         name: 'Cadeira',
         description: 'Cadeira',
-        donationType: 'monetary',
         targetAmount: 50000,
         categoryIds: [],
       });
@@ -134,7 +132,7 @@ describe('Product Actions', () => {
       const result = await createProduct({
         name: 'Produto',
         description: 'Desc',
-        donationType: 'physical',
+        targetAmount: 10000,
         imagePath: 'product-photos/2024-02-18-abc123.jpg',
       });
 
@@ -160,7 +158,7 @@ describe('Product Actions', () => {
       const result = await createProduct({
         name: 'Produto',
         description: 'Desc',
-        donationType: 'physical',
+        targetAmount: 10000,
       });
 
       expect(result.success).toBe(true);

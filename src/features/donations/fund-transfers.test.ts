@@ -108,12 +108,10 @@ describe('createFundTransfer', () => {
       {
         id: '123e4567-e89b-12d3-a456-426614174000',
         currentAmount: 99,
-        donationType: 'monetary',
       },
       {
         id: '123e4567-e89b-12d3-a456-426614174001',
         currentAmount: 0,
-        donationType: 'monetary',
       },
     ]);
 
@@ -133,12 +131,10 @@ describe('createFundTransfer', () => {
       {
         id: '123e4567-e89b-12d3-a456-426614174000',
         currentAmount: 1000,
-        donationType: 'monetary',
       },
       {
         id: '123e4567-e89b-12d3-a456-426614174001',
         currentAmount: 0,
-        donationType: 'monetary',
       },
     ]);
     mockUpdateReturning.mockResolvedValueOnce([]);
@@ -158,12 +154,10 @@ describe('createFundTransfer', () => {
       {
         id: '123e4567-e89b-12d3-a456-426614174000',
         currentAmount: 1000,
-        donationType: 'monetary',
       },
       {
         id: '123e4567-e89b-12d3-a456-426614174001',
         currentAmount: 500,
-        donationType: 'monetary',
       },
     ]);
     mockUpdateReturning
@@ -184,27 +178,4 @@ describe('createFundTransfer', () => {
     expect(mockRevalidatePath).toHaveBeenCalledWith('/admin/transfers');
   });
 
-  it('returns VALIDATION_ERROR when source or target is not a monetary product', async () => {
-    mockFindMany.mockResolvedValueOnce([
-      {
-        id: '123e4567-e89b-12d3-a456-426614174000',
-        currentAmount: 1000,
-        donationType: 'monetary',
-      },
-      {
-        id: '123e4567-e89b-12d3-a456-426614174001',
-        currentAmount: 500,
-        donationType: 'physical',
-      },
-    ]);
-
-    const result = await createFundTransfer({
-      sourceProductId: '123e4567-e89b-12d3-a456-426614174000',
-      targetProductId: '123e4567-e89b-12d3-a456-426614174001',
-      amount: 200,
-    });
-
-    expect(result.success).toBe(false);
-    expect(result.error).toBe('VALIDATION_ERROR');
-  });
 });

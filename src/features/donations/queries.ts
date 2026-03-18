@@ -36,13 +36,13 @@ export async function getPhysicalDonationStats() {
       where: eq(products.isFulfilled, true),
     });
 
-    const allPhysical = await db.query.products.findMany({
-      where: eq(products.donationType, 'physical'),
+    const pending = await db.query.products.findMany({
+      where: eq(products.isFulfilled, false),
     });
 
     return {
       fulfilled: fulfilled.length,
-      pending: allPhysical.length - fulfilled.length,
+      pending: pending.length,
     };
   } catch (error) {
     console.error('getPhysicalDonationStats error:', error);
@@ -90,7 +90,6 @@ export async function getProductsForTransfer() {
         name: true,
         currentAmount: true,
       },
-      where: eq(products.donationType, 'monetary'),
     });
     return result;
   } catch (error) {

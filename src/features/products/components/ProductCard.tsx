@@ -1,8 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import type { products } from '@/lib/db/schema';
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { Card, CardFooter, CardHeader } from '@/components/ui/card';
 import { ProgressBar } from './ProgressBar';
 import { FulfilledBadge } from './FulfilledBadge';
 import { getPublicUrl } from '@/lib/storage/supabase';
@@ -43,12 +42,7 @@ export function ProductCard({ product }: ProductCardProps) {
         </div>
 
         <CardHeader className="flex-1">
-          <div className="flex items-start justify-between gap-2">
-            <h3 className="text-lg font-semibold line-clamp-2">{product.name}</h3>
-            <Badge variant="secondary">
-              {product.donationType === 'monetary' ? 'Dinheiro' : 'Material'}
-            </Badge>
-          </div>
+          <h3 className="text-lg font-semibold line-clamp-2">{product.name}</h3>
           <p className="text-sm text-muted-foreground line-clamp-3">
             {product.description}
           </p>
@@ -59,14 +53,11 @@ export function ProductCard({ product }: ProductCardProps) {
           )}
         </CardHeader>
         <CardFooter className="flex flex-col gap-4 pt-4 border-t">
-          {product.donationType === 'monetary' ? (
-            <ProgressBar
-              currentAmount={product.currentAmount}
-              targetAmount={product.targetAmount || 0}
-            />
-          ) : (
-            <FulfilledBadge isFulfilled={product.isFulfilled} />
-          )}
+          <ProgressBar
+            currentAmount={product.currentAmount}
+            targetAmount={product.targetAmount || 0}
+          />
+          <FulfilledBadge isFulfilled={product.isFulfilled} />
         </CardFooter>
       </Card>
     </Link>

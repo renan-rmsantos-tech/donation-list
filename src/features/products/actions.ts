@@ -76,11 +76,7 @@ export async function createProduct(
       .values({
         name: validated.name,
         description: validated.description,
-        donationType: validated.donationType,
-        targetAmount:
-          validated.donationType === 'monetary'
-            ? validated.targetAmount
-            : undefined,
+        targetAmount: validated.targetAmount,
         currentAmount: 0,
         isPublished: validated.isPublished ?? true,
         imagePath: validated.imagePath ?? undefined,
@@ -145,19 +141,7 @@ export async function updateProduct(
 
     if (validated.name !== undefined) updates.name = validated.name;
     if (validated.description !== undefined) updates.description = validated.description;
-    if (validated.donationType !== undefined)
-      updates.donationType = validated.donationType;
-    if (validated.donationType === 'physical') {
-      updates.targetAmount = null;
-    } else if (
-      validated.donationType === 'monetary' &&
-      validated.targetAmount !== undefined &&
-      validated.targetAmount !== null
-    ) {
-      updates.targetAmount = validated.targetAmount;
-    } else if (validated.targetAmount !== undefined) {
-      updates.targetAmount = validated.targetAmount;
-    }
+    if (validated.targetAmount !== undefined) updates.targetAmount = validated.targetAmount;
     if (validated.isPublished !== undefined) updates.isPublished = validated.isPublished;
     if (validated.imagePath !== undefined) updates.imagePath = validated.imagePath;
 

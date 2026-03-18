@@ -17,7 +17,6 @@ const mockProduct = {
   id: '1',
   name: 'Test Product',
   description: 'Test Description',
-  donationType: 'monetary' as const,
   targetAmount: 10000,
   currentAmount: 5000,
   isFulfilled: false,
@@ -43,8 +42,7 @@ const mockPhysicalProduct = {
   id: '2',
   name: 'Physical Product',
   description: 'Physical Item',
-  donationType: 'physical' as const,
-  targetAmount: null,
+  targetAmount: 5000,
   currentAmount: 0,
   isFulfilled: false,
   isPublished: true,
@@ -163,16 +161,16 @@ describe('CatalogPage', () => {
       });
       render(Page);
       expect(screen.getByText('Test Product')).toBeInTheDocument();
-      expect(screen.getByText('Progresso')).toBeInTheDocument();
+      expect(screen.getAllByText('Progresso').length).toBeGreaterThanOrEqual(1);
     });
 
-    it('should display physical products with fulfilled badge', async () => {
+    it('should display products with fulfilled/needed badge', async () => {
       const Page = await CatalogPage({
         searchParams: Promise.resolve({}),
       });
       render(Page);
       expect(screen.getByText('Physical Product')).toBeInTheDocument();
-      expect(screen.getByText('Necessário')).toBeInTheDocument();
+      expect(screen.getAllByText('Necessário').length).toBeGreaterThanOrEqual(1);
     });
 
     it('should display product categories', async () => {

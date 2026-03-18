@@ -184,22 +184,22 @@ INSERT INTO categories (name) VALUES
   ('Casa dos padres')
 ON CONFLICT (name) DO NOTHING;
 
-INSERT INTO products (id, name, description, donation_type, target_amount, current_amount, is_fulfilled, is_published) VALUES
-  ('b2c3d4e5-0001-4000-8000-000000000001', 'Multifuncional Impressora Epson Workforce WF-C5810', 'Impressora multifuncional colorida com sistema de tinta substituível, velocidade de 25 ppm, conectividade Wi-Fi e Ethernet. Ideal para ambiente escolar com alto volume de impressão.', 'monetary', 350000, 0, false, true),
-  ('b2c3d4e5-0002-4000-8000-000000000002', 'Porta copos de bebedouro', 'Suporte organizador em metal para copos descartáveis de 180-200ml, fixação em bebedouro ou parede, uso coletivo.', 'monetary', 8000, 0, false, true),
-  ('b2c3d4e5-0003-4000-8000-000000000003', 'Uma losa', 'Losa/lousa branca para sala de aula, superfície para escrita com marcadores apagáveis, moldura em alumínio.', 'monetary', 45000, 0, false, true),
-  ('b2c3d4e5-0004-4000-8000-000000000004', '7 bolsas de mensualidade', 'Auxílio financeiro para estudantes em situação de vulnerabilidade socioeconômica, cobertura de mensalidade escolar.', 'monetary', 700000, 0, false, true),
-  ('b2c3d4e5-0005-4000-8000-000000000005', 'Um bebedouro', 'Bebedouro de coluna refrigerado, filtro de água, capacidade para uso intenso em ambiente escolar.', 'monetary', 120000, 0, false, true),
-  ('b2c3d4e5-0006-4000-8000-000000000006', 'Paramentos (todas as cores)', 'Conjunto completo de paramentos litúrgicos nas cores: branco, vermelho, verde, roxo e preto. Inclui casulas, estolas e véus de cálice para celebrações do ano litúrgico.', 'monetary', 250000, 0, false, true),
-  ('b2c3d4e5-0007-4000-8000-000000000007', 'Um turíbulo', 'Incensário suspenso por correntes em metal dourado ou prateado, utilizado para incensar o altar e procissões durante missas solenes.', 'monetary', 45000, 0, false, true),
-  ('b2c3d4e5-0008-4000-8000-000000000008', 'Móvel para sacristia', 'Armário ou cômoda em madeira para organização e guarda de paramentos, alfaias e objetos litúrgicos.', 'monetary', 180000, 0, false, true),
-  ('b2c3d4e5-0009-4000-8000-000000000009', 'Candelabros para os acólitos', 'Par de candelabros em metal (latão ou bronze) com acabamento dourado, altura adequada para procissões e cerimônias com acólitos.', 'monetary', 60000, 0, false, true),
-  ('b2c3d4e5-0010-4000-8000-000000000010', 'Mesa de comunhão', 'Mesa em madeira nobre ou MDF com acabamento litúrgico, utilizada para distribuição da comunhão durante celebrações.', 'monetary', 90000, 0, false, true),
-  ('b2c3d4e5-0011-4000-8000-000000000011', 'Bancos para a capela', 'Conjunto de bancos em madeira com encosto, capacidade para 8-10 pessoas por banco, acabamento envernizado.', 'monetary', 350000, 0, false, true),
-  ('b2c3d4e5-0012-4000-8000-000000000012', 'Trator de cortar grama', 'Trator cortador de grama tipo ride-on, motor a gasolina, largura de corte 90-120cm, ideal para grandes áreas e campos escolares.', 'monetary', 1200000, 0, false, true),
-  ('b2c3d4e5-0013-4000-8000-000000000013', 'Motosserra', 'Motosserra a gasolina, potência 2-3 HP, sabre de 16-18 polegadas, para corte de árvores e manutenção de área verde.', 'monetary', 180000, 0, false, true),
-  ('b2c3d4e5-0014-4000-8000-000000000014', 'Podadora elétrica', 'Podadora/eletrosserra portátil, bateria recarregável ou elétrica com fio, lâmina 100-250mm para poda de galhos e arbustos.', 'monetary', 80000, 0, false, true),
-  ('b2c3d4e5-0015-4000-8000-000000000015', 'Chaleira elétrica', 'Chaleira elétrica em aço inoxidável, capacidade 1.5-2 litros, desligamento automático, base giratória 360°.', 'monetary', 15000, 0, false, true)
+INSERT INTO products (id, name, description, target_amount, current_amount, is_fulfilled, is_published) VALUES
+  ('b2c3d4e5-0001-4000-8000-000000000001', 'Multifuncional Impressora Epson Workforce WF-C5810', 'Impressora multifuncional colorida com sistema de tinta substituível, velocidade de 25 ppm, conectividade Wi-Fi e Ethernet. Ideal para ambiente escolar com alto volume de impressão.', 350000, 0, false, true),
+  ('b2c3d4e5-0002-4000-8000-000000000002', 'Porta copos de bebedouro', 'Suporte organizador em metal para copos descartáveis de 180-200ml, fixação em bebedouro ou parede, uso coletivo.', 8000, 0, false, true),
+  ('b2c3d4e5-0003-4000-8000-000000000003', 'Uma losa', 'Losa/lousa branca para sala de aula, superfície para escrita com marcadores apagáveis, moldura em alumínio.', 45000, 0, false, true),
+  ('b2c3d4e5-0004-4000-8000-000000000004', '7 bolsas de mensualidade', 'Auxílio financeiro para estudantes em situação de vulnerabilidade socioeconômica, cobertura de mensalidade escolar.', 700000, 0, false, true),
+  ('b2c3d4e5-0005-4000-8000-000000000005', 'Um bebedouro', 'Bebedouro de coluna refrigerado, filtro de água, capacidade para uso intenso em ambiente escolar.', 120000, 0, false, true),
+  ('b2c3d4e5-0006-4000-8000-000000000006', 'Paramentos (todas as cores)', 'Conjunto completo de paramentos litúrgicos nas cores: branco, vermelho, verde, roxo e preto. Inclui casulas, estolas e véus de cálice para celebrações do ano litúrgico.', 250000, 0, false, true),
+  ('b2c3d4e5-0007-4000-8000-000000000007', 'Um turíbulo', 'Incensário suspenso por correntes em metal dourado ou prateado, utilizado para incensar o altar e procissões durante missas solenes.', 45000, 0, false, true),
+  ('b2c3d4e5-0008-4000-8000-000000000008', 'Móvel para sacristia', 'Armário ou cômoda em madeira para organização e guarda de paramentos, alfaias e objetos litúrgicos.', 180000, 0, false, true),
+  ('b2c3d4e5-0009-4000-8000-000000000009', 'Candelabros para os acólitos', 'Par de candelabros em metal (latão ou bronze) com acabamento dourado, altura adequada para procissões e cerimônias com acólitos.', 60000, 0, false, true),
+  ('b2c3d4e5-0010-4000-8000-000000000010', 'Mesa de comunhão', 'Mesa em madeira nobre ou MDF com acabamento litúrgico, utilizada para distribuição da comunhão durante celebrações.', 90000, 0, false, true),
+  ('b2c3d4e5-0011-4000-8000-000000000011', 'Bancos para a capela', 'Conjunto de bancos em madeira com encosto, capacidade para 8-10 pessoas por banco, acabamento envernizado.', 350000, 0, false, true),
+  ('b2c3d4e5-0012-4000-8000-000000000012', 'Trator de cortar grama', 'Trator cortador de grama tipo ride-on, motor a gasolina, largura de corte 90-120cm, ideal para grandes áreas e campos escolares.', 1200000, 0, false, true),
+  ('b2c3d4e5-0013-4000-8000-000000000013', 'Motosserra', 'Motosserra a gasolina, potência 2-3 HP, sabre de 16-18 polegadas, para corte de árvores e manutenção de área verde.', 180000, 0, false, true),
+  ('b2c3d4e5-0014-4000-8000-000000000014', 'Podadora elétrica', 'Podadora/eletrosserra portátil, bateria recarregável ou elétrica com fio, lâmina 100-250mm para poda de galhos e arbustos.', 80000, 0, false, true),
+  ('b2c3d4e5-0015-4000-8000-000000000015', 'Chaleira elétrica', 'Chaleira elétrica em aço inoxidável, capacidade 1.5-2 litros, desligamento automático, base giratória 360°.', 15000, 0, false, true)
 ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO product_categories (product_id, category_id) VALUES

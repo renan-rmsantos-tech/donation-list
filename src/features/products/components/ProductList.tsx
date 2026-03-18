@@ -30,7 +30,6 @@ import {
 type Product = {
   id: string;
   name: string;
-  donationType: 'monetary' | 'physical';
   targetAmount: number | null;
   currentAmount: number;
   isFulfilled: boolean;
@@ -68,7 +67,6 @@ export function ProductList({ products }: { products: Product[] }) {
             <TableHeader>
               <TableRow>
                 <TableHead className="px-4">Nome</TableHead>
-                <TableHead className="px-4">Tipo</TableHead>
                 <TableHead className="px-4">Status</TableHead>
                 <TableHead className="px-4">Ações</TableHead>
               </TableRow>
@@ -78,16 +76,15 @@ export function ProductList({ products }: { products: Product[] }) {
                 <TableRow key={product.id}>
                   <TableCell className="px-4">{product.name}</TableCell>
                   <TableCell className="px-4">
-                    {product.donationType === 'monetary'
-                      ? 'Dinheiro'
-                      : 'Material'}
-                  </TableCell>
-                  <TableCell className="px-4">
-                    {product.donationType === 'monetary'
-                      ? `${formatCurrency(product.currentAmount)} de ${formatCurrency(product.targetAmount ?? 0)}`
-                      : product.isFulfilled
-                        ? 'Concluído'
-                        : 'Pendente'}
+                    <div className="flex flex-col gap-1">
+                      <span>
+                        {formatCurrency(product.currentAmount)} de{' '}
+                        {formatCurrency(product.targetAmount ?? 0)}
+                      </span>
+                      <span className="text-sm text-muted-foreground">
+                        Material: {product.isFulfilled ? 'Concluído' : 'Pendente'}
+                      </span>
+                    </div>
                   </TableCell>
                   <TableCell className="px-4">
                     <div className="flex gap-2 items-center">

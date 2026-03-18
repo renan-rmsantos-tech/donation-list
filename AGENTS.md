@@ -53,10 +53,10 @@ src/
 
 2. **products** - Donation items
    - id (UUID PK)
-   - name, description, donationType
-   - targetAmount (monetary only, in cents)
+   - name, description
+   - targetAmount (in cents)
    - currentAmount (denormalized, in cents)
-   - isFulfilled (physical only)
+   - isFulfilled
    - isPublished
    - timestamps
 

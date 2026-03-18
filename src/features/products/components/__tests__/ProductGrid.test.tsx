@@ -6,7 +6,6 @@ const mockMonetaryProduct = {
   id: '1',
   name: 'Monetary Product',
   description: 'A monetary donation item',
-  donationType: 'monetary' as const,
   targetAmount: 10000,
   currentAmount: 5000,
   isFulfilled: false,
@@ -23,8 +22,7 @@ const mockPhysicalProduct = {
   id: '2',
   name: 'Physical Product',
   description: 'A physical donation item',
-  donationType: 'physical' as const,
-  targetAmount: null,
+  targetAmount: 5000,
   currentAmount: 0,
   isFulfilled: false,
       imagePath: null,
@@ -77,14 +75,6 @@ describe('ProductGrid', () => {
       );
       expect(screen.getByText(/Categorias: Sacristy/)).toBeInTheDocument();
       expect(screen.getByText(/Categorias: Garden/)).toBeInTheDocument();
-    });
-
-    it('should display donation type labels', () => {
-      render(
-        <ProductGrid products={[mockMonetaryProduct, mockPhysicalProduct]} />
-      );
-      expect(screen.getAllByText('Dinheiro').length).toBeGreaterThan(0);
-      expect(screen.getAllByText('Material').length).toBeGreaterThan(0);
     });
 
     it('should render links to product detail pages', () => {

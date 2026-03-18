@@ -14,13 +14,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import {
   Form,
   FormControl,
   FormDescription,
@@ -39,18 +32,14 @@ const productFormSchema = z
       .string()
       .min(1, 'Descrição é obrigatória')
       .max(1000, 'Descrição muito longa'),
-    donationType: z.enum(['monetary', 'physical']),
-    targetAmountDisplay: z.string().optional(),
+    targetAmountDisplay: z.string().min(1, 'Valor alvo é obrigatório'),
     isPublished: z.boolean(),
     categoryIds: z.array(z.string()),
   })
   .refine(
-    (data) =>
-      data.donationType !== 'monetary' ||
-      (data.targetAmountDisplay &&
-        parseBRLToNumber(data.targetAmountDisplay) > 0),
+    (data) => parseBRLToNumber(data.targetAmountDisplay) > 0,
     {
-      message: 'Valor alvo é obrigatório para produtos monetários',
+      message: 'Valor alvo deve ser maior que zero',
       path: ['targetAmountDisplay'],
     }
   );
@@ -68,7 +57,6 @@ type ProductFormProps = {
     id: string;
     name: string;
     description: string;
-    donationType: 'monetary' | 'physical';
     targetAmount: number | null;
     currentAmount: number;
     isFulfilled: boolean;
@@ -89,9 +77,8 @@ export function ProductForm({ categories, product, imageUrl }: ProductFormProps)
     defaultValues: {
       name: product?.name ?? '',
       description: product?.description ?? '',
-      donationType: product?.donationType ?? 'monetary',
       targetAmountDisplay:
-        product?.donationType === 'monetary' && product?.targetAmount
+        product?.targetAmount
           ? formatToBRLDisplay(product.targetAmount / 100)
           : '',
       isPublished: product?.isPublished ?? true,
@@ -99,16 +86,13 @@ export function ProductForm({ categories, product, imageUrl }: ProductFormProps)
     },
   });
 
-  const donationType = form.watch('donationType');
-
   const onSubmit = async (values: ProductFormValues) => {
     setIsUploading(true);
 
     try {
-      const targetAmountCents =
-        values.donationType === 'monetary' && values.targetAmountDisplay
-          ? Math.round(parseBRLToNumber(values.targetAmountDisplay) * 100)
-          : undefined;
+      const targetAmountCents = values.targetAmountDisplay
+        ? Math.round(parseBRLToNumber(values.targetAmountDisplay) * 100)
+        : undefined;
 
       let imagePath: string | undefined;
 
@@ -165,7 +149,6 @@ export function ProductForm({ categories, product, imageUrl }: ProductFormProps)
       const payload: Record<string, unknown> = {
         name: values.name.trim(),
         description: values.description.trim(),
-        donationType: values.donationType,
         targetAmount: targetAmountCents,
         isPublished: values.isPublished,
         categoryIds: values.categoryIds,
@@ -191,7 +174,7 @@ export function ProductForm({ categories, product, imageUrl }: ProductFormProps)
       } else {
         toast.error(
           result.error === 'VALIDATION_ERROR'
-            ? 'Verifique os campos. Valor alvo é obrigatório para produtos monetários.'
+            ? 'Verifique os campos.'
             : result.error === 'UNAUTHORIZED'
               ? 'Sessão expirada. Faça login novamente.'
               : 'Erro ao salvar. Tente novamente.'
@@ -243,69 +226,40 @@ export function ProductForm({ categories, product, imageUrl }: ProductFormProps)
 
           <FormField
             control={form.control}
-            name="donationType"
+            name="targetAmountDisplay"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Tipo de doação</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                  value={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Selecione o tipo" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="monetary">Dinheiro</SelectItem>
-                    <SelectItem value="physical">Material</SelectItem>
-                  </SelectContent>
-                </Select>
+                <FormLabel>Valor alvo</FormLabel>
+                <FormControl>
+                  <div className="flex items-center rounded-md border border-input bg-background px-3 has-[:focus-within]:outline-none has-[:focus-within]:ring-2 has-[:focus-within]:ring-ring has-[:focus-within]:ring-offset-2">
+                    <span className="text-muted-foreground mr-2">R$</span>
+                    <Input
+                      type="text"
+                      inputMode="decimal"
+                      placeholder="0,00"
+                      className="border-0 p-0 shadow-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                      value={field.value ?? ''}
+                      onChange={(e) => field.onChange(e.target.value)}
+                      onBlur={(e) => {
+                        const num = parseBRLToNumber(e.target.value);
+                        if (num > 0) {
+                          field.onChange(formatToBRLDisplay(num));
+                        }
+                        field.onBlur();
+                      }}
+                    />
+                  </div>
+                </FormControl>
+                {product?.targetAmount && (
+                  <FormDescription>
+                    Atual: {formatCurrency(product.currentAmount)} de{' '}
+                    {formatCurrency(product.targetAmount)}
+                  </FormDescription>
+                )}
                 <FormMessage />
               </FormItem>
             )}
           />
-
-          {donationType === 'monetary' && (
-            <FormField
-              control={form.control}
-              name="targetAmountDisplay"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Valor alvo</FormLabel>
-                  <FormControl>
-                    <div className="flex items-center rounded-md border border-input bg-background px-3 has-[:focus-within]:outline-none has-[:focus-within]:ring-2 has-[:focus-within]:ring-ring has-[:focus-within]:ring-offset-2">
-                      <span className="text-muted-foreground mr-2">R$</span>
-                      <Input
-                        type="text"
-                        inputMode="decimal"
-                        placeholder="0,00"
-                        className="border-0 p-0 shadow-none focus-visible:ring-0 focus-visible:ring-offset-0"
-                        value={field.value ?? ''}
-                        onChange={(e) => field.onChange(e.target.value)}
-                        onBlur={(e) => {
-                          const num = parseBRLToNumber(e.target.value);
-                          if (num > 0) {
-                            field.onChange(formatToBRLDisplay(num));
-                          }
-                          field.onBlur();
-                        }}
-                      />
-                    </div>
-                  </FormControl>
-                  {product?.donationType === 'monetary' &&
-                    product?.targetAmount && (
-                      <FormDescription>
-                        Atual: {formatCurrency(product.currentAmount)} de{' '}
-                        {formatCurrency(product.targetAmount)}
-                      </FormDescription>
-                    )}
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          )}
 
           <FormField
             control={form.control}

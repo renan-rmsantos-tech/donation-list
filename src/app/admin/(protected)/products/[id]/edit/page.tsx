@@ -30,7 +30,6 @@ export default async function EditProductPage({
           id: product.id,
           name: product.name,
           description: product.description,
-          donationType: product.donationType,
           targetAmount: product.targetAmount,
           currentAmount: product.currentAmount,
           isFulfilled: product.isFulfilled,

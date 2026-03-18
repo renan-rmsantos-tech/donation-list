@@ -41,7 +41,7 @@ export async function createMonetaryDonation(
   try {
     const validated = createMonetaryDonationSchema.parse(input);
 
-    // Check if product exists and is monetary type
+    // Check if product exists
     const product = await db.query.products.findFirst({
       where: eq(products.id, validated.productId),
     });
@@ -148,7 +148,7 @@ export async function createPhysicalPledge(
   try {
     const validated = createPhysicalPledgeSchema.parse(input);
 
-    // Check if product exists and is physical type
+    // Check if product exists
     const product = await db.query.products.findFirst({
       where: eq(products.id, validated.productId),
     });
@@ -378,7 +378,6 @@ export async function createFundTransfer(
         columns: {
           id: true,
           currentAmount: true,
-          donationType: true,
         },
         where: inArray(products.id, [
           validated.sourceProductId,
@@ -396,11 +395,6 @@ export async function createFundTransfer(
 
       if (!sourceProduct) {
         throw new Error('PRODUCT_NOT_FOUND');
-      }
-
-      // Transfers are restricted to products with monetary balances.
-      if (transferProducts.some((p) => p.donationType !== 'monetary')) {
-        throw new Error('INVALID_TRANSFER_PRODUCTS');
       }
 
       // Fast-fail before write for clearer domain error.

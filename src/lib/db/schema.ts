@@ -24,10 +24,9 @@ export const products = pgTable('products', {
   id: uuid('id').primaryKey().defaultRandom(),
   name: text('name').notNull(),
   description: text('description').notNull(),
-  donationType: donationTypeEnum('donation_type').notNull(),
-  targetAmount: integer('target_amount'), // BRL cents, null for physical
+  targetAmount: integer('target_amount'), // BRL cents
   currentAmount: integer('current_amount').default(0).notNull(), // denormalized, BRL cents
-  isFulfilled: boolean('is_fulfilled').default(false).notNull(), // for physical items
+  isFulfilled: boolean('is_fulfilled').default(false).notNull(),
   isPublished: boolean('is_published').default(true).notNull(),
   imagePath: text('image_path'), // Supabase Storage path for product photo
   createdAt: timestamp('created_at').defaultNow().notNull(),
