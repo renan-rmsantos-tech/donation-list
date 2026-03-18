@@ -55,4 +55,19 @@ describe('MonetaryDonationForm', () => {
     expect(screen.getByText(/Restante para atingir a meta/)).toBeInTheDocument();
   });
 
+  it('should render required donor email field', () => {
+    render(
+      <MonetaryDonationForm
+        productId="123e4567-e89b-12d3-a456-426614174000"
+        targetAmount={10000}
+        currentAmount={0}
+        qrCodeImageUrl="https://example.com/qr.png"
+        copiaEColaCode="00020126..."
+      />
+    );
+
+    const emailInput = screen.getByLabelText('E-mail *');
+    expect(emailInput).toBeInTheDocument();
+    expect(emailInput).toBeRequired();
+  });
 });

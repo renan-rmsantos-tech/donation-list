@@ -17,6 +17,7 @@ type MonetaryDonationFormProps = {
   currentAmount: number;
   qrCodeImageUrl: string | null;
   copiaEColaCode: string | null;
+  idPrefix?: string;
 };
 
 export function MonetaryDonationForm({
@@ -25,6 +26,7 @@ export function MonetaryDonationForm({
   currentAmount,
   qrCodeImageUrl,
   copiaEColaCode,
+  idPrefix = '',
 }: MonetaryDonationFormProps) {
   const [amount, setAmount] = useState('');
   const [donorName, setDonorName] = useState('');
@@ -119,6 +121,10 @@ export function MonetaryDonationForm({
   };
 
   const hasPixSettings = qrCodeImageUrl || copiaEColaCode;
+  const amountInputId = `${idPrefix}amount`;
+  const donorNameInputId = `${idPrefix}donorName`;
+  const donorEmailInputId = `${idPrefix}donorEmail`;
+  const receiptInputId = `${idPrefix}receipt`;
 
   return (
     <Card className="border-primary/30 bg-primary/5">
@@ -178,9 +184,9 @@ export function MonetaryDonationForm({
         {hasPixSettings && (
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="amount">Valor da Doação (R$) *</Label>
+              <Label htmlFor={amountInputId}>Valor da Doação (R$) *</Label>
               <Input
-                id="amount"
+                id={amountInputId}
                 type="number"
                 step="0.01"
                 min="0.01"
@@ -196,9 +202,9 @@ export function MonetaryDonationForm({
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="donorName">Seu Nome (opcional)</Label>
+              <Label htmlFor={donorNameInputId}>Seu Nome (opcional)</Label>
               <Input
-                id="donorName"
+                id={donorNameInputId}
                 type="text"
                 value={donorName}
                 onChange={(e) => setDonorName(e.target.value)}
@@ -208,9 +214,9 @@ export function MonetaryDonationForm({
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="donorEmail">E-mail *</Label>
+              <Label htmlFor={donorEmailInputId}>E-mail *</Label>
               <Input
-                id="donorEmail"
+                id={donorEmailInputId}
                 type="email"
                 value={donorEmail}
                 onChange={(e) => setDonorEmail(e.target.value)}
@@ -223,10 +229,10 @@ export function MonetaryDonationForm({
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="receipt">Comprovante de Pagamento *</Label>
+              <Label htmlFor={receiptInputId}>Comprovante de Pagamento *</Label>
               <Input
                 ref={fileInputRef}
-                id="receipt"
+                id={receiptInputId}
                 type="file"
                 accept="image/*,.pdf"
                 onChange={(e) => {

@@ -58,7 +58,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
                 <div className="flex items-center gap-3 mb-2">
                   <h1 className="text-3xl font-bold">{product.name}</h1>
                   <Badge variant="secondary" className="shrink-0">
-                    {product.donationType === 'monetary' ? 'Dinheiro' : 'Material'}
+                    Dinheiro + Material
                   </Badge>
                 </div>
                 {categoryNames && (
@@ -95,38 +95,44 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
             <div className="p-6 bg-muted/50 rounded-lg">
               <h2 className="text-xl font-semibold mb-4">Status</h2>
 
-              {product.donationType === 'monetary' ? (
-                <div>
-                  <ProgressBar
-                    currentAmount={product.currentAmount}
-                    targetAmount={product.targetAmount || 0}
-                  />
-                  <div className="mt-4 p-3 bg-primary/5 border border-primary/20 rounded text-sm">
-                    <p className="font-medium mb-1">Meta: {formatCurrency(product.targetAmount || 0)}</p>
-                    <p>Valor arrecadado: {formatCurrency(product.currentAmount)}</p>
-                  </div>
+              <div>
+                <h3 className="text-sm font-medium text-muted-foreground mb-3">
+                  Doações em Dinheiro
+                </h3>
+                <ProgressBar
+                  currentAmount={product.currentAmount}
+                  targetAmount={product.targetAmount || 0}
+                />
+                <div className="mt-4 p-3 bg-primary/5 border border-primary/20 rounded text-sm">
+                  <p className="font-medium mb-1">
+                    Meta: {formatCurrency(product.targetAmount || 0)}
+                  </p>
+                  <p>Valor arrecadado: {formatCurrency(product.currentAmount)}</p>
                 </div>
-              ) : (
-                <div>
-                  <div className="mb-4">
-                    <FulfilledBadge isFulfilled={product.isFulfilled} />
-                  </div>
-                  <Alert
-                    variant="default"
-                    className={
-                      product.isFulfilled
-                        ? 'border-green-200 bg-green-50 dark:bg-green-950/30 text-green-800 dark:text-green-200'
-                        : 'border-orange-200 bg-orange-50 dark:bg-orange-950/30 text-orange-800 dark:text-orange-200'
-                    }
-                  >
-                    <AlertDescription>
-                      {product.isFulfilled
-                        ? 'Este item foi atendido'
-                        : 'Este item ainda é necessário'}
-                    </AlertDescription>
-                  </Alert>
+              </div>
+
+              <div className="mt-6">
+                <h3 className="text-sm font-medium text-muted-foreground mb-3">
+                  Doações de Material
+                </h3>
+                <div className="mb-4">
+                  <FulfilledBadge isFulfilled={product.isFulfilled} />
                 </div>
-              )}
+                <Alert
+                  variant="default"
+                  className={
+                    product.isFulfilled
+                      ? 'border-green-200 bg-green-50 dark:bg-green-950/30 text-green-800 dark:text-green-200'
+                      : 'border-orange-200 bg-orange-50 dark:bg-orange-950/30 text-orange-800 dark:text-orange-200'
+                  }
+                >
+                  <AlertDescription>
+                    {product.isFulfilled
+                      ? 'Este item foi atendido'
+                      : 'Este item ainda é necessário'}
+                  </AlertDescription>
+                </Alert>
+              </div>
             </div>
 
             {/* Donation Forms - Tabbed Interface */}

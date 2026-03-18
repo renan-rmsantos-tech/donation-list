@@ -121,22 +121,22 @@ describe('ProductDetailPage', () => {
       expect(link).toHaveAttribute('href', '/');
     });
 
-    it('should render Monetary Donation badge for monetary products', async () => {
+    it('should render dual donation badge for monetary products', async () => {
       vi.mocked(getPublishedProductById).mockResolvedValue(mockMonetaryProduct);
       const Page = await ProductDetailPage({
         params: Promise.resolve({ id: '1' }),
       });
       render(Page);
-      expect(screen.getByText('Dinheiro')).toBeInTheDocument();
+      expect(screen.getByText('Dinheiro + Material')).toBeInTheDocument();
     });
 
-    it('should render Physical Donation badge for physical products', async () => {
+    it('should render dual donation badge for physical products', async () => {
       vi.mocked(getPublishedProductById).mockResolvedValue(mockPhysicalProduct);
       const Page = await ProductDetailPage({
         params: Promise.resolve({ id: '2' }),
       });
       render(Page);
-      expect(screen.getByText('Material')).toBeInTheDocument();
+      expect(screen.getByText('Dinheiro + Material')).toBeInTheDocument();
     });
   });
 

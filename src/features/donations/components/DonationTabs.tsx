@@ -1,6 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@/components/ui/tabs';
 import { MonetaryDonationForm } from './MonetaryDonationForm';
 import { PhysicalPledgeForm } from './PhysicalPledgeForm';
 
@@ -19,49 +24,29 @@ export function DonationTabs({
   qrCodeImageUrl,
   copiaEColaCode,
 }: DonationTabsProps) {
-  const [activeTab, setActiveTab] = useState<'monetary' | 'physical'>('monetary');
-
   return (
     <div className="w-full">
-      {/* Tab Headers */}
-      <div className="flex border-b border-border mb-6">
-        <button
-          onClick={() => setActiveTab('monetary')}
-          className={`px-4 py-2 font-medium transition-colors ${
-            activeTab === 'monetary'
-              ? 'border-b-2 border-primary text-primary'
-              : 'text-muted-foreground hover:text-foreground'
-          }`}
-        >
-          Dinheiro
-        </button>
-        <button
-          onClick={() => setActiveTab('physical')}
-          className={`px-4 py-2 font-medium transition-colors ${
-            activeTab === 'physical'
-              ? 'border-b-2 border-primary text-primary'
-              : 'text-muted-foreground hover:text-foreground'
-          }`}
-        >
-          Material
-        </button>
-      </div>
+      <Tabs defaultValue="monetary" className="w-full">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="monetary">Dinheiro</TabsTrigger>
+          <TabsTrigger value="physical">Material</TabsTrigger>
+        </TabsList>
 
-      {/* Tab Content */}
-      <div>
-        {activeTab === 'monetary' && (
+        <TabsContent value="monetary" forceMount>
           <MonetaryDonationForm
             productId={productId}
             targetAmount={targetAmount ?? 0}
             currentAmount={currentAmount}
             qrCodeImageUrl={qrCodeImageUrl}
             copiaEColaCode={copiaEColaCode}
+            idPrefix="monetary-"
           />
-        )}
-        {activeTab === 'physical' && (
-          <PhysicalPledgeForm productId={productId} />
-        )}
-      </div>
+        </TabsContent>
+
+        <TabsContent value="physical" forceMount>
+          <PhysicalPledgeForm productId={productId} idPrefix="physical-" />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }

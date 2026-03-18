@@ -10,13 +10,20 @@ import { toast } from 'sonner';
 
 type PhysicalPledgeFormProps = {
   productId: string;
+  idPrefix?: string;
 };
 
-export function PhysicalPledgeForm({ productId }: PhysicalPledgeFormProps) {
+export function PhysicalPledgeForm({
+  productId,
+  idPrefix = '',
+}: PhysicalPledgeFormProps) {
   const [donorName, setDonorName] = useState('');
   const [donorPhone, setDonorPhone] = useState('');
   const [donorEmail, setDonorEmail] = useState('');
   const [loading, setLoading] = useState(false);
+  const donorNameInputId = `${idPrefix}donorName`;
+  const donorPhoneInputId = `${idPrefix}donorPhone`;
+  const donorEmailInputId = `${idPrefix}donorEmail`;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -67,9 +74,9 @@ export function PhysicalPledgeForm({ productId }: PhysicalPledgeFormProps) {
       <CardContent className="space-y-6">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="donorName">Seu Nome *</Label>
+            <Label htmlFor={donorNameInputId}>Seu Nome *</Label>
             <Input
-              id="donorName"
+              id={donorNameInputId}
               type="text"
               value={donorName}
               onChange={(e) => setDonorName(e.target.value)}
@@ -80,9 +87,9 @@ export function PhysicalPledgeForm({ productId }: PhysicalPledgeFormProps) {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="donorPhone">Telefone *</Label>
+            <Label htmlFor={donorPhoneInputId}>Telefone *</Label>
             <Input
-              id="donorPhone"
+              id={donorPhoneInputId}
               type="tel"
               value={donorPhone}
               onChange={(e) => setDonorPhone(e.target.value)}
@@ -95,9 +102,9 @@ export function PhysicalPledgeForm({ productId }: PhysicalPledgeFormProps) {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="donorEmail">E-mail *</Label>
+            <Label htmlFor={donorEmailInputId}>E-mail *</Label>
             <Input
-              id="donorEmail"
+              id={donorEmailInputId}
               type="email"
               value={donorEmail}
               onChange={(e) => setDonorEmail(e.target.value)}

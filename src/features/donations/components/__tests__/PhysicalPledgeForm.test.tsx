@@ -40,6 +40,9 @@ describe('PhysicalPledgeForm', () => {
     fireEvent.change(screen.getByPlaceholderText(/98765-4321/), {
       target: { value: '11987654321' },
     });
+    fireEvent.change(screen.getByPlaceholderText('email@example.com'), {
+      target: { value: 'donor@example.com' },
+    });
     fireEvent.click(screen.getByText('Enviar Compromisso'));
 
     await waitFor(() => {
@@ -65,10 +68,23 @@ describe('PhysicalPledgeForm', () => {
     fireEvent.change(screen.getByPlaceholderText(/98765-4321/), {
       target: { value: '11987654321' },
     });
+    fireEvent.change(screen.getByPlaceholderText('email@example.com'), {
+      target: { value: 'donor@example.com' },
+    });
     fireEvent.click(screen.getByText('Enviar Compromisso'));
 
     await waitFor(() => {
       expect(toast.error).toHaveBeenCalledWith('Este item já foi atendido.');
     });
+  });
+
+  it('should render required donor email field', () => {
+    render(
+      <PhysicalPledgeForm productId="123e4567-e89b-12d3-a456-426614174000" />
+    );
+
+    const emailInput = screen.getByLabelText('E-mail *');
+    expect(emailInput).toBeInTheDocument();
+    expect(emailInput).toBeRequired();
   });
 });
