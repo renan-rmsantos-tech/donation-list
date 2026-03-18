@@ -7,8 +7,7 @@ import { getPublicUrl } from '@/lib/storage/supabase';
 import { PRODUCT_PLACEHOLDER_IMAGE } from '@/lib/constants';
 import { ProgressBar } from '@/features/products/components/ProgressBar';
 import { FulfilledBadge } from '@/features/products/components/FulfilledBadge';
-import { MonetaryDonationForm } from '@/features/donations/components/MonetaryDonationForm';
-import { PhysicalPledgeForm } from '@/features/donations/components/PhysicalPledgeForm';
+import { DonationTabs } from '@/features/donations/components/DonationTabs';
 import { formatCurrency } from '@/lib/utils/format';
 import { BackButton } from '@/components/back-button';
 import { ThemeToggle } from '@/components/theme-toggle';
@@ -130,39 +129,28 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
               )}
             </div>
 
-            {/* Donation Forms */}
-            {product.donationType === 'monetary' && (
-              <>
-                {product.targetAmount != null &&
-                product.currentAmount >= product.targetAmount ? (
-                  <Alert className="border-green-200 bg-green-50 dark:bg-green-950/30">
-                    <AlertDescription>
-                      Esta campanha atingiu a meta. Obrigado pelo seu apoio!
-                    </AlertDescription>
-                  </Alert>
-                ) : (
-                  <MonetaryDonationForm
-                    productId={product.id}
-                    targetAmount={product.targetAmount ?? 0}
-                    currentAmount={product.currentAmount}
-                    qrCodeImageUrl={qrCodeImageUrl}
-                    copiaEColaCode={pixSettings?.copiaEColaCode ?? null}
-                  />
-                )}
-              </>
-            )}
-            {product.donationType === 'physical' && (
-              <>
-                {product.isFulfilled ? (
-                  <Alert className="border-green-200 bg-green-50 dark:bg-green-950/30">
-                    <AlertDescription>
-                      Este item foi atendido. Obrigado pelo seu apoio!
-                    </AlertDescription>
-                  </Alert>
-                ) : (
-                  <PhysicalPledgeForm productId={product.id} />
-                )}
-              </>
+            {/* Donation Forms - Tabbed Interface */}
+            {product.targetAmount != null &&
+            product.currentAmount >= product.targetAmount ? (
+              <Alert className="border-green-200 bg-green-50 dark:bg-green-950/30">
+                <AlertDescription>
+                  Esta campanha atingiu a meta. Obrigado pelo seu apoio!
+                </AlertDescription>
+              </Alert>
+            ) : product.isFulfilled ? (
+              <Alert className="border-green-200 bg-green-50 dark:bg-green-950/30">
+                <AlertDescription>
+                  Este item foi atendido. Obrigado pelo seu apoio!
+                </AlertDescription>
+              </Alert>
+            ) : (
+              <DonationTabs
+                productId={product.id}
+                targetAmount={product.targetAmount}
+                currentAmount={product.currentAmount}
+                qrCodeImageUrl={qrCodeImageUrl}
+                copiaEColaCode={pixSettings?.copiaEColaCode ?? null}
+              />
             )}
           </CardContent>
         </Card>

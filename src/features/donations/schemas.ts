@@ -9,6 +9,7 @@ export const createMonetaryDonationSchema = z.object({
     .positive('Amount must be positive')
     .min(100, 'Minimum donation is R$ 1.00'),
   donorName: z.string().max(200, 'Name is too long').optional().or(z.literal('')),
+  donorEmail: z.string().email('E-mail inválido'),
   receiptPath: z.string().min(1, 'Receipt path is required'),
 });
 
@@ -29,7 +30,7 @@ export const createPhysicalPledgeSchema = z.object({
       (phone) => isValidBrazilianPhone(phone),
       'Invalid Brazilian phone number'
     ),
-  donorEmail: z.string().email().optional().or(z.literal('')),
+  donorEmail: z.string().email('E-mail inválido'),
 });
 
 export type CreatePhysicalPledgeInput = z.infer<
@@ -48,3 +49,23 @@ export const generateUploadUrlSchema = z.object({
 });
 
 export type GenerateUploadUrlInput = z.infer<typeof generateUploadUrlSchema>;
+
+export const createFundTransferSchema = z
+  .object({
+    sourceProductId: z.string().uuid('Invalid source product ID'),
+    targetProductId: z.string().uuid('Invalid target product ID'),
+    amount: z
+      .number()
+      .int('Amount must be an integer')
+      .positive('Amount must be positive')
+      .min(100, 'Minimum transfer is R$ 1.00'),
+  })
+  .refine(
+    (data) => data.sourceProductId !== data.targetProductId,
+    {
+      message: 'Source and target products must be different',
+      path: ['targetProductId'],
+    }
+  );
+
+export type CreateFundTransferInput = z.infer<typeof createFundTransferSchema>;

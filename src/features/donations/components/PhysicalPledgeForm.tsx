@@ -27,7 +27,7 @@ export function PhysicalPledgeForm({ productId }: PhysicalPledgeFormProps) {
         productId,
         donorName: donorName.trim(),
         donorPhone: donorPhone.trim(),
-        donorEmail: donorEmail.trim() || undefined,
+        donorEmail: donorEmail.trim(),
       });
 
       if (result.success) {
@@ -40,14 +40,12 @@ export function PhysicalPledgeForm({ productId }: PhysicalPledgeFormProps) {
       } else {
         toast.error(
           result.error === 'VALIDATION_ERROR'
-            ? 'Verifique os campos. Nome e telefone são obrigatórios. Telefone deve ser um número brasileiro válido (10-11 dígitos).'
+            ? 'Verifique os campos. Nome, telefone e e-mail são obrigatórios. Telefone deve ser um número brasileiro válido (10-11 dígitos).'
             : result.error === 'ALREADY_FULFILLED'
               ? 'Este item já foi atendido.'
-              : result.error === 'INVALID_DONATION_TYPE'
-                ? 'Este produto não aceita doações físicas.'
-                : result.error === 'PRODUCT_NOT_FOUND'
-                  ? 'Produto não encontrado.'
-                  : 'Ocorreu um erro. Tente novamente.'
+              : result.error === 'PRODUCT_NOT_FOUND'
+                ? 'Produto não encontrado.'
+                : 'Ocorreu um erro. Tente novamente.'
         );
       }
     } catch {
@@ -97,14 +95,18 @@ export function PhysicalPledgeForm({ productId }: PhysicalPledgeFormProps) {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="donorEmail">E-mail (opcional)</Label>
+            <Label htmlFor="donorEmail">E-mail *</Label>
             <Input
               id="donorEmail"
               type="email"
               value={donorEmail}
               onChange={(e) => setDonorEmail(e.target.value)}
               placeholder="email@example.com"
+              required
             />
+            <p className="text-xs text-muted-foreground">
+              Usaremos seu e-mail para confirmar o recebimento do item.
+            </p>
           </div>
 
           <Button type="submit" disabled={loading} className="w-full">

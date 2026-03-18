@@ -15,6 +15,13 @@
       "when": 1771986230719,
       "tag": "0001_ambitious_zuras",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1773792846349,
+      "tag": "0002_strange_gamma_corps",
+      "breakpoints": true
     }
   ]
 }

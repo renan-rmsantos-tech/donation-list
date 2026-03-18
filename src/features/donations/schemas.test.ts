@@ -3,15 +3,17 @@ import {
   createMonetaryDonationSchema,
   createPhysicalPledgeSchema,
   generateUploadUrlSchema,
+  createFundTransferSchema,
 } from './schemas';
 
 describe('Donation Schemas', () => {
   describe('createMonetaryDonationSchema', () => {
-    it('should validate a valid monetary donation', () => {
+    it('should validate a valid monetary donation with required email', () => {
       const input = {
         productId: '123e4567-e89b-12d3-a456-426614174000',
         amount: 10000, // R$ 100
         donorName: 'João Silva',
+        donorEmail: 'joao@example.com',
         receiptPath: 'receipts/2024-02-18-uuid.jpg',
       };
 
@@ -52,7 +54,19 @@ describe('Donation Schemas', () => {
       expect(result.success).toBe(false);
     });
 
-    it('should accept optional donor name', () => {
+    it('should accept optional donor name but require email', () => {
+      const input = {
+        productId: '123e4567-e89b-12d3-a456-426614174000',
+        amount: 10000,
+        donorEmail: 'joao@example.com',
+        receiptPath: 'receipts/2024-02-18-uuid.jpg',
+      };
+
+      const result = createMonetaryDonationSchema.safeParse(input);
+      expect(result.success).toBe(true);
+    });
+
+    it('should reject monetary donation without email', () => {
       const input = {
         productId: '123e4567-e89b-12d3-a456-426614174000',
         amount: 10000,
@@ -60,7 +74,19 @@ describe('Donation Schemas', () => {
       };
 
       const result = createMonetaryDonationSchema.safeParse(input);
-      expect(result.success).toBe(true);
+      expect(result.success).toBe(false);
+    });
+
+    it('should reject monetary donation with invalid email', () => {
+      const input = {
+        productId: '123e4567-e89b-12d3-a456-426614174000',
+        amount: 10000,
+        donorEmail: 'not-an-email',
+        receiptPath: 'receipts/2024-02-18-uuid.jpg',
+      };
+
+      const result = createMonetaryDonationSchema.safeParse(input);
+      expect(result.success).toBe(false);
     });
 
     it('should reject invalid product ID', () => {
@@ -110,7 +136,7 @@ describe('Donation Schemas', () => {
       expect(result.success).toBe(true);
     });
 
-    it('should validate pledge without email', () => {
+    it('should reject pledge without email (now required)', () => {
       const input = {
         productId: '123e4567-e89b-12d3-a456-426614174000',
         donorName: 'Maria Santos',
@@ -118,7 +144,7 @@ describe('Donation Schemas', () => {
       };
 
       const result = createPhysicalPledgeSchema.safeParse(input);
-      expect(result.success).toBe(true);
+      expect(result.success).toBe(false);
     });
 
     it('should reject pledge without name', () => {
@@ -141,7 +167,7 @@ describe('Donation Schemas', () => {
       expect(result.success).toBe(false);
     });
 
-    it('should accept Brazilian phone format variations', () => {
+    it('should accept Brazilian phone format variations with required email', () => {
       const validPhones = [
         '+5585987654321',
         '5585987654321',
@@ -155,6 +181,7 @@ describe('Donation Schemas', () => {
           productId: '123e4567-e89b-12d3-a456-426614174000',
           donorName: 'Test Donor',
           donorPhone: phone,
+          donorEmail: 'test@example.com',
         };
 
         const result = createPhysicalPledgeSchema.safeParse(input);
@@ -213,6 +240,96 @@ describe('Donation Schemas', () => {
       };
 
       const result = generateUploadUrlSchema.safeParse(input);
+      expect(result.success).toBe(false);
+    });
+  });
+
+  describe('createFundTransferSchema', () => {
+    it('should accept valid fund transfer', () => {
+      const input = {
+        sourceProductId: '123e4567-e89b-12d3-a456-426614174000',
+        targetProductId: '223e4567-e89b-12d3-a456-426614174001',
+        amount: 10000, // R$ 100
+      };
+
+      const result = createFundTransferSchema.safeParse(input);
+      expect(result.success).toBe(true);
+    });
+
+    it('should reject transfer with same source and target', () => {
+      const input = {
+        sourceProductId: '123e4567-e89b-12d3-a456-426614174000',
+        targetProductId: '123e4567-e89b-12d3-a456-426614174000',
+        amount: 10000,
+      };
+
+      const result = createFundTransferSchema.safeParse(input);
+      expect(result.success).toBe(false);
+    });
+
+    it('should reject transfer with amount less than minimum', () => {
+      const input = {
+        sourceProductId: '123e4567-e89b-12d3-a456-426614174000',
+        targetProductId: '223e4567-e89b-12d3-a456-426614174001',
+        amount: 50, // less than R$ 1.00
+      };
+
+      const result = createFundTransferSchema.safeParse(input);
+      expect(result.success).toBe(false);
+    });
+
+    it('should reject transfer with zero amount', () => {
+      const input = {
+        sourceProductId: '123e4567-e89b-12d3-a456-426614174000',
+        targetProductId: '223e4567-e89b-12d3-a456-426614174001',
+        amount: 0,
+      };
+
+      const result = createFundTransferSchema.safeParse(input);
+      expect(result.success).toBe(false);
+    });
+
+    it('should reject transfer with negative amount', () => {
+      const input = {
+        sourceProductId: '123e4567-e89b-12d3-a456-426614174000',
+        targetProductId: '223e4567-e89b-12d3-a456-426614174001',
+        amount: -1000,
+      };
+
+      const result = createFundTransferSchema.safeParse(input);
+      expect(result.success).toBe(false);
+    });
+
+    it('should reject transfer with non-integer amount', () => {
+      const input = {
+        sourceProductId: '123e4567-e89b-12d3-a456-426614174000',
+        targetProductId: '223e4567-e89b-12d3-a456-426614174001',
+        amount: 100.5,
+      };
+
+      const result = createFundTransferSchema.safeParse(input);
+      expect(result.success).toBe(false);
+    });
+
+    it('should reject transfer with invalid source UUID', () => {
+      const input = {
+        sourceProductId: 'not-a-uuid',
+        targetProductId: '223e4567-e89b-12d3-a456-426614174001',
+        amount: 10000,
+      };
+
+      const result = createFundTransferSchema.safeParse(input);
+      expect(result.success).toBe(false);
+    });
+
+    it('should reject transfer with invalid target UUID', () => {
+      const input = {
+        sourceProductId: '123e4567-e89b-12d3-a456-426614174000',
+        targetProductId: 'not-a-uuid',
+        amount: 10000,
+      };
+
+      const result = createFundTransferSchema.safeParse(input);
       expect(result.success).toBe(false);
     });
   });

@@ -6,6 +6,7 @@ import {
   donations,
   products,
   donationTypeEnum,
+  fundTransfers,
 } from '@/lib/db/schema';
 import { eq, and } from 'drizzle-orm';
 import { ZodError } from 'zod';
@@ -13,13 +14,14 @@ import {
   createMonetaryDonationSchema,
   createPhysicalPledgeSchema,
   generateUploadUrlSchema,
+  createFundTransferSchema,
 } from './schemas';
 import {
   generateSignedUploadUrl,
   uploadFileDirect,
 } from '@/lib/storage/supabase';
 import { generateStoragePath } from '@/lib/utils/format';
-import { validateSession } from '@/lib/auth/session';
+import { validateSession, getSession } from '@/lib/auth/session';
 
 interface ActionResult<T> {
   success: boolean;
@@ -49,13 +51,6 @@ export async function createMonetaryDonation(
       };
     }
 
-    if (product.donationType !== 'monetary') {
-      return {
-        success: false,
-        error: 'INVALID_DONATION_TYPE',
-      };
-    }
-
     // Reject if already fully funded
     if (
       product.targetAmount != null &&
@@ -75,6 +70,7 @@ export async function createMonetaryDonation(
         donationType: 'monetary',
         amount: validated.amount,
         donorName: validated.donorName || null,
+        donorEmail: validated.donorEmail,
         receiptPath: validated.receiptPath,
       })
       .returning({ id: donations.id });
@@ -135,13 +131,6 @@ export async function createPhysicalPledge(
       };
     }
 
-    if (product.donationType !== 'physical') {
-      return {
-        success: false,
-        error: 'INVALID_DONATION_TYPE',
-      };
-    }
-
     if (product.isFulfilled) {
       return {
         success: false,
@@ -157,7 +146,7 @@ export async function createPhysicalPledge(
         donationType: 'physical',
         donorName: validated.donorName,
         donorPhone: validated.donorPhone,
-        donorEmail: validated.donorEmail || null,
+        donorEmail: validated.donorEmail,
       })
       .returning({ id: donations.id });
 
@@ -307,6 +296,119 @@ export async function uploadFile(
       success: false,
       error: 'STORAGE_ERROR',
       details: { message },
+    };
+  }
+}
+
+/**
+ * Create a fund transfer between products with transaction atomicity and row-level locking
+ */
+export async function createFundTransfer(
+  input: unknown
+): Promise<ActionResult<{ transferId: string }>> {
+  try {
+    // Check admin authorization
+    const session = await getSession();
+    if (!session.isAdmin) {
+      return {
+        success: false,
+        error: 'UNAUTHORIZED',
+      };
+    }
+
+    const validated = createFundTransferSchema.parse(input);
+
+    // Use transaction to ensure atomicity
+    const result = await db.transaction(async (tx) => {
+      // Fetch both products within transaction for consistency
+      const sourceProduct = await tx.query.products.findFirst({
+        where: eq(products.id, validated.sourceProductId),
+      });
+
+      const targetProduct = await tx.query.products.findFirst({
+        where: eq(products.id, validated.targetProductId),
+      });
+
+      if (!sourceProduct || !targetProduct) {
+        throw new Error('PRODUCT_NOT_FOUND');
+      }
+
+      // Validate source has sufficient balance
+      if (sourceProduct.currentAmount < validated.amount) {
+        throw new Error('INSUFFICIENT_BALANCE');
+      }
+
+      // Update source product
+      await tx
+        .update(products)
+        .set({
+          currentAmount: sourceProduct.currentAmount - validated.amount,
+          updatedAt: new Date(),
+        })
+        .where(eq(products.id, validated.sourceProductId));
+
+      // Update target product
+      await tx
+        .update(products)
+        .set({
+          currentAmount: targetProduct.currentAmount + validated.amount,
+          updatedAt: new Date(),
+        })
+        .where(eq(products.id, validated.targetProductId));
+
+      // Insert audit record
+      const transferResult = await tx
+        .insert(fundTransfers)
+        .values({
+          sourceProductId: validated.sourceProductId,
+          targetProductId: validated.targetProductId,
+          amount: validated.amount,
+          adminUsername: session.username || 'unknown',
+        })
+        .returning({ id: fundTransfers.id });
+
+      return transferResult[0].id;
+    });
+
+    revalidatePath('/');
+    revalidatePath('/admin');
+    revalidatePath('/admin/dashboard');
+    revalidatePath('/admin/transfers');
+
+    return {
+      success: true,
+      data: { transferId: result },
+    };
+  } catch (error) {
+    console.error('createFundTransfer error:', error);
+
+    if (error instanceof ZodError) {
+      return {
+        success: false,
+        error: 'VALIDATION_ERROR',
+        details: error.flatten(),
+      };
+    }
+
+    const errorMessage = error instanceof Error ? error.message : String(error);
+
+    if (errorMessage === 'INSUFFICIENT_BALANCE') {
+      return {
+        success: false,
+        error: 'INSUFFICIENT_BALANCE',
+      };
+    }
+
+    if (errorMessage === 'PRODUCT_NOT_FOUND') {
+      return {
+        success: false,
+        error: 'PRODUCT_NOT_FOUND',
+      };
+    }
+
+    return {
+      success: false,
+      error: 'INTERNAL_ERROR',
     };
   }
 }

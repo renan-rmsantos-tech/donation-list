@@ -65,6 +65,7 @@ describe('Donation Actions', () => {
       const result = await createMonetaryDonation({
         productId: '123e4567-e89b-12d3-a456-426614174000',
         amount: 10000,
+        donorEmail: 'test@example.com',
         receiptPath: 'receipts/test.jpg',
       });
 
@@ -72,7 +73,7 @@ describe('Donation Actions', () => {
       expect(result.error).toBe('PRODUCT_NOT_FOUND');
     });
 
-    it('should reject if product is not monetary type', async () => {
+    it('should accept monetary donation on physical type product (guard removed)', async () => {
       const { db } = await import('@/lib/db');
 
       vi.mocked(db.query.products.findFirst).mockResolvedValueOnce({
@@ -84,7 +85,7 @@ describe('Donation Actions', () => {
         currentAmount: 0,
         isFulfilled: false,
         isPublished: true,
-  imagePath: null,
+        imagePath: null,
         createdAt: new Date(),
         updatedAt: new Date(),
       });
@@ -92,11 +93,12 @@ describe('Donation Actions', () => {
       const result = await createMonetaryDonation({
         productId: '123e4567-e89b-12d3-a456-426614174000',
         amount: 10000,
+        donorEmail: 'test@example.com',
         receiptPath: 'receipts/test.jpg',
       });
 
-      expect(result.success).toBe(false);
-      expect(result.error).toBe('INVALID_DONATION_TYPE');
+      expect(result.success).toBe(true);
+      expect(result.data?.donationId).toBe('donation-uuid-123');
     });
 
     it('should reject missing receipt path', async () => {
@@ -111,7 +113,7 @@ describe('Donation Actions', () => {
         currentAmount: 0,
         isFulfilled: false,
         isPublished: true,
-  imagePath: null,
+        imagePath: null,
         createdAt: new Date(),
         updatedAt: new Date(),
       });
@@ -119,8 +121,36 @@ describe('Donation Actions', () => {
       const result = await createMonetaryDonation({
         productId: '123e4567-e89b-12d3-a456-426614174000',
         amount: 10000,
+        donorEmail: 'test@example.com',
         receiptPath: '',
       });
+
+      expect(result.success).toBe(false);
+      expect(result.error).toBe('VALIDATION_ERROR');
+    });
+
+    it('should reject missing donorEmail', async () => {
+      const { db } = await import('@/lib/db');
+
+      vi.mocked(db.query.products.findFirst).mockResolvedValueOnce({
+        id: '123e4567-e89b-12d3-a456-426614174000',
+        name: 'Test Product',
+        description: 'Test',
+        donationType: 'monetary',
+        targetAmount: 50000,
+        currentAmount: 0,
+        isFulfilled: false,
+        isPublished: true,
+        imagePath: null,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+
+      const result = await createMonetaryDonation({
+        productId: '123e4567-e89b-12d3-a456-426614174000',
+        amount: 10000,
+        receiptPath: 'receipts/test.jpg',
+      } as any);
 
       expect(result.success).toBe(false);
       expect(result.error).toBe('VALIDATION_ERROR');
@@ -138,7 +168,7 @@ describe('Donation Actions', () => {
         currentAmount: 10000,
         isFulfilled: false,
         isPublished: true,
-  imagePath: null,
+        imagePath: null,
         createdAt: new Date(),
         updatedAt: new Date(),
       });
@@ -146,6 +176,7 @@ describe('Donation Actions', () => {
       const result = await createMonetaryDonation({
         productId: '123e4567-e89b-12d3-a456-426614174000',
         amount: 100,
+        donorEmail: 'test@example.com',
         receiptPath: 'receipts/test.jpg',
       });
 
@@ -153,7 +184,7 @@ describe('Donation Actions', () => {
       expect(result.error).toBe('ALREADY_FUNDED');
     });
 
-    it('should process valid monetary donation', async () => {
+    it('should process valid monetary donation with required email', async () => {
       const { db } = await import('@/lib/db');
 
       vi.mocked(db.query.products.findFirst).mockResolvedValueOnce({
@@ -165,7 +196,7 @@ describe('Donation Actions', () => {
         currentAmount: 0,
         isFulfilled: false,
         isPublished: true,
-  imagePath: null,
+        imagePath: null,
         createdAt: new Date(),
         updatedAt: new Date(),
       });
@@ -174,6 +205,7 @@ describe('Donation Actions', () => {
         productId: '123e4567-e89b-12d3-a456-426614174000',
         amount: 10000,
         donorName: 'Test Donor',
+        donorEmail: 'test@example.com',
         receiptPath: 'receipts/test.jpg',
       });
 
@@ -203,13 +235,14 @@ describe('Donation Actions', () => {
         productId: '123e4567-e89b-12d3-a456-426614174000',
         donorName: 'Test Donor',
         donorPhone: '+5585987654321',
+        donorEmail: 'test@example.com',
       });
 
       expect(result.success).toBe(false);
       expect(result.error).toBe('PRODUCT_NOT_FOUND');
     });
 
-    it('should reject if product is not physical type', async () => {
+    it('should accept physical pledge on monetary type product (guard removed)', async () => {
       const { db } = await import('@/lib/db');
 
       vi.mocked(db.query.products.findFirst).mockResolvedValueOnce({
@@ -221,7 +254,7 @@ describe('Donation Actions', () => {
         currentAmount: 0,
         isFulfilled: false,
         isPublished: true,
-  imagePath: null,
+        imagePath: null,
         createdAt: new Date(),
         updatedAt: new Date(),
       });
@@ -230,10 +263,11 @@ describe('Donation Actions', () => {
         productId: '123e4567-e89b-12d3-a456-426614174000',
         donorName: 'Test Donor',
         donorPhone: '+5585987654321',
+        donorEmail: 'test@example.com',
       });
 
-      expect(result.success).toBe(false);
-      expect(result.error).toBe('INVALID_DONATION_TYPE');
+      expect(result.success).toBe(true);
+      expect(result.data?.donationId).toBe('donation-uuid-123');
     });
 
     it('should reject if product already fulfilled', async () => {
@@ -248,7 +282,7 @@ describe('Donation Actions', () => {
         currentAmount: 0,
         isFulfilled: true,
         isPublished: true,
-  imagePath: null,
+        imagePath: null,
         createdAt: new Date(),
         updatedAt: new Date(),
       });
@@ -257,13 +291,14 @@ describe('Donation Actions', () => {
         productId: '123e4567-e89b-12d3-a456-426614174000',
         donorName: 'Test Donor',
         donorPhone: '+5585987654321',
+        donorEmail: 'test@example.com',
       });
 
       expect(result.success).toBe(false);
       expect(result.error).toBe('ALREADY_FULFILLED');
     });
 
-    it('should process valid physical pledge without optional email', async () => {
+    it('should reject physical pledge without required email', async () => {
       const { db } = await import('@/lib/db');
 
       vi.mocked(db.query.products.findFirst).mockResolvedValueOnce({
@@ -275,7 +310,7 @@ describe('Donation Actions', () => {
         currentAmount: 0,
         isFulfilled: false,
         isPublished: true,
-  imagePath: null,
+        imagePath: null,
         createdAt: new Date(),
         updatedAt: new Date(),
       });
@@ -284,10 +319,10 @@ describe('Donation Actions', () => {
         productId: '123e4567-e89b-12d3-a456-426614174000',
         donorName: 'Test Donor',
         donorPhone: '+5585987654321',
-      });
+      } as any);
 
-      expect(result.success).toBe(true);
-      expect(result.data?.donationId).toBeDefined();
+      expect(result.success).toBe(false);
+      expect(result.error).toBe('VALIDATION_ERROR');
     });
 
     it('should process valid physical pledge', async () => {

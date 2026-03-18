@@ -28,6 +28,7 @@ export function MonetaryDonationForm({
 }: MonetaryDonationFormProps) {
   const [amount, setAmount] = useState('');
   const [donorName, setDonorName] = useState('');
+  const [donorEmail, setDonorEmail] = useState('');
   const [receiptFile, setReceiptFile] = useState<File | null>(null);
   const [receiptPath, setReceiptPath] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -85,6 +86,7 @@ export function MonetaryDonationForm({
         productId,
         amount: amountCents,
         donorName: donorName.trim() || undefined,
+        donorEmail: donorEmail.trim(),
         receiptPath: finalReceiptPath,
       });
 
@@ -92,6 +94,7 @@ export function MonetaryDonationForm({
         toast.success('Obrigado! Sua doação foi registrada com sucesso.');
         setAmount('');
         setDonorName('');
+        setDonorEmail('');
         setReceiptFile(null);
         setReceiptPath(null);
         if (fileInputRef.current) {
@@ -100,14 +103,12 @@ export function MonetaryDonationForm({
       } else {
         toast.error(
           result.error === 'VALIDATION_ERROR'
-            ? 'Verifique os campos. Valor deve ser pelo menos R$ 1,00 e comprovante é obrigatório.'
+            ? 'Verifique os campos. Valor deve ser pelo menos R$ 1,00, e-mail válido e comprovante são obrigatórios.'
             : result.error === 'ALREADY_FUNDED'
               ? 'Esta campanha já atingiu a meta.'
-              : result.error === 'INVALID_DONATION_TYPE'
-                ? 'Este produto não aceita doações monetárias.'
-                : result.error === 'PRODUCT_NOT_FOUND'
-                  ? 'Produto não encontrado.'
-                  : 'Ocorreu um erro. Tente novamente.'
+              : result.error === 'PRODUCT_NOT_FOUND'
+                ? 'Produto não encontrado.'
+                : 'Ocorreu um erro. Tente novamente.'
         );
       }
     } catch {
@@ -204,6 +205,21 @@ export function MonetaryDonationForm({
                 placeholder="Deixe em branco para doar anonimamente"
                 maxLength={200}
               />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="donorEmail">E-mail *</Label>
+              <Input
+                id="donorEmail"
+                type="email"
+                value={donorEmail}
+                onChange={(e) => setDonorEmail(e.target.value)}
+                placeholder="seu@email.com"
+                required
+              />
+              <p className="text-xs text-muted-foreground">
+                Usaremos seu e-mail para confirmar o recebimento da doação.
+              </p>
             </div>
 
             <div className="space-y-2">

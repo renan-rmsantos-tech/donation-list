@@ -7,6 +7,7 @@ import {
   boolean,
   pgEnum,
   primaryKey,
+  index,
 } from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm';
 
@@ -69,10 +70,41 @@ export const pixSettings = pgTable('pix_settings', {
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });
 
+export const fundTransfers = pgTable(
+  'fund_transfers',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    sourceProductId: uuid('source_product_id')
+      .notNull()
+      .references(() => products.id, { onDelete: 'restrict' }),
+    targetProductId: uuid('target_product_id')
+      .notNull()
+      .references(() => products.id, { onDelete: 'restrict' }),
+    amount: integer('amount').notNull(), // BRL cents
+    adminUsername: text('admin_username').notNull(),
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+  },
+  (t) => ({
+    createdAtIdx: index('fund_transfers_created_at_idx').on(t.createdAt),
+    sourceProductIdIdx: index('fund_transfers_source_product_id_idx').on(
+      t.sourceProductId
+    ),
+    targetProductIdIdx: index('fund_transfers_target_product_id_idx').on(
+      t.targetProductId
+    ),
+  })
+);
+
 // Relations
 export const productsRelations = relations(products, ({ many }) => ({
   productCategories: many(productCategories),
   donations: many(donations),
+  fundTransfersAsSource: many(fundTransfers, {
+    relationName: 'sourceProduct',
+  }),
+  fundTransfersAsTarget: many(fundTransfers, {
+    relationName: 'targetProduct',
+  }),
 }));
 
 export const categoriesRelations = relations(categories, ({ many }) => ({
@@ -97,5 +129,18 @@ export const donationsRelations = relations(donations, ({ one }) => ({
   products: one(products, {
     fields: [donations.productId],
     references: [products.id],
+  }),
+}));
+
+export const fundTransfersRelations = relations(fundTransfers, ({ one }) => ({
+  sourceProduct: one(products, {
+    fields: [fundTransfers.sourceProductId],
+    references: [products.id],
+    relationName: 'sourceProduct',
+  }),
+  targetProduct: one(products, {
+    fields: [fundTransfers.targetProductId],
+    references: [products.id],
+    relationName: 'targetProduct',
   }),
 }));
