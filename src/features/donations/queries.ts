@@ -90,6 +90,7 @@ export async function getProductsForTransfer() {
         name: true,
         currentAmount: true,
       },
+      where: eq(products.donationType, 'monetary'),
     });
     return result;
   } catch (error) {

@@ -5,10 +5,9 @@ import { db } from '@/lib/db';
 import {
   donations,
   products,
-  donationTypeEnum,
   fundTransfers,
 } from '@/lib/db/schema';
-import { eq, and } from 'drizzle-orm';
+import { eq, and, gte, inArray, sql } from 'drizzle-orm';
 import { ZodError } from 'zod';
 import {
   createMonetaryDonationSchema,
@@ -320,41 +319,73 @@ export async function createFundTransfer(
 
     // Use transaction to ensure atomicity
     const result = await db.transaction(async (tx) => {
-      // Fetch both products within transaction for consistency
-      const sourceProduct = await tx.query.products.findFirst({
-        where: eq(products.id, validated.sourceProductId),
+      // Validate both products exist before attempting balance mutation.
+      const transferProducts = await tx.query.products.findMany({
+        columns: {
+          id: true,
+          currentAmount: true,
+          donationType: true,
+        },
+        where: inArray(products.id, [
+          validated.sourceProductId,
+          validated.targetProductId,
+        ]),
       });
 
-      const targetProduct = await tx.query.products.findFirst({
-        where: eq(products.id, validated.targetProductId),
-      });
-
-      if (!sourceProduct || !targetProduct) {
+      if (transferProducts.length !== 2) {
         throw new Error('PRODUCT_NOT_FOUND');
       }
 
-      // Validate source has sufficient balance
+      const sourceProduct = transferProducts.find(
+        (p) => p.id === validated.sourceProductId
+      );
+
+      if (!sourceProduct) {
+        throw new Error('PRODUCT_NOT_FOUND');
+      }
+
+      // Transfers are restricted to products with monetary balances.
+      if (transferProducts.some((p) => p.donationType !== 'monetary')) {
+        throw new Error('INVALID_TRANSFER_PRODUCTS');
+      }
+
+      // Fast-fail before write for clearer domain error.
       if (sourceProduct.currentAmount < validated.amount) {
         throw new Error('INSUFFICIENT_BALANCE');
       }
 
-      // Update source product
-      await tx
+      // Guarded decrement prevents concurrent overdraft race conditions.
+      const sourceUpdate = await tx
         .update(products)
         .set({
-          currentAmount: sourceProduct.currentAmount - validated.amount,
+          currentAmount: sql`${products.currentAmount} - ${validated.amount}`,
           updatedAt: new Date(),
         })
-        .where(eq(products.id, validated.sourceProductId));
+        .where(
+          and(
+            eq(products.id, validated.sourceProductId),
+            gte(products.currentAmount, validated.amount)
+          )
+        )
+        .returning({ id: products.id });
+
+      if (sourceUpdate.length === 0) {
+        throw new Error('INSUFFICIENT_BALANCE');
+      }
 
       // Update target product
-      await tx
+      const targetUpdate = await tx
         .update(products)
         .set({
-          currentAmount: targetProduct.currentAmount + validated.amount,
+          currentAmount: sql`${products.currentAmount} + ${validated.amount}`,
           updatedAt: new Date(),
         })
-        .where(eq(products.id, validated.targetProductId));
+        .where(eq(products.id, validated.targetProductId))
+        .returning({ id: products.id });
+
+      if (targetUpdate.length === 0) {
+        throw new Error('PRODUCT_NOT_FOUND');
+      }
 
       // Insert audit record
       const transferResult = await tx
@@ -403,6 +434,23 @@ export async function createFundTransfer(
       return {
         success: false,
         error: 'PRODUCT_NOT_FOUND',
+      };
+    }
+
+    if (errorMessage === 'INVALID_TRANSFER_PRODUCTS') {
+      return {
+        success: false,
+        error: 'VALIDATION_ERROR',
+        details: {
+          fieldErrors: {
+            sourceProductId: [
+              'Transferências só podem envolver produtos monetários.',
+            ],
+            targetProductId: [
+              'Transferências só podem envolver produtos monetários.',
+            ],
+          },
+        },
       };
     }
 
