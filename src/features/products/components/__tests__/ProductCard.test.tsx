@@ -84,10 +84,10 @@ describe('ProductCard', () => {
       expect(screen.getByText('Atendido')).toBeInTheDocument();
     });
 
-    it('should display Needed badge for unfulfilled physical product', () => {
+    it('should not display badge for unfulfilled physical product', () => {
       const unfulfilled = { ...mockPhysicalProduct, isFulfilled: false };
       render(<ProductCard product={unfulfilled} />);
-      expect(screen.getByText('Necessário')).toBeInTheDocument();
+      expect(screen.queryByText('Necessário')).not.toBeInTheDocument();
     });
 
     it('should display donation options hint for unfulfilled product', () => {

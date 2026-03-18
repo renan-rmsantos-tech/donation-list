@@ -164,13 +164,15 @@ describe('CatalogPage', () => {
       expect(screen.getAllByText('Progresso').length).toBeGreaterThanOrEqual(1);
     });
 
-    it('should display products with fulfilled/needed badge', async () => {
+    it('should display products with donation options for unfulfilled items', async () => {
       const Page = await CatalogPage({
         searchParams: Promise.resolve({}),
       });
       render(Page);
       expect(screen.getByText('Physical Product')).toBeInTheDocument();
-      expect(screen.getAllByText('Necessário').length).toBeGreaterThanOrEqual(1);
+      expect(
+        screen.getAllByText('Aceita doação em dinheiro ou em espécie').length
+      ).toBeGreaterThanOrEqual(1);
     });
 
     it('should display product categories', async () => {

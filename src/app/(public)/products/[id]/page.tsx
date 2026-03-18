@@ -109,9 +109,11 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
                 <h3 className="text-sm font-medium text-muted-foreground mb-3">
                   Doações de Material
                 </h3>
-                <div className="mb-4">
-                  <FulfilledBadge isFulfilled={product.isFulfilled} />
-                </div>
+                {product.isFulfilled && (
+                  <div className="mb-4">
+                    <FulfilledBadge isFulfilled={product.isFulfilled} />
+                  </div>
+                )}
                 <Alert
                   variant="default"
                   className={

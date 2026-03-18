@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import {
   Tabs,
   TabsContent,
@@ -24,15 +25,25 @@ export function DonationTabs({
   qrCodeImageUrl,
   copiaEColaCode,
 }: DonationTabsProps) {
+  const [activeTab, setActiveTab] = useState('monetary');
+
   return (
     <div className="w-full">
-      <Tabs defaultValue="monetary" className="w-full">
+      <Tabs
+        value={activeTab}
+        onValueChange={setActiveTab}
+        className="w-full"
+      >
         <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="monetary">Dinheiro</TabsTrigger>
-          <TabsTrigger value="physical">Material</TabsTrigger>
+          <TabsTrigger value="monetary" type="button">
+            Dinheiro
+          </TabsTrigger>
+          <TabsTrigger value="physical" type="button">
+            Material
+          </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="monetary" forceMount>
+        <TabsContent value="monetary" forceMount className="mt-4">
           <MonetaryDonationForm
             productId={productId}
             targetAmount={targetAmount ?? 0}
@@ -43,7 +54,7 @@ export function DonationTabs({
           />
         </TabsContent>
 
-        <TabsContent value="physical" forceMount>
+        <TabsContent value="physical" forceMount className="mt-4">
           <PhysicalPledgeForm productId={productId} idPrefix="physical-" />
         </TabsContent>
       </Tabs>

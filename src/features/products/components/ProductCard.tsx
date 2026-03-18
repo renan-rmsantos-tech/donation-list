@@ -58,7 +58,9 @@ export function ProductCard({ product }: ProductCardProps) {
             targetAmount={product.targetAmount || 0}
           />
           <div className="flex flex-col gap-1">
-            <FulfilledBadge isFulfilled={product.isFulfilled} />
+            {product.isFulfilled && (
+              <FulfilledBadge isFulfilled={product.isFulfilled} />
+            )}
             {!product.isFulfilled && (
               <p className="text-xs text-muted-foreground">
                 Aceita doação em dinheiro ou em espécie
