@@ -3,7 +3,7 @@
 -- =============================================================================
 -- Use este script para criar a base do zero e preencher com dados iniciais.
 -- Pode ser executado no Supabase Dashboard → SQL Editor
--- ou via: psql $DATABASE_URL -f supabase/init-from-scratch.sql
+-- ou via: psql $DATABASE_URL -f supabase/structure.sql
 --
 -- ATENÇÃO: Este script DROP e recria as tabelas. Use apenas em ambiente novo
 -- ou quando quiser resetar completamente.
@@ -130,6 +130,7 @@ ALTER TABLE public.products ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.product_categories ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.donations ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.pix_settings ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.fund_transfers ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "anon_select_categories" ON public.categories;
 DROP POLICY IF EXISTS "anon_select_published_products" ON public.products;
