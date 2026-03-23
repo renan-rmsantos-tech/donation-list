@@ -35,8 +35,8 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
             <Image
               src="/logo.png"
               alt="Colégio São José"
-              width={108}
-              height={108}
+              width={140}
+              height={140}
               className="rounded-full flex-shrink-0"
               priority
             />
