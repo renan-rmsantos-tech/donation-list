@@ -23,10 +23,10 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
     <>
       <PublicNav />
 
-      <main className="max-w-[960px] mx-auto px-4 md:px-8">
+      <main className="max-w-[960px] mx-auto px-4 md:px-8 pb-20">
 
         {/* ── Mensagem ─────────────────────────────── */}
-        <section id="mensagem" className="py-14">
+        <section id="mensagem" className="pt-9 pb-10 border-b border-[#D4C4A8]">
           <span className="block text-[11px] uppercase tracking-[1.6px] text-[#B8952E] mb-5">
             Mensagem
           </span>
@@ -90,10 +90,8 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
           </div>
         </section>
 
-        <hr className="border-0 border-t-2 border-[#B8952E]" />
-
         {/* ── Produtos ─────────────────────────────── */}
-        <section id="produtos" className="py-14">
+        <section id="produtos" className="pt-10">
           <span className="block text-[11px] uppercase tracking-[1.6px] text-[#B8952E] mb-4">
             Produtos
           </span>
@@ -151,10 +149,8 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
           />
         </section>
 
-        <hr className="border-0 border-t-2 border-[#B8952E]" />
-
         {/* ── Conheça o Colégio ────────────────────── */}
-        <section id="colegio" className="py-14 pb-20">
+        <section id="colegio" className="mt-12 pt-14 border-t-2 border-[#B8952E]">
           <span className="block text-[11px] uppercase tracking-[1.6px] text-[#B8952E] mb-4">
             Conheça o Colégio
           </span>
