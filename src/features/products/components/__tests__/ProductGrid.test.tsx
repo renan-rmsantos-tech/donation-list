@@ -73,8 +73,8 @@ describe('ProductGrid', () => {
       render(
         <ProductGrid products={[mockMonetaryProduct, mockPhysicalProduct]} />
       );
-      expect(screen.getByText(/Categorias: Sacristy/)).toBeInTheDocument();
-      expect(screen.getByText(/Categorias: Garden/)).toBeInTheDocument();
+      expect(screen.getByText('Sacristy')).toBeInTheDocument();
+      expect(screen.getByText('Garden')).toBeInTheDocument();
     });
 
     it('should render links to product detail pages', () => {

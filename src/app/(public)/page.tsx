@@ -3,8 +3,7 @@ import Image from 'next/image';
 import { getPublishedProducts, getProductsByCategory } from '@/features/products/queries';
 import { getCategories } from '@/features/categories/queries';
 import { ProductGrid } from '@/features/products/components/ProductGrid';
-import { Button } from '@/components/ui/button';
-import { ThemeToggle } from '@/components/theme-toggle';
+import { PublicNav } from './components/PublicNav';
 
 interface CatalogPageProps {
   searchParams: Promise<{ category?: string }>;
@@ -21,84 +20,154 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
   ]);
 
   return (
-    <main className="container max-w-5xl mx-auto px-4 py-8">
-      <header className="mb-10 flex flex-col gap-6 sm:flex-row sm:items-start sm:gap-8">
-        <Image
-          src="/logo.png"
-          alt="Colégio São José"
-          width={120}
-          height={120}
-          className="shrink-0 mx-auto sm:mx-0"
-          priority
-        />
-        <div className="min-w-0 flex-1 space-y-6">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
-            <h1 className="text-3xl font-bold tracking-tight sm:text-4xl font-serif">
-              Doações para o Colégio São José
-            </h1>
-            <ThemeToggle className="shrink-0 sm:pt-1" />
-          </div>
-          <div className="space-y-4 text-base leading-relaxed text-foreground/90">
-            <p>
-              O nosso Colégio São José, finalmente nasceu e recorre à sua generosidade.
-            </p>
-            <p>
-              Somos como uma grande família: “em seus inícios, enfrenta muitos desafios, com
-              grandes esforços e gastos, até alcançar a estabilidade, quando os irmãos mais velhos
-              já podem ajudar os mais novos.” Desde já, agradecemos sua liberalidade, pois dela
-              depende o futuro de nossas crianças, o crescimento de nossa Fraternidade e a esperança
-              do nosso Brasil.
-            </p>
-            <blockquote className="border-l-4 border-primary/30 pl-4 text-muted-foreground italic">
-              “Há quem dá liberalmente e se torna mais rico; há quem retém mais do que é justo e
-              acaba na pobreza.” (Provérbios 11:24)
-            </blockquote>
-            <p>
-              Aqui encontraram gastos e objetos concretos que necessitamos. Podem ajudar em
-              dinheiro ou com o bem físico.
-            </p>
-            <div className="space-y-1 pt-2 not-italic">
-              <p>Muito obrigado</p>
-              <p>Que Deus os abençoe</p>
-              <p className="pt-2 font-medium text-foreground">
-                Pe. João Maria Ferreira da Costa, Diretor
+    <>
+      <PublicNav />
+
+      <main className="max-w-[960px] mx-auto px-4 md:px-8">
+
+        {/* ── Mensagem ─────────────────────────────── */}
+        <section id="mensagem" className="py-14">
+          <span className="block text-[11px] uppercase tracking-[1.6px] text-[#B8952E] mb-5">
+            Mensagem
+          </span>
+
+          <div className="flex gap-12 items-start">
+            <Image
+              src="/logo.png"
+              alt="Colégio São José"
+              width={108}
+              height={108}
+              className="rounded-full flex-shrink-0"
+              priority
+            />
+
+            <div className="flex flex-col gap-[18px] flex-1 min-w-0">
+              <div>
+                <h1 className="font-serif font-bold text-[38px] leading-[1.12] text-[#1E3D59]">
+                  Doações para o
+                </h1>
+                <h1 className="font-serif font-bold text-[38px] leading-[1.12] text-[#B8952E]">
+                  Colégio São José
+                </h1>
+              </div>
+
+              <p className="text-[16px] leading-[1.7] text-[#3D4F5F]">
+                O nosso Colégio São José, finalmente nasceu e recorre à sua generosidade.
               </p>
+
+              <p className="text-[16px] leading-[1.7] text-[#3D4F5F]">
+                Somos como uma grande família: &ldquo;em seus inícios, enfrenta muitos desafios, com
+                grandes esforços e gastos, até alcançar a estabilidade, quando os irmãos mais velhos
+                já podem ajudar os mais novos.&rdquo; Desde já, agradecemos sua liberalidade, pois dela
+                depende o futuro de nossas crianças, o crescimento de nossa Fraternidade e a esperança
+                do nosso Brasil.
+              </p>
+
+              <blockquote className="rounded-tr-[8px] rounded-br-[8px] py-3 px-5 bg-[#E8EEF4] border-l-[3px] border-l-[#B8952E]">
+                <p className="font-serif font-normal italic text-[15px] leading-[1.65] text-[#1E3D59]">
+                  &ldquo;Há quem dá liberalmente e se torna mais rico; há quem retém mais do que é justo e
+                  acaba na pobreza.&rdquo;
+                </p>
+                <cite className="block mt-2 text-[13px] text-[#6B7D8E] not-italic">
+                  Provérbios 11:24
+                </cite>
+              </blockquote>
+
+              <p className="text-[16px] leading-[1.7] text-[#3D4F5F]">
+                Aqui encontrarão gastos e objetos concretos que necessitamos. Podem ajudar em
+                dinheiro ou com o bem físico.
+              </p>
+
+              <div>
+                <p className="text-[15px] leading-[18px] text-[#3D4F5F]">
+                  Muito obrigado — Que Deus os abençoe
+                </p>
+                <p className="font-serif font-semibold text-[15px] leading-[18px] text-[#1E3D59] mt-1">
+                  Pe. João Maria Ferreira da Costa, Diretor
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-      </header>
-
-      {categories.length > 0 && (
-        <section className="mb-8">
-          <h2 className="text-xl font-semibold mb-4">Filtrar por categoria</h2>
-          <div className="flex gap-2 flex-wrap">
-            <Button variant={!categoryId ? 'default' : 'secondary'} asChild>
-              <Link href="/">Todas as categorias</Link>
-            </Button>
-            {categories.map((category) => (
-              <Button
-                key={category.id}
-                variant={categoryId === category.id ? 'default' : 'secondary'}
-                asChild
-              >
-                <Link href={`/?category=${category.id}`}>{category.name}</Link>
-              </Button>
-            ))}
-          </div>
         </section>
-      )}
 
-      <section>
-        <h2 className="text-2xl font-semibold mb-4">Produtos</h2>
-        <ProductGrid
-          products={products}
-          emptyMessage={
-            categoryId
-              ? 'Nenhum produto encontrado nesta categoria.'
-              : 'Nenhum produto disponível no momento.'
-          }
-        />
-      </section>
-    </main>
+        <hr className="border-0 border-t-2 border-[#B8952E]" />
+
+        {/* ── Produtos ─────────────────────────────── */}
+        <section id="produtos" className="py-14">
+          <span className="block text-[11px] uppercase tracking-[1.6px] text-[#B8952E] mb-4">
+            Produtos
+          </span>
+
+          <div className="flex items-baseline gap-[14px] mb-5">
+            <h2 className="font-serif font-bold text-[28px] leading-[34px] text-[#1E3D59]">
+              Itens para doação
+            </h2>
+            <span className="text-[13px] text-[#6B7D8E]">
+              {products.length}{' '}
+              {products.length === 1 ? 'item disponível' : 'itens disponíveis'}
+            </span>
+          </div>
+
+          {categories.length > 0 && (
+            <div className="mb-7">
+              <span className="block text-[11px] uppercase tracking-[1.4px] text-[#8A7A5C] mb-3">
+                Filtrar por categoria
+              </span>
+              <div className="flex flex-wrap gap-2">
+                <Link
+                  href="/#produtos"
+                  className={`rounded-full py-2 px-5 text-[14px] transition-colors cursor-pointer ${
+                    !categoryId
+                      ? 'bg-[#1E3D59] text-[#F8F6F1]'
+                      : 'bg-[#E5DFD4] border border-[#C5A572] text-[#3D4F5F] hover:bg-[#D4C4A8]'
+                  }`}
+                >
+                  Todas
+                </Link>
+                {categories.map((cat) => (
+                  <Link
+                    key={cat.id}
+                    href={`/?category=${cat.id}#produtos`}
+                    className={`rounded-full py-2 px-5 text-[14px] transition-colors cursor-pointer ${
+                      categoryId === cat.id
+                        ? 'bg-[#1E3D59] text-[#F8F6F1]'
+                        : 'bg-[#E5DFD4] border border-[#C5A572] text-[#3D4F5F] hover:bg-[#D4C4A8]'
+                    }`}
+                  >
+                    {cat.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <ProductGrid
+            products={products}
+            emptyMessage={
+              categoryId
+                ? 'Nenhum produto encontrado nesta categoria.'
+                : 'Nenhum produto disponível no momento.'
+            }
+          />
+        </section>
+
+        <hr className="border-0 border-t-2 border-[#B8952E]" />
+
+        {/* ── Conheça o Colégio ────────────────────── */}
+        <section id="colegio" className="py-14 pb-20">
+          <span className="block text-[11px] uppercase tracking-[1.6px] text-[#B8952E] mb-4">
+            Conheça o Colégio
+          </span>
+          <h2 className="font-serif font-bold text-[30px] leading-[36px] text-[#1E3D59] mb-4">
+            Conheça o Colégio
+          </h2>
+          <p className="text-[16px] leading-[1.75] text-[#5A6D7E] max-w-[720px]">
+            Conteúdo em breve. Esta seção reunirá informações sobre a história, a missão e o dia a
+            dia do Colégio São José.
+          </p>
+        </section>
+
+      </main>
+    </>
   );
 }

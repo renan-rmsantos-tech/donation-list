@@ -46,18 +46,18 @@ describe('ProductCard', () => {
       expect(screen.getByText('A monetary donation item')).toBeInTheDocument();
     });
 
-    it('should display category context when present', () => {
+    it('should display category name when present', () => {
       render(<ProductCard product={mockMonetaryProduct} />);
-      expect(screen.getByText(/Categorias: Sacristy/)).toBeInTheDocument();
+      expect(screen.getByText('Sacristy')).toBeInTheDocument();
     });
 
-    it('should not display categories label when product has no categories', () => {
+    it('should not display category when product has no categories', () => {
       const productNoCategories = {
         ...mockMonetaryProduct,
         productCategories: [],
       };
       render(<ProductCard product={productNoCategories} />);
-      expect(screen.queryByText(/Categorias:/)).not.toBeInTheDocument();
+      expect(screen.queryByText('Sacristy')).not.toBeInTheDocument();
     });
   });
 
@@ -84,18 +84,10 @@ describe('ProductCard', () => {
       expect(screen.getByText('Meta atingida')).toBeInTheDocument();
     });
 
-    it('should not display badge for unfulfilled physical product', () => {
+    it('should display progress bar for unfulfilled product', () => {
       const unfulfilled = { ...mockPhysicalProduct, isFulfilled: false };
       render(<ProductCard product={unfulfilled} />);
-      expect(screen.queryByText('Necessário')).not.toBeInTheDocument();
-    });
-
-    it('should display donation options hint for unfulfilled product', () => {
-      const unfulfilled = { ...mockPhysicalProduct, isFulfilled: false };
-      render(<ProductCard product={unfulfilled} />);
-      expect(
-        screen.getByText('Aceita doação em dinheiro ou doação material')
-      ).toBeInTheDocument();
+      expect(screen.getByText('Progresso')).toBeInTheDocument();
     });
   });
 
@@ -111,14 +103,9 @@ describe('ProductCard', () => {
       expect(img).toHaveAttribute('src', expect.stringContaining('product-photos'));
     });
 
-    it('should render default placeholder image when product has no imagePath', () => {
+    it('should not render an img element when product has no imagePath', () => {
       render(<ProductCard product={mockMonetaryProduct} />);
-      const img = screen.getByRole('img', { name: 'Produto sem foto' });
-      expect(img).toBeInTheDocument();
-      const src = img.getAttribute('src');
-      expect(src).toBeTruthy();
-      expect(src).not.toContain('product-photos');
-      expect(src).toContain('product-placeholder-sem-foto');
+      expect(screen.queryByRole('img', { name: 'Monetary Product' })).not.toBeInTheDocument();
     });
 
     it('should use correct object-fit styling for images', () => {

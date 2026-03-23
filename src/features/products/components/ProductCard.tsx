@@ -1,11 +1,9 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { ImageIcon } from 'lucide-react';
 import type { products } from '@/lib/db/schema';
-import { Card, CardFooter, CardHeader } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { ProgressBar } from './ProgressBar';
 import { getPublicUrl } from '@/lib/storage/supabase';
-import { PRODUCT_PLACEHOLDER_IMAGE } from '@/lib/constants';
+import { formatCurrency } from '@/lib/utils/format';
 
 type Product = typeof products.$inferSelect;
 
@@ -23,64 +21,93 @@ export function ProductCard({ product }: ProductCardProps) {
     (product.targetAmount != null &&
       product.currentAmount >= product.targetAmount);
 
-  const categoryNames = product.productCategories
-    .map((pc) => pc.categories.name)
-    .join(', ');
+  const percentage =
+    product.targetAmount && product.targetAmount > 0
+      ? Math.min(
+          Math.round((product.currentAmount / product.targetAmount) * 100),
+          100
+        )
+      : 0;
+
+  const firstCategory =
+    product.productCategories[0]?.categories.name ?? null;
 
   const imageUrl = product.imagePath
     ? getPublicUrl('product-photos', product.imagePath)
-    : PRODUCT_PLACEHOLDER_IMAGE;
+    : null;
 
   return (
-    <Link href={`/products/${product.id}`} className="block h-full">
-      <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer flex flex-col">
-        {/* Product Photo/Placeholder */}
-        <div className="w-full aspect-square bg-muted/50 rounded-t-lg overflow-hidden flex items-center justify-center">
-          <Image
-            src={imageUrl}
-            alt={product.imagePath ? product.name : 'Produto sem foto'}
-            width={300}
-            height={300}
-            className="w-full h-full object-cover"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 300px"
-          />
+    <Link href={`/products/${product.id}`} className="block cursor-pointer">
+      <div className="rounded-[12px] border border-[#D4C4A8] overflow-hidden bg-white flex flex-col hover:shadow-lg transition-shadow">
+
+        {/* Image area */}
+        <div
+          className="h-[200px] flex items-center justify-center flex-shrink-0"
+          style={{
+            background:
+              'linear-gradient(135deg, #1B2E3D 0%, #1E3D59 50%, #8A6920 100%)',
+          }}
+        >
+          {imageUrl ? (
+            <Image
+              src={imageUrl}
+              alt={product.name}
+              width={300}
+              height={200}
+              className="w-full h-full object-cover"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 300px"
+            />
+          ) : (
+            <ImageIcon className="w-12 h-12 text-white/40" strokeWidth={1.5} />
+          )}
         </div>
 
-        <CardHeader className="flex-1">
-          <h3 className="text-lg font-semibold line-clamp-2">{product.name}</h3>
-          <p className="text-sm text-muted-foreground line-clamp-3">
+        {/* Body */}
+        <div className="flex flex-col gap-2 px-5 py-5 flex-1">
+          <h3 className="font-serif font-semibold text-[17px] leading-[22px] text-[#1E3D59] line-clamp-2">
+            {product.name}
+          </h3>
+          <p className="text-[13px] leading-[1.55] text-[#5A6D7E] line-clamp-2">
             {product.description}
           </p>
-          {categoryNames && (
-            <p className="text-xs text-muted-foreground">
-              Categorias: {categoryNames}
-            </p>
+          {firstCategory && (
+            <span className="text-[11px] uppercase tracking-[0.8px] text-[#B8952E]">
+              {firstCategory}
+            </span>
           )}
-        </CardHeader>
-        <CardFooter className="flex flex-col gap-4 pt-4 border-t">
+        </div>
+
+        {/* Progress footer */}
+        <div className="px-5 pt-4 pb-5 border-t border-[#E5DFD4]">
           {isGoalReached ? (
-            <div className="flex items-center justify-center w-full py-2">
-              <Badge
-                variant="outline"
-                className="border-green-500 text-green-700 bg-green-50 dark:bg-green-950/30 dark:text-green-400 inline-flex items-center gap-2"
-              >
-                <span className="w-2 h-2 rounded-full bg-green-600" />
-                Meta atingida
-              </Badge>
+            <div className="flex items-center gap-2 rounded-full py-2 px-5 border-[1.5px] border-[#22A55A] bg-[#ECFDF3] w-fit mx-auto">
+              <span className="w-2 h-2 rounded-full bg-[#22A55A] flex-shrink-0" />
+              <span className="text-[13px] text-[#15803D]">Meta atingida</span>
             </div>
           ) : (
             <>
-              <ProgressBar
-                currentAmount={product.currentAmount}
-                targetAmount={product.targetAmount || 0}
-              />
-              <p className="text-xs text-muted-foreground">
-                Aceita doação em dinheiro ou doação material
-              </p>
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-[12px] text-[#8A7A5C]">Progresso</span>
+                <span className="text-[12px] text-[#1E3D59]">{percentage}%</span>
+              </div>
+              <div className="h-[6px] rounded-full bg-[#E5DFD4] mb-3">
+                <div
+                  className="h-full rounded-full bg-[#B8952E] transition-all"
+                  style={{ width: `${percentage}%` }}
+                />
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-[12px] text-[#8A7A5C]">
+                  {formatCurrency(product.currentAmount)}
+                </span>
+                <span className="text-[12px] text-[#8A7A5C]">
+                  Meta: {formatCurrency(product.targetAmount ?? 0)}
+                </span>
+              </div>
             </>
           )}
-        </CardFooter>
-      </Card>
+        </div>
+      </div>
     </Link>
   );
 }

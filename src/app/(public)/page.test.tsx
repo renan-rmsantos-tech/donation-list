@@ -85,7 +85,8 @@ describe('CatalogPage', () => {
         searchParams: Promise.resolve({}),
       });
       render(Page);
-      expect(screen.getByText('Doações para o Colégio São José')).toBeInTheDocument();
+      expect(screen.getByText('Doações para o')).toBeInTheDocument();
+      expect(screen.getAllByText('Colégio São José').length).toBeGreaterThanOrEqual(1);
     });
 
     it('should display category filter section', async () => {
@@ -101,7 +102,7 @@ describe('CatalogPage', () => {
         searchParams: Promise.resolve({}),
       });
       render(Page);
-      expect(screen.getByText('Produtos')).toBeInTheDocument();
+      expect(screen.getAllByText('Produtos').length).toBeGreaterThanOrEqual(1);
     });
 
     it('should display all-categories filter button', async () => {
@@ -109,7 +110,7 @@ describe('CatalogPage', () => {
         searchParams: Promise.resolve({}),
       });
       render(Page);
-      expect(screen.getByRole('link', { name: 'Todas as categorias' })).toBeInTheDocument();
+      expect(screen.getByRole('link', { name: 'Todas' })).toBeInTheDocument();
     });
   });
 
@@ -170,9 +171,7 @@ describe('CatalogPage', () => {
       });
       render(Page);
       expect(screen.getByText('Physical Product')).toBeInTheDocument();
-      expect(
-        screen.getAllByText('Aceita doação em dinheiro ou doação material').length
-      ).toBeGreaterThanOrEqual(1);
+      expect(screen.getAllByText('Progresso').length).toBeGreaterThanOrEqual(1);
     });
 
     it('should display product categories', async () => {
@@ -180,8 +179,8 @@ describe('CatalogPage', () => {
         searchParams: Promise.resolve({}),
       });
       render(Page);
-      expect(screen.getByText(/Categorias: Sacristy/)).toBeInTheDocument();
-      expect(screen.getByText(/Categorias: Garden/)).toBeInTheDocument();
+      expect(screen.getAllByText('Sacristy').length).toBeGreaterThanOrEqual(1);
+      expect(screen.getAllByText('Garden').length).toBeGreaterThanOrEqual(1);
     });
   });
 
