@@ -118,7 +118,7 @@ describe('ProductCard', () => {
       const src = img.getAttribute('src');
       expect(src).toBeTruthy();
       expect(src).not.toContain('product-photos');
-      expect(src).toMatch(/icon\.png/i);
+      expect(src).toContain('product-placeholder-sem-foto');
     });
 
     it('should use correct object-fit styling for images', () => {

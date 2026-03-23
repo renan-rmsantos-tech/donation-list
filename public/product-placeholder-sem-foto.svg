@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800" role="img" aria-label="Sem foto">
+  <defs>
+    <style>
+      .bg { fill: #f4f4f5; }
+      .stroke { stroke: #d4d4d8; }
+      .text { fill: #71717a; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 42px; font-weight: 600; letter-spacing: 0.02em; }
+      @media (prefers-color-scheme: dark) {
+        .bg { fill: #27272a; }
+        .stroke { stroke: #3f3f46; }
+        .text { fill: #a1a1aa; }
+      }
+    </style>
+  </defs>
+  <rect class="bg" width="800" height="800" />
+  <rect class="stroke" x="48" y="48" width="704" height="704" rx="24" fill="none" stroke-width="2" />
+  <text class="text" x="400" y="410" text-anchor="middle" dominant-baseline="middle">Sem foto</text>
+</svg>
