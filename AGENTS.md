@@ -42,6 +42,48 @@ src/
 └── components/           # Shared UI components
 ```
 
+## Agent Skills (instalados no repositório)
+
+Skills são pacotes de instruções para assistentes (Cursor, Claude Code, etc.). Cada skill vive em um diretório com `SKILL.md` e metadados no frontmatter.
+
+### Onde estão
+
+| Local | Uso |
+| --- | --- |
+| `.agents/skills/` | Conjunto principal referenciado pelo Cursor neste workspace. |
+| `.agent/skills/` | Espelho do mesmo conjunto (mesmos 23 skills). |
+| `.claude/skills/`, `.trae/skills/`, `.kilocode/skills/` | Cópias alinhadas a outros clientes/ferramentas; o conteúdo espelha o mesmo catálogo. |
+
+### Catálogo (`.agents/skills/<id>/SKILL.md`)
+
+| Skill | Quando usar (resumo) |
+| --- | --- |
+| `deploy-to-vercel` | Deploy e previews na Vercel; ligar projeto ao Git. |
+| `drizzle-orm` | Drizzle: schema, queries, transações, migrações, performance. |
+| `drizzle-safe-migrations` | Migrações Drizzle seguras em produção (backfills, enums, ordem). |
+| `exa-web-search-free` | Busca web/código via Exa MCP (sem API key). |
+| `fix-coderabbit-review` | Corrigir issues do CodeRabbit em um PR e commit único. |
+| `frontend-design` | Interfaces web com alto nível de design (evitar estética genérica). |
+| `landing-page-design` | Landing pages: hero, CTA, conversão, mobile. |
+| `nano-banana-pro` | Geração/edição de imagens (Gemini / Nano Banana Pro). |
+| `next-best-practices` | Next.js: App Router, RSC, dados, metadata, bundling. |
+| `perplexity` | Pesquisa na web com Perplexity (não substitui docs de libs nem o repo). |
+| `postgres-drizzle` | PostgreSQL + Drizzle: SQL, índices, pooling, RLS, N+1. |
+| `professional-communication` | E-mails, mensagens de time, reuniões, audiências técnicas/não técnicas. |
+| `react` | React: componentes, hooks, estado, Vitest; React 19+. |
+| `shadcn` | shadcn/ui: padrões, Radix, tokens, componentes compostos. |
+| `shadcn-ui` | Instalação e padrões completos shadcn + RHF + Zod + temas. |
+| `skill-best-practices` | Autoria de skills (agentskills.io), metadados, descoberta. |
+| `skill-writer` | Criar/editar Skills para Claude Code (`SKILL.md`, frontmatter). |
+| `tailwindcss` | Tailwind v4, layout responsivo, tailwind-variants. |
+| `ui-ux-pro-max` | UI/UX: paletas, tipografia, padrões por stack (incl. Next + shadcn). |
+| `vercel-composition-patterns` | Composição React em escala; compound components; React 19. |
+| `vercel-react-best-practices` | Performance React/Next.js (Vercel Engineering). |
+| `vercel-react-native-skills` | React Native / Expo: listas, animação, navegação nativa. |
+| `web-design-guidelines` | Revisão de UI contra diretrizes web (a11y, UX). |
+
+Para o texto completo de cada skill (passos, regras, referências), abra o `SKILL.md` correspondente.
+
 ## Database Schema
 
 ### Tables

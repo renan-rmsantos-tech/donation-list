@@ -1,0 +1,120 @@
+{
+  "version": 1,
+  "skills": {
+    "deploy-to-vercel": {
+      "source": "vercel-labs/agent-skills",
+      "sourceType": "github",
+      "computedHash": "d2b5bcc7c09fdb649129ffc7dd7b647ec1b155736974b974292675afd588cb39"
+    },
+    "drizzle-orm": {
+      "source": "pedronauck/skills",
+      "sourceType": "github",
+      "computedHash": "490d7f1fe2960165c3fb63a5322c766e4ea27ffe170dbaca3666bbf4c66cd58e"
+    },
+    "drizzle-safe-migrations": {
+      "source": "pedronauck/skills",
+      "sourceType": "github",
+      "computedHash": "5f32994472dadf53ff74fde49a2aaee425dbad366fbbfceefb3cab6ce28a86eb"
+    },
+    "exa-web-search-free": {
+      "source": "pedronauck/skills",
+      "sourceType": "github",
+      "computedHash": "4456756ff2cf096cc7c6d2fc9d6771e2a1ea0084868f28b69f68157757ee50c8"
+    },
+    "fix-coderabbit-review": {
+      "source": "pedronauck/skills",
+      "sourceType": "github",
+      "computedHash": "3b8c91501866e5591903ff6eb06106dd17915269776c49f407c72961d13a4cee"
+    },
+    "frontend-design": {
+      "source": "pedronauck/skills",
+      "sourceType": "github",
+      "computedHash": "63b5b9b6ca2c4654d927d240cf8637360b347461189433e78102ba22a90684ff"
+    },
+    "landing-page-design": {
+      "source": "pedronauck/skills",
+      "sourceType": "github",
+      "computedHash": "c489ece3f049aa26c78154d1f67aa5e2b8342216e5f6acf07455cba56e10c19f"
+    },
+    "nano-banana-pro": {
+      "source": "pedronauck/skills",
+      "sourceType": "github",
+      "computedHash": "165246e9b08f1fee54994d2daa15a5aa690b6745bcd26fab2811cd3db6544c17"
+    },
+    "next-best-practices": {
+      "source": "pedronauck/skills",
+      "sourceType": "github",
+      "computedHash": "515ba75178bd44875812d9a560bdf14651f86709f89cf1d4f209638e879807f3"
+    },
+    "perplexity": {
+      "source": "pedronauck/skills",
+      "sourceType": "github",
+      "computedHash": "a8c31732045ef978362c29b27c13ba6ee11b93d522a0019f08dd8568a08d7de6"
+    },
+    "postgres-drizzle": {
+      "source": "pedronauck/skills",
+      "sourceType": "github",
+      "computedHash": "b008d29eacbec8ace6e552d948bb6dd10c0047eae81a941e9ea366172aca9317"
+    },
+    "professional-communication": {
+      "source": "pedronauck/skills",
+      "sourceType": "github",
+      "computedHash": "4ecfeba923ab6dea1ac6e4a3d05a1a7f23b2af3dce690f4aad8167ae92b14397"
+    },
+    "react": {
+      "source": "pedronauck/skills",
+      "sourceType": "github",
+      "computedHash": "cc809ab22b2fee72903f73d450b11c7d500e6a61641e7bcd427f3034a9c8832f"
+    },
+    "shadcn": {
+      "source": "pedronauck/skills",
+      "sourceType": "github",
+      "computedHash": "1f9dd6946d6bb66bd76c5d49d607e5becf7c93ad643070fc4e352d17e426b69d"
+    },
+    "shadcn-ui": {
+      "source": "pedronauck/skills",
+      "sourceType": "github",
+      "computedHash": "4c3e54ac47ddcc2c948995c85f6740b78f2f556c769d800e92ddff035d5c7e59"
+    },
+    "skill-best-practices": {
+      "source": "pedronauck/skills",
+      "sourceType": "github",
+      "computedHash": "d53ae5bec0895e4fe802acc4a92441cfeb1cfda5ab18a10f6e96f153cb682c61"
+    },
+    "skill-writer": {
+      "source": "pedronauck/skills",
+      "sourceType": "github",
+      "computedHash": "1c379c5949311949c4c1deb601cc4451bbcb90c87a0a3a48047a28ff992bc37c"
+    },
+    "tailwindcss": {
+      "source": "pedronauck/skills",
+      "sourceType": "github",
+      "computedHash": "d7b9e3e49ffd0f4d2185d894568035633d31a0b7cb09494c6c0df4799a0a3ff3"
+    },
+    "ui-ux-pro-max": {
+      "source": "pedronauck/skills",
+      "sourceType": "github",
+      "computedHash": "ec90b96361a8c1c59ee642cde483398d07c1a884fcaa5850945181f8a08f9a26"
+    },
+    "vercel-composition-patterns": {
+      "source": "pedronauck/skills",
+      "sourceType": "github",
+      "computedHash": "1aa8cc5a812ffcb991f8d9528d2aefc85158cddfdf3c4a810c597f0c9c7bfc89"
+    },
+    "vercel-react-best-practices": {
+      "source": "pedronauck/skills",
+      "sourceType": "github",
+      "computedHash": "0c40488a357b638d7eb188086f93d166128b8c5ca54d6e0d04ac1bca4062e5c1"
+    },
+    "vercel-react-native-skills": {
+      "source": "vercel-labs/agent-skills",
+      "sourceType": "github",
+      "computedHash": "2e9088a7333666d8c2833b8ff58bd51b955501c42b4c7244f72b4cbf22dafcc4"
+    },
+    "web-design-guidelines": {
+      "source": "pedronauck/skills",
+      "sourceType": "github",
+      "computedHash": "2b4252a346243aa696da2d021a7a2f747259567cd3ca51308ee86ca24ab60d86"
+    }
+  }
+}
