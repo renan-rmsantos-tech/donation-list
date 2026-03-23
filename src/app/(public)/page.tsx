@@ -45,7 +45,7 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
               {/* Títulos */}
               <div>
                 <h1 className="font-serif font-bold text-[38px] leading-[1.12] text-[#1E3D59] inline-block">
-                  Doações para o &rdquo;
+                  Doações para o 
                 </h1>
                 <h1 className="font-serif font-bold text-[38px] leading-[1.12] text-[#B8952E] inline-block">
                   Colégio São José
