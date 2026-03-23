@@ -1,5 +1,5 @@
-/**
- * Path to the default product placeholder image (relative to public folder).
- * Used when a product has no photo uploaded.
- */
-export const PRODUCT_PLACEHOLDER_IMAGE = '/placeholder-product.svg';
+import type { StaticImageData } from 'next/image';
+import productPlaceholderImage from '@/app/icon.png';
+
+/** Colégio São José seal — shown when a product has no uploaded photo. */
+export const PRODUCT_PLACEHOLDER_IMAGE: StaticImageData = productPlaceholderImage;

@@ -74,14 +74,14 @@ describe('ProductCard', () => {
         currentAmount: 10000,
       };
       render(<ProductCard product={fullyFunded} />);
-      expect(screen.getByText('100%')).toBeInTheDocument();
+      expect(screen.getByText('Meta atingida')).toBeInTheDocument();
     });
   });
 
   describe('Physical product status', () => {
     it('should display Fulfilled badge for fulfilled physical product', () => {
       render(<ProductCard product={mockPhysicalProduct} />);
-      expect(screen.getByText('Atendido')).toBeInTheDocument();
+      expect(screen.getByText('Meta atingida')).toBeInTheDocument();
     });
 
     it('should not display badge for unfulfilled physical product', () => {
@@ -115,7 +115,10 @@ describe('ProductCard', () => {
       render(<ProductCard product={mockMonetaryProduct} />);
       const img = screen.getByRole('img', { name: 'Produto sem foto' });
       expect(img).toBeInTheDocument();
-      expect(img).toHaveAttribute('src', expect.stringContaining('placeholder-product'));
+      const src = img.getAttribute('src');
+      expect(src).toBeTruthy();
+      expect(src).not.toContain('product-photos');
+      expect(src).toMatch(/icon\.png/i);
     });
 
     it('should use correct object-fit styling for images', () => {

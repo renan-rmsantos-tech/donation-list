@@ -22,25 +22,51 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
 
   return (
     <main className="container max-w-5xl mx-auto px-4 py-8">
-      <div className="mb-8 flex flex-col items-start gap-4 sm:flex-row sm:items-start sm:justify-between">
-        <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-start w-full">
-          <Image
-            src="/logo.png"
-            alt="Colégio São José"
-            width={120}
-            height={120}
-            className="shrink-0"
-            priority
-          />
-          <div>
-            <h1 className="text-4xl font-bold mb-2">Doações para o Colégio São José</h1>
-            <p className="text-muted-foreground">
-              Fazer uma descrição aqui.
-            </p>
+      <header className="mb-10 flex flex-col gap-6 sm:flex-row sm:items-start sm:gap-8">
+        <Image
+          src="/logo.png"
+          alt="Colégio São José"
+          width={120}
+          height={120}
+          className="shrink-0 mx-auto sm:mx-0"
+          priority
+        />
+        <div className="min-w-0 flex-1 space-y-6">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
+            <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
+              Doações para o Colégio São José
+            </h1>
+            <ThemeToggle className="shrink-0 sm:pt-1" />
           </div>
-          <ThemeToggle className="sm:ml-auto mt-4 sm:mt-0" />
+          <div className="space-y-4 text-base leading-relaxed text-foreground/90">
+            <p>
+              O nosso Colégio São José, finalmente nasceu e recorre à sua generosidade.
+            </p>
+            <p>
+              Somos como uma grande família: “em seus inícios, enfrenta muitos desafios, com
+              grandes esforços e gastos, até alcançar a estabilidade, quando os irmãos mais velhos
+              já podem ajudar os mais novos.” Desde já, agradecemos sua liberalidade, pois dela
+              depende o futuro de nossas crianças, o crescimento de nossa Fraternidade e a esperança
+              do nosso Brasil.
+            </p>
+            <blockquote className="border-l-4 border-primary/30 pl-4 text-muted-foreground italic">
+              “Há quem dá liberalmente e se torna mais rico; há quem retém mais do que é justo e
+              acaba na pobreza.” (Provérbios 11:24)
+            </blockquote>
+            <p>
+              Aqui encontraram gastos e objetos concretos que necessitamos. Podem ajudar em
+              dinheiro ou com o bem físico.
+            </p>
+            <div className="space-y-1 pt-2 not-italic">
+              <p>Muito obrigado</p>
+              <p>Que Deus os abençoe</p>
+              <p className="pt-2 font-medium text-foreground">
+                Pe. João Maria Ferreira da Costa, Diretor
+              </p>
+            </div>
+          </div>
         </div>
-      </div>
+      </header>
 
       {categories.length > 0 && (
         <section className="mb-8">
