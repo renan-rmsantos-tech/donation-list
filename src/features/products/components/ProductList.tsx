@@ -52,7 +52,7 @@ export function ProductList({ products }: { products: Product[] }) {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-4xl font-bold">Produtos</h1>
+        <h1 className="text-4xl font-bold font-serif">Produtos</h1>
         <Button asChild className="gap-2">
           <Link href="/admin/products/new">
             <Plus className="h-4 w-4" />
@@ -66,9 +66,9 @@ export function ProductList({ products }: { products: Product[] }) {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="px-4">Nome</TableHead>
-                <TableHead className="px-4">Status</TableHead>
-                <TableHead className="px-4">Ações</TableHead>
+                <TableHead className="px-4 text-xs uppercase tracking-wider">Nome</TableHead>
+                <TableHead className="px-4 text-xs uppercase tracking-wider">Status</TableHead>
+                <TableHead className="px-4 text-xs uppercase tracking-wider">Ações</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -81,8 +81,8 @@ export function ProductList({ products }: { products: Product[] }) {
                         {formatCurrency(product.currentAmount)} de{' '}
                         {formatCurrency(product.targetAmount ?? 0)}
                       </span>
-                      <span className="text-sm text-muted-foreground">
-                        Material: {product.isFulfilled ? 'Concluído' : 'Pendente'}
+                      <span className={`text-sm ${product.isFulfilled ? 'text-green-700 dark:text-green-400' : 'text-orange-600 dark:text-orange-400'}`}>
+                        Material: {product.isFulfilled ? 'Atendido' : 'Pendente'}
                       </span>
                     </div>
                   </TableCell>

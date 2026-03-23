@@ -89,7 +89,7 @@ export function PixSettingsForm({
 
   return (
     <div className="space-y-6">
-      <h1 className="text-4xl font-bold">Configurações PIX</h1>
+      <h1 className="text-4xl font-bold font-serif">Configurações PIX</h1>
 
       <form onSubmit={handleSubmit} className="space-y-6 max-w-2xl">
         <div className="space-y-2">

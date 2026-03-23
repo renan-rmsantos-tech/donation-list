@@ -14,7 +14,7 @@ describe('DashboardStatsCards', () => {
         }}
       />
     );
-    expect(screen.getByText('Total de Doações em Dinheiro Arrecadadas')).toBeInTheDocument();
+    expect(screen.getByText('Total de Doações em Dinheiro')).toBeInTheDocument();
     expect(screen.getByText('Itens Atendidos')).toBeInTheDocument();
     expect(screen.getByText('Itens Pendentes')).toBeInTheDocument();
   });

@@ -6,6 +6,7 @@ import { adminLogout } from '@/lib/auth/actions';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { AdminNavLinks } from './components/AdminNavLinks';
 
 export default async function ProtectedAdminLayout({
   children,
@@ -35,35 +36,7 @@ export default async function ProtectedAdminLayout({
             <div className="flex items-center gap-2">
               <ThemeToggle className="text-primary-foreground hover:bg-primary-foreground/10" />
               <Separator orientation="vertical" className="h-5 bg-primary-foreground/30" />
-              <Button variant="ghost" size="sm" asChild>
-                <Link href="/admin/dashboard" className="text-primary-foreground hover:bg-primary-foreground/10">
-                  Painel
-                </Link>
-              </Button>
-              <Separator orientation="vertical" className="h-5 bg-primary-foreground/30" />
-              <Button variant="ghost" size="sm" asChild>
-                <Link href="/admin/products" className="text-primary-foreground hover:bg-primary-foreground/10">
-                  Produtos
-                </Link>
-              </Button>
-              <Separator orientation="vertical" className="h-5 bg-primary-foreground/30" />
-              <Button variant="ghost" size="sm" asChild>
-                <Link href="/admin/categories" className="text-primary-foreground hover:bg-primary-foreground/10">
-                  Categorias
-                </Link>
-              </Button>
-              <Separator orientation="vertical" className="h-5 bg-primary-foreground/30" />
-              <Button variant="ghost" size="sm" asChild>
-                <Link href="/admin/pix" className="text-primary-foreground hover:bg-primary-foreground/10">
-                  PIX
-                </Link>
-              </Button>
-              <Separator orientation="vertical" className="h-5 bg-primary-foreground/30" />
-              <Button variant="ghost" size="sm" asChild>
-                <Link href="/admin/transfers" className="text-primary-foreground hover:bg-primary-foreground/10">
-                  Transferências
-                </Link>
-              </Button>
+              <AdminNavLinks />
               <Separator orientation="vertical" className="h-5 bg-primary-foreground/30" />
               <form action={adminLogout} className="inline">
                 <Button

@@ -33,7 +33,7 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
         />
         <div className="min-w-0 flex-1 space-y-6">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
-            <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
+            <h1 className="text-3xl font-bold tracking-tight sm:text-4xl font-serif">
               Doações para o Colégio São José
             </h1>
             <ThemeToggle className="shrink-0 sm:pt-1" />

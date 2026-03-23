@@ -56,7 +56,10 @@ const config: Config = {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
-  		}
+  		},
+  		fontFamily: {
+  			serif: ['var(--font-playfair)', 'Playfair Display', 'Georgia', 'serif'],
+  		},
   	}
   },
   plugins: [require("tailwindcss-animate")],

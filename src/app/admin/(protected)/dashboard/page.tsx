@@ -7,7 +7,7 @@ export default async function DashboardPage() {
 
   return (
     <div>
-      <h1 className="text-4xl font-bold mb-8">Painel</h1>
+      <h1 className="text-4xl font-bold mb-8 font-serif">Painel</h1>
       <div className="space-y-6">
         <DashboardTransferAlert hasTransfersAvailable={stats.hasTransfersAvailable} />
         <DashboardStatsCards stats={stats} />

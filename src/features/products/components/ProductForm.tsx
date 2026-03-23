@@ -188,7 +188,7 @@ export function ProductForm({ categories, product, imageUrl }: ProductFormProps)
   return (
     <div className="max-w-2xl space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-4xl font-bold">
+        <h1 className="text-4xl font-bold font-serif">
           {isEdit ? 'Editar Produto' : 'Novo Produto'}
         </h1>
         <BackButton href="/admin/products">Voltar</BackButton>

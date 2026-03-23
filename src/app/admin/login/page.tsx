@@ -47,7 +47,7 @@ export default function LoginPage() {
       <div className="w-full max-w-md">
         <Card>
           <CardHeader>
-            <CardTitle className="text-3xl text-center">Login Administrativo</CardTitle>
+            <CardTitle className="text-3xl text-center font-serif">Login Administrativo</CardTitle>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">

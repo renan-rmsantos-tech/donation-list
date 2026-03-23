@@ -34,7 +34,7 @@ describe('DashboardPage', () => {
       });
       const Page = await DashboardPage();
       render(Page);
-      expect(screen.getByText('Total de Doações em Dinheiro Arrecadadas')).toBeInTheDocument();
+      expect(screen.getByText('Total de Doações em Dinheiro')).toBeInTheDocument();
       expect(screen.getByText(/R\$\s*500,00/)).toBeInTheDocument();
     });
 
@@ -104,7 +104,7 @@ describe('DashboardPage', () => {
       });
       const Page = await DashboardPage();
       render(Page);
-      expect(screen.getByText('Total de Doações em Dinheiro Arrecadadas')).toBeInTheDocument();
+      expect(screen.getByText('Total de Doações em Dinheiro')).toBeInTheDocument();
       expect(screen.getByText('Itens Atendidos')).toBeInTheDocument();
       expect(screen.getByText('Itens Pendentes')).toBeInTheDocument();
       expect(screen.getByText(/R\$\s*250,00/)).toBeInTheDocument();

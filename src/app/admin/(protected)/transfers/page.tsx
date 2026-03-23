@@ -19,7 +19,7 @@ export default async function TransfersPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-bold mb-2">Transferências de Fundos</h1>
+        <h1 className="text-3xl font-bold mb-2 font-serif">Transferências de Fundos</h1>
         <p className="text-muted-foreground">
           Gerencie transferências de fundos monetários entre produtos com rastreamento de auditoria.
         </p>
