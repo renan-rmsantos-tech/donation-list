@@ -108,6 +108,70 @@ describe('Product Schemas', () => {
       });
       expect(result.success).toBe(true);
     });
+
+    // donationMode tests
+    it('should accept valid donationMode: monetary', () => {
+      const result = createProductSchema.safeParse({
+        name: 'Produto',
+        description: 'Descrição',
+        targetAmount: 10000,
+        donationMode: 'monetary',
+      });
+      expect(result.success).toBe(true);
+      expect(result.data?.donationMode).toBe('monetary');
+    });
+
+    it('should accept valid donationMode: physical', () => {
+      const result = createProductSchema.safeParse({
+        name: 'Produto',
+        description: 'Descrição',
+        targetAmount: 10000,
+        donationMode: 'physical',
+      });
+      expect(result.success).toBe(true);
+      expect(result.data?.donationMode).toBe('physical');
+    });
+
+    it('should accept valid donationMode: both', () => {
+      const result = createProductSchema.safeParse({
+        name: 'Produto',
+        description: 'Descrição',
+        targetAmount: 10000,
+        donationMode: 'both',
+      });
+      expect(result.success).toBe(true);
+      expect(result.data?.donationMode).toBe('both');
+    });
+
+    it('should default donationMode to "both" when omitted', () => {
+      const result = createProductSchema.safeParse({
+        name: 'Produto',
+        description: 'Descrição',
+        targetAmount: 10000,
+      });
+      expect(result.success).toBe(true);
+      expect(result.data?.donationMode).toBe('both');
+    });
+
+    it('should reject invalid donationMode value', () => {
+      const result = createProductSchema.safeParse({
+        name: 'Produto',
+        description: 'Descrição',
+        targetAmount: 10000,
+        donationMode: 'invalid',
+      });
+      expect(result.success).toBe(false);
+    });
+
+    it('should reject donationMode as number', () => {
+      const result = createProductSchema.safeParse({
+        name: 'Produto',
+        description: 'Descrição',
+        targetAmount: 10000,
+        donationMode: 123,
+      });
+      expect(result.success).toBe(false);
+    });
   });
 
   describe('updateProductSchema', () => {
@@ -162,6 +226,66 @@ describe('Product Schemas', () => {
         imagePath: 'a'.repeat(500),
       });
       expect(result.success).toBe(true);
+    });
+
+    // donationMode tests
+    it('should accept optional donationMode: monetary', () => {
+      const result = updateProductSchema.safeParse({
+        donationMode: 'monetary',
+      });
+      expect(result.success).toBe(true);
+      expect(result.data?.donationMode).toBe('monetary');
+    });
+
+    it('should accept optional donationMode: physical', () => {
+      const result = updateProductSchema.safeParse({
+        donationMode: 'physical',
+      });
+      expect(result.success).toBe(true);
+      expect(result.data?.donationMode).toBe('physical');
+    });
+
+    it('should accept optional donationMode: both', () => {
+      const result = updateProductSchema.safeParse({
+        donationMode: 'both',
+      });
+      expect(result.success).toBe(true);
+      expect(result.data?.donationMode).toBe('both');
+    });
+
+    it('should not have donationMode defined when omitted', () => {
+      const result = updateProductSchema.safeParse({
+        name: 'Updated Name',
+      });
+      expect(result.success).toBe(true);
+      expect(result.data?.donationMode).toBeUndefined();
+    });
+
+    it('should reject invalid donationMode in update', () => {
+      const result = updateProductSchema.safeParse({
+        donationMode: 'invalid',
+      });
+      expect(result.success).toBe(false);
+    });
+
+    it('should allow updating donationMode with other fields', () => {
+      const result = updateProductSchema.safeParse({
+        name: 'Updated Name',
+        donationMode: 'physical',
+      });
+      expect(result.success).toBe(true);
+      expect(result.data?.name).toBe('Updated Name');
+      expect(result.data?.donationMode).toBe('physical');
+    });
+
+    it('should allow updating imagePath and donationMode together', () => {
+      const result = updateProductSchema.safeParse({
+        imagePath: 'new-photo.jpg',
+        donationMode: 'monetary',
+      });
+      expect(result.success).toBe(true);
+      expect(result.data?.imagePath).toBe('new-photo.jpg');
+      expect(result.data?.donationMode).toBe('monetary');
     });
   });
 

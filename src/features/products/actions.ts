@@ -7,7 +7,7 @@ import { eq } from 'drizzle-orm';
 import { ZodError } from 'zod';
 import { createProductSchema, updateProductSchema, generateProductPhotoUploadUrlSchema } from './schemas';
 import { validateSession } from '@/lib/auth/session';
-import { generateSignedUploadUrl } from '@/lib/storage/supabase';
+import { generateSignedUploadUrl, deleteStorageObject } from '@/lib/storage/supabase';
 import { generateStoragePath } from '@/lib/utils/format';
 
 interface ActionResult<T> {
@@ -80,6 +80,7 @@ export async function createProduct(
         currentAmount: 0,
         isPublished: validated.isPublished ?? true,
         imagePath: validated.imagePath ?? undefined,
+        donationMode: validated.donationMode ?? 'both',
       })
       .returning({ id: products.id });
 
@@ -143,7 +144,26 @@ export async function updateProduct(
     if (validated.description !== undefined) updates.description = validated.description;
     if (validated.targetAmount !== undefined) updates.targetAmount = validated.targetAmount;
     if (validated.isPublished !== undefined) updates.isPublished = validated.isPublished;
-    if (validated.imagePath !== undefined) updates.imagePath = validated.imagePath;
+    if (validated.imagePath !== undefined) {
+      updates.imagePath = validated.imagePath;
+
+      // Handle photo deletion when imagePath is explicitly set to null
+      if (validated.imagePath === null) {
+        const existingProduct = await db.query.products.findFirst({
+          where: eq(products.id, id),
+        });
+
+        if (existingProduct?.imagePath) {
+          try {
+            await deleteStorageObject('product-photos', existingProduct.imagePath);
+          } catch (error) {
+            // Log storage deletion errors but don't block database update
+            console.error('Error deleting product photo from storage:', error);
+          }
+        }
+      }
+    }
+    if (validated.donationMode !== undefined) updates.donationMode = validated.donationMode;
 
     await db.update(products).set(updates).where(eq(products.id, id));
 

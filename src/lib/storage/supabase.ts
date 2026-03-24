@@ -55,3 +55,20 @@ export const getPublicUrl = (bucket: string, path: string): string => {
   const { data } = supabaseAdmin.storage.from(bucket).getPublicUrl(path);
   return data.publicUrl;
 };
+
+export const deleteStorageObject = async (
+  bucket: string,
+  path: string
+): Promise<void> => {
+  try {
+    const { error } = await supabaseAdmin.storage
+      .from(bucket)
+      .remove([path]);
+
+    if (error) {
+      console.error(`Failed to delete storage object at ${bucket}/${path}:`, error);
+    }
+  } catch (error) {
+    console.error(`Error deleting storage object at ${bucket}/${path}:`, error);
+  }
+};

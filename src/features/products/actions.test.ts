@@ -6,7 +6,7 @@ import {
   generateProductPhotoUploadUrl,
 } from './actions';
 import { validateSession } from '@/lib/auth/session';
-import { generateSignedUploadUrl } from '@/lib/storage/supabase';
+import { generateSignedUploadUrl, deleteStorageObject } from '@/lib/storage/supabase';
 import { generateStoragePath } from '@/lib/utils/format';
 
 vi.mock('@/lib/db', () => ({
@@ -30,6 +30,7 @@ vi.mock('next/cache', () => ({
 
 vi.mock('@/lib/storage/supabase', () => ({
   generateSignedUploadUrl: vi.fn(),
+  deleteStorageObject: vi.fn(),
 }));
 
 vi.mock('@/lib/utils/format', () => ({
@@ -163,6 +164,106 @@ describe('Product Actions', () => {
 
       expect(result.success).toBe(true);
     });
+
+    it('should include donationMode in database insert', async () => {
+      const { db } = await import('@/lib/db');
+
+      vi.mocked(db.insert).mockImplementation(
+        () =>
+          ({
+            values: (values: any) => {
+              expect(values.donationMode).toBe('monetary');
+              return {
+                returning: () => Promise.resolve([{ id: 'prod-donation-1' }]),
+              };
+            },
+          }) as never
+      );
+
+      const result = await createProduct({
+        name: 'Produto Monetário',
+        description: 'Desc',
+        targetAmount: 10000,
+        donationMode: 'monetary',
+      });
+
+      expect(result.success).toBe(true);
+      expect(result.data?.id).toBe('prod-donation-1');
+    });
+
+    it('should use "both" as default donationMode when not provided', async () => {
+      const { db } = await import('@/lib/db');
+
+      vi.mocked(db.insert).mockImplementation(
+        () =>
+          ({
+            values: (values: any) => {
+              expect(values.donationMode).toBe('both');
+              return {
+                returning: () => Promise.resolve([{ id: 'prod-donation-2' }]),
+              };
+            },
+          }) as never
+      );
+
+      const result = await createProduct({
+        name: 'Produto Padrão',
+        description: 'Desc',
+        targetAmount: 10000,
+      });
+
+      expect(result.success).toBe(true);
+    });
+
+    it('should accept "physical" as donationMode', async () => {
+      const { db } = await import('@/lib/db');
+
+      vi.mocked(db.insert).mockImplementation(
+        () =>
+          ({
+            values: (values: any) => {
+              expect(values.donationMode).toBe('physical');
+              return {
+                returning: () => Promise.resolve([{ id: 'prod-donation-3' }]),
+              };
+            },
+          }) as never
+      );
+
+      const result = await createProduct({
+        name: 'Produto Físico',
+        description: 'Desc',
+        targetAmount: 10000,
+        donationMode: 'physical',
+      });
+
+      expect(result.success).toBe(true);
+    });
+
+    it('should accept "both" as donationMode', async () => {
+      const { db } = await import('@/lib/db');
+
+      vi.mocked(db.insert).mockImplementation(
+        () =>
+          ({
+            values: (values: any) => {
+              expect(values.donationMode).toBe('both');
+              return {
+                returning: () => Promise.resolve([{ id: 'prod-donation-4' }]),
+              };
+            },
+          }) as never
+      );
+
+      const result = await createProduct({
+        name: 'Produto Ambos',
+        description: 'Desc',
+        targetAmount: 10000,
+        donationMode: 'both',
+      });
+
+      expect(result.success).toBe(true);
+    });
   });
 
   describe('updateProduct', () => {
@@ -283,6 +384,177 @@ describe('Product Actions', () => {
 
       expect(result.success).toBe(true);
       expect(setWasCalled).toBe(true);
+    });
+
+    it('should include donationMode in update', async () => {
+      const { db } = await import('@/lib/db');
+
+      vi.mocked(db.update).mockReturnValue({
+        set: (updates: any) => {
+          expect(updates.donationMode).toBe('physical');
+          return {
+            where: () => Promise.resolve(undefined),
+          };
+        },
+      } as never);
+
+      vi.mocked(db.delete).mockReturnValue({
+        where: () => Promise.resolve(undefined),
+      } as never);
+
+      vi.mocked(db.insert).mockReturnValue({
+        values: () => Promise.resolve(undefined),
+      } as never);
+
+      const result = await updateProduct('prod-123', {
+        donationMode: 'physical',
+      });
+
+      expect(result.success).toBe(true);
+    });
+
+    it('should call deleteStorageObject when imagePath is set to null and product has existing photo', async () => {
+      const { db } = await import('@/lib/db');
+
+      vi.mocked(db.query.products.findFirst).mockResolvedValueOnce({
+        imagePath: 'product-photos/old-photo.jpg',
+      } as never);
+
+      vi.mocked(db.update).mockReturnValue({
+        set: () => ({
+          where: () => Promise.resolve(undefined),
+        }),
+      } as never);
+
+      vi.mocked(db.delete).mockReturnValue({
+        where: () => Promise.resolve(undefined),
+      } as never);
+
+      vi.mocked(db.insert).mockReturnValue({
+        values: () => Promise.resolve(undefined),
+      } as never);
+
+      await updateProduct('prod-123', {
+        imagePath: null,
+      });
+
+      expect(vi.mocked(deleteStorageObject)).toHaveBeenCalledWith(
+        'product-photos',
+        'product-photos/old-photo.jpg'
+      );
+    });
+
+    it('should not call deleteStorageObject when imagePath is null but product has no existing photo', async () => {
+      const { db } = await import('@/lib/db');
+
+      vi.mocked(db.query.products.findFirst).mockResolvedValueOnce({
+        imagePath: null,
+      } as never);
+
+      vi.mocked(db.update).mockReturnValue({
+        set: () => ({
+          where: () => Promise.resolve(undefined),
+        }),
+      } as never);
+
+      vi.mocked(db.delete).mockReturnValue({
+        where: () => Promise.resolve(undefined),
+      } as never);
+
+      vi.mocked(db.insert).mockReturnValue({
+        values: () => Promise.resolve(undefined),
+      } as never);
+
+      await updateProduct('prod-123', {
+        imagePath: null,
+      });
+
+      expect(vi.mocked(deleteStorageObject)).not.toHaveBeenCalled();
+    });
+
+    it('should continue successfully even if deleteStorageObject throws error', async () => {
+      const { db } = await import('@/lib/db');
+
+      vi.mocked(db.query.products.findFirst).mockResolvedValueOnce({
+        imagePath: 'product-photos/old-photo.jpg',
+      } as never);
+
+      vi.mocked(deleteStorageObject).mockRejectedValueOnce(
+        new Error('Storage deletion failed')
+      );
+
+      vi.mocked(db.update).mockReturnValue({
+        set: () => ({
+          where: () => Promise.resolve(undefined),
+        }),
+      } as never);
+
+      vi.mocked(db.delete).mockReturnValue({
+        where: () => Promise.resolve(undefined),
+      } as never);
+
+      vi.mocked(db.insert).mockReturnValue({
+        values: () => Promise.resolve(undefined),
+      } as never);
+
+      const result = await updateProduct('prod-123', {
+        imagePath: null,
+      });
+
+      expect(result.success).toBe(true);
+    });
+
+    it('should not call deleteStorageObject when imagePath is not set to null', async () => {
+      const { db } = await import('@/lib/db');
+
+      vi.mocked(db.update).mockReturnValue({
+        set: () => ({
+          where: () => Promise.resolve(undefined),
+        }),
+      } as never);
+
+      vi.mocked(db.delete).mockReturnValue({
+        where: () => Promise.resolve(undefined),
+      } as never);
+
+      vi.mocked(db.insert).mockReturnValue({
+        values: () => Promise.resolve(undefined),
+      } as never);
+
+      await updateProduct('prod-123', {
+        imagePath: 'product-photos/new-photo.jpg',
+      });
+
+      expect(vi.mocked(deleteStorageObject)).not.toHaveBeenCalled();
+    });
+
+    it('should allow simultaneous donationMode and imagePath updates', async () => {
+      const { db } = await import('@/lib/db');
+
+      vi.mocked(db.update).mockReturnValue({
+        set: (updates: any) => {
+          expect(updates.donationMode).toBe('monetary');
+          expect(updates.imagePath).toBe('product-photos/new-photo.jpg');
+          return {
+            where: () => Promise.resolve(undefined),
+          };
+        },
+      } as never);
+
+      vi.mocked(db.delete).mockReturnValue({
+        where: () => Promise.resolve(undefined),
+      } as never);
+
+      vi.mocked(db.insert).mockReturnValue({
+        values: () => Promise.resolve(undefined),
+      } as never);
+
+      const result = await updateProduct('prod-123', {
+        imagePath: 'product-photos/new-photo.jpg',
+        donationMode: 'monetary',
+      });
+
+      expect(result.success).toBe(true);
     });
   });
 

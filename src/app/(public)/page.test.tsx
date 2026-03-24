@@ -22,6 +22,7 @@ const mockProduct = {
   isFulfilled: false,
   isPublished: true,
   imagePath: null,
+  donationMode: 'both' as const,
   createdAt: new Date(),
   updatedAt: new Date(),
   productCategories: [
@@ -47,6 +48,7 @@ const mockPhysicalProduct = {
   isFulfilled: false,
   isPublished: true,
   imagePath: null,
+  donationMode: 'both' as const,
   createdAt: new Date(),
   updatedAt: new Date(),
   productCategories: [

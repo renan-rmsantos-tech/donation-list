@@ -16,6 +16,7 @@ export const createProductSchema = z.object({
   isPublished: z.boolean().optional().default(true),
   categoryIds: z.array(z.string().uuid()).optional().default([]),
   imagePath: z.string().max(500).nullable().optional(),
+  donationMode: z.enum(['monetary', 'physical', 'both']).optional().default('both'),
 });
 
 export type CreateProductInput = z.infer<typeof createProductSchema>;
@@ -27,6 +28,7 @@ export const updateProductSchema = z.object({
   isPublished: z.boolean().optional(),
   categoryIds: z.array(z.string().uuid()).optional(),
   imagePath: z.string().max(500).nullable().optional(),
+  donationMode: z.enum(['monetary', 'physical', 'both']).optional(),
 });
 
 export type UpdateProductInput = z.infer<typeof updateProductSchema>;

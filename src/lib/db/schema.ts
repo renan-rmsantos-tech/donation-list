@@ -12,6 +12,7 @@ import {
 import { relations } from 'drizzle-orm';
 
 export const donationTypeEnum = pgEnum('donation_type', ['monetary', 'physical']);
+export const donationModeEnum = pgEnum('donation_mode', ['monetary', 'physical', 'both']);
 
 export const categories = pgTable('categories', {
   id: uuid('id').primaryKey().defaultRandom(),
@@ -29,6 +30,7 @@ export const products = pgTable('products', {
   isFulfilled: boolean('is_fulfilled').default(false).notNull(),
   isPublished: boolean('is_published').default(true).notNull(),
   imagePath: text('image_path'), // Supabase Storage path for product photo
+  donationMode: donationModeEnum('donation_mode').notNull().default('both'), // 'monetary', 'physical', or 'both'
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });
