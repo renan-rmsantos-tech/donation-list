@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import { getCategories } from '@/features/categories/queries';
 import { getProductById } from '@/features/products/queries';
-import { getPublicUrl } from '@/lib/storage/supabase';
+import { getPublicUrl } from '@/lib/storage/public-url';
 import { ProductForm } from '@/features/products/components/ProductForm';
 
 export default async function EditProductPage({

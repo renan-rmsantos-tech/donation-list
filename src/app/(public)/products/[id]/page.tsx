@@ -4,7 +4,7 @@ import { ChevronLeft } from 'lucide-react';
 import { notFound } from 'next/navigation';
 import { getPublishedProductById } from '@/features/products/queries';
 import { getPixSettings } from '@/features/pix/queries';
-import { getPublicUrl } from '@/lib/storage/supabase';
+import { getPublicUrl } from '@/lib/storage/public-url';
 import { DonationSection } from '@/features/donations/components/DonationSection';
 import { formatCurrency, calculateProgressPercentage } from '@/lib/utils/format';
 import { ThemeToggle } from '@/components/theme-toggle';

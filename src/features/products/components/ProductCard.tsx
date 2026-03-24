@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ImageIcon } from 'lucide-react';
 import type { products } from '@/lib/db/schema';
-import { getPublicUrl } from '@/lib/storage/supabase';
+import { getPublicUrl } from '@/lib/storage/public-url';
 import { formatCurrency } from '@/lib/utils/format';
 import { DonationModeBadge } from './DonationModeBadge';
 

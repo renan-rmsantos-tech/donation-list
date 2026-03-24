@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { deleteProduct } from '../actions';
 import { formatCurrency } from '@/lib/utils/format';
-import { getPublicUrl } from '@/lib/storage/supabase';
+import { getPublicUrl } from '@/lib/storage/public-url';
 import { PlaceholderImage } from '@/components/ui/placeholder-image';
 import { toast } from 'sonner';
 import {

@@ -51,11 +51,6 @@ export const generateSignedUploadUrl = async (
   };
 };
 
-export const getPublicUrl = (bucket: string, path: string): string => {
-  const { data } = supabaseAdmin.storage.from(bucket).getPublicUrl(path);
-  return data.publicUrl;
-};
-
 export const deleteStorageObject = async (
   bucket: string,
   path: string

@@ -12,12 +12,11 @@
     "test:watch": "NODE_ENV=test vitest",
     "test:coverage": "NODE_ENV=test vitest run --coverage",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate",
-    "db:migrate:local": "env -u DATABASE_URL -u DATABASE_URL_MIGRATE drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
     "supabase:start": "supabase start",
     "supabase:stop": "supabase stop",
-    "supabase:reset": "supabase db reset"
+    "supabase:reset": "supabase db reset",
+    "supabase:status": "supabase migration list"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

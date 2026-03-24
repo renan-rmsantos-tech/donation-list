@@ -17,7 +17,7 @@ vi.mock('@/features/pix/queries', () => ({
   getPixSettings: vi.fn(),
 }));
 
-vi.mock('@/lib/storage/supabase', () => ({
+vi.mock('@/lib/storage/public-url', () => ({
   getPublicUrl: (bucket: string, path: string) =>
     `https://example.com/${bucket}/${path}`,
 }));
