@@ -11,7 +11,7 @@ import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from '@/components/ui/sonner';
 
 export const metadata: Metadata = {
-  title: 'Colégio São José - Doações',
+  title: 'Colégio São José',
   description: 'Plataforma de doações transparente para a comunidade do Colégio São José',
   icons: {
     icon: '/logo.png',

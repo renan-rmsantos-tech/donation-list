@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { ScrollToHash } from './components/ScrollToHash';
 
 export const metadata: Metadata = {
-  title: 'Colégio São José - Doações',
+  title: 'Colégio São José',
   description: 'Catálogo público de itens para doação ao Colégio São José',
 };
 
