@@ -189,7 +189,7 @@ export function MonetaryDonationForm({
           {copiaEColaCode && (
             <div className="flex items-center gap-2">
               <div className="flex-1 min-w-0 bg-[#EDE9DE] border border-[#D9CFBE] rounded-md px-3.5 py-2.5 overflow-hidden">
-                <p className="text-[14px] text-[#2C4A5A]">{copiaEColaCode}</p>
+                <p className="text-[14px] text-[#2C4A5A] break-words">{copiaEColaCode}</p>
               </div>
               <button
                 type="button"
