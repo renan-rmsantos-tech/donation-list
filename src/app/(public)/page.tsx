@@ -25,7 +25,10 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
       <main className="max-w-[960px] mx-auto px-4 md:px-8 pb-20">
 
         {/* ── Mensagem ─────────────────────────────── */}
-        <section id="mensagem" className="pt-9 pb-10 border-b border-[#D4C4A8]">
+        <section
+          id="mensagem"
+          className="scroll-mt-[188px] pt-9 pb-10 border-b border-[#D4C4A8]"
+        >
           <h2 className="font-serif font-bold text-[28px] leading-[34px] text-[#B8952E] mb-5">
             Mensagem
           </h2>
@@ -72,7 +75,7 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
         </section>
 
         {/* ── Produtos ─────────────────────────────── */}
-        <section id="doacoes" className="pt-10">
+        <section id="doacoes" className="scroll-mt-[188px] pt-10">
           <div className="flex items-baseline gap-[14px] mb-5">
             <h2 className="font-serif font-bold text-[28px] leading-[34px] text-[#B8952E]">
               Itens para doação
@@ -127,7 +130,10 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
         </section>
 
         {/* ── Conheça o Colégio ────────────────────── */}
-        <section id="colegio" className="mt-12 pt-14 border-t-2 border-[#B8952E]">
+        <section
+          id="colegio"
+          className="scroll-mt-[188px] mt-12 pt-14 border-t-2 border-[#B8952E]"
+        >
           <h2 className="font-serif font-bold text-[30px] leading-[36px] text-[#B8952E] mb-4">
             Conheça o Colégio
           </h2>

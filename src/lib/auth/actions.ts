@@ -29,7 +29,7 @@ export async function adminLogin(
     session.isAdmin = true;
     session.username = input.username;
     await session.save();
-    redirect('/admin/dashboard');
+    return { success: true };
   }
 
   return {

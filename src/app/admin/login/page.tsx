@@ -2,11 +2,13 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { adminLogin } from '@/lib/auth/actions';
 import { toast } from 'sonner';
 import { ThemeToggle } from '@/components/theme-toggle';
 
 export default function LoginPage() {
+  const router = useRouter();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -17,9 +19,11 @@ export default function LoginPage() {
 
     try {
       const result = await adminLogin({ username, password });
-      if (!result.success) {
-        toast.error(result.error ?? 'Erro ao fazer login');
+      if (result.success) {
+        router.replace('/admin/dashboard');
+        return;
       }
+      toast.error(result.error ?? 'Erro ao fazer login');
     } catch {
       toast.error('Ocorreu um erro. Tente novamente.');
     } finally {

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { ScrollToHash } from './components/ScrollToHash';
 
 export const metadata: Metadata = {
   title: 'Colégio São José - Doações',
@@ -12,6 +13,7 @@ export default function PublicLayout({
 }) {
   return (
     <div className="min-h-screen bg-background">
+      <ScrollToHash />
       {children}
     </div>
   );

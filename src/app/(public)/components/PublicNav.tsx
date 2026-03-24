@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { PublicNavLinks } from './PublicNavLinks';
 
 export function PublicNav() {
   return (
@@ -19,24 +20,7 @@ export function PublicNav() {
         </div>
 
         <div className="flex items-center gap-1">
-          <a
-            href="#mensagem"
-            className="px-4 py-2 rounded-full text-[13px] text-[#5A6D7E] hover:text-[#1E3D59] hover:bg-[#1E3D5914] transition-colors cursor-pointer"
-          >
-            Mensagem
-          </a>
-          <a
-            href="#doacoes"
-            className="px-4 py-2 rounded-full text-[13px] text-[#5A6D7E] hover:text-[#1E3D59] hover:bg-[#1E3D5914] transition-colors cursor-pointer"
-          >
-            Doações
-          </a>
-          <a
-            href="#colegio"
-            className="px-4 py-2 rounded-full text-[13px] text-[#5A6D7E] hover:text-[#1E3D59] hover:bg-[#1E3D5914] transition-colors cursor-pointer"
-          >
-            Conheça o Colégio
-          </a>
+          <PublicNavLinks />
           <ThemeToggle className="ml-2 w-10 h-10 border-[1.5px] border-[#C5A572] rounded-lg" />
         </div>
       </div>
