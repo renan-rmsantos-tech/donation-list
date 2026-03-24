@@ -1,6 +1,5 @@
 import { formatCurrency } from '@/lib/utils/format';
 import type { DashboardStats } from '../queries';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
 
 interface DashboardStatsCardsProps {
   stats: DashboardStats;
@@ -9,74 +8,56 @@ interface DashboardStatsCardsProps {
 const LOCALE_PT_BR = 'pt-BR';
 
 export function DashboardStatsCards({ stats }: DashboardStatsCardsProps) {
-  const hasData =
-    stats.totalMonetaryDonations > 0 ||
-    stats.totalPhysicalFulfilled > 0 ||
-    stats.totalPhysicalPending > 0;
-
   return (
-    <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card>
-          <CardHeader>
-            <h2 className="text-xs font-medium text-muted-foreground uppercase tracking-widest">
-              Total de Doações em Dinheiro
-            </h2>
-          </CardHeader>
-          <CardContent>
-            <p className="text-3xl font-bold">
-              {formatCurrency(stats.totalMonetaryDonations, LOCALE_PT_BR)}
-            </p>
-            <p className="text-xs text-muted-foreground mt-1">
-              Total arrecadado em todas as doações
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <h2 className="text-xs font-medium text-muted-foreground uppercase tracking-widest">
-              Itens Atendidos
-            </h2>
-          </CardHeader>
-          <CardContent>
-            <p className={`text-3xl font-bold ${stats.totalPhysicalFulfilled > 0 ? 'text-green-700 dark:text-green-400' : ''}`}>
-              {stats.totalPhysicalFulfilled}
-            </p>
-            <p className="text-xs text-muted-foreground mt-1">
-              Itens que atingiram a meta
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <h2 className="text-xs font-medium text-muted-foreground uppercase tracking-widest">
-              Itens Pendentes
-            </h2>
-          </CardHeader>
-          <CardContent>
-            <p className="text-3xl font-bold">{stats.totalPhysicalPending}</p>
-            <p className="text-xs text-muted-foreground mt-1">
-              Itens ainda sem meta atingida
-            </p>
-          </CardContent>
-        </Card>
+    <div className="flex gap-6">
+      <div
+        className="flex-1 bg-white border border-[#EDE5DA] rounded-xl flex flex-col gap-3 pt-7 pl-7 pr-7 pb-6"
+        style={{ boxShadow: '#1C14100D 0px 2px 12px' }}
+      >
+        <p className="text-[12px] uppercase tracking-[1px] leading-4 text-[#9B7B5A] m-0">
+          Total de Doações em Dinheiro
+        </p>
+        <p className="font-serif font-bold text-[36px] leading-none text-[#1E3D59] m-0">
+          {formatCurrency(stats.totalMonetaryDonations, LOCALE_PT_BR)}
+        </p>
+        <p className="text-[12px] leading-4 text-[#9B7B5A] m-0">
+          Total arrecadado em todas as doações
+        </p>
       </div>
 
-      {!hasData && (
-        <Card
-          className="border-dashed"
-          data-testid="dashboard-empty-state"
+      <div
+        className="flex-1 bg-white border border-[#EDE5DA] rounded-xl flex flex-col gap-3 pt-7 pl-7 pr-7 pb-6"
+        style={{ boxShadow: '#1C14100D 0px 2px 12px' }}
+      >
+        <p className="text-[12px] uppercase tracking-[1px] leading-4 text-[#9B7B5A] m-0">
+          Itens Atendidos
+        </p>
+        <p
+          className={`font-serif font-bold text-[36px] leading-none m-0 ${
+            stats.totalPhysicalFulfilled > 0 ? 'text-[#22A55A]' : 'text-[#1E3D59]'
+          }`}
         >
-          <CardContent className="pt-6">
-            <p className="text-center text-muted-foreground">
-              Ainda não há dados de doações. As métricas aparecerão quando
-              doações ou compromissos forem registrados.
-            </p>
-          </CardContent>
-        </Card>
-      )}
+          {stats.totalPhysicalFulfilled}
+        </p>
+        <p className="text-[12px] leading-4 text-[#9B7B5A] m-0">
+          Itens que atingiram a meta
+        </p>
+      </div>
+
+      <div
+        className="flex-1 bg-white border border-[#EDE5DA] rounded-xl flex flex-col gap-3 pt-7 pl-7 pr-7 pb-6"
+        style={{ boxShadow: '#1C14100D 0px 2px 12px' }}
+      >
+        <p className="text-[12px] uppercase tracking-[1px] leading-4 text-[#9B7B5A] m-0">
+          Itens Pendentes
+        </p>
+        <p className="font-serif font-bold text-[36px] leading-none text-[#1E3D59] m-0">
+          {stats.totalPhysicalPending}
+        </p>
+        <p className="text-[12px] leading-4 text-[#9B7B5A] m-0">
+          Itens ainda sem meta atingida
+        </p>
+      </div>
     </div>
   );
 }

@@ -2,8 +2,6 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
 
 const navItems = [
   { href: '/admin/dashboard', label: 'Painel' },
@@ -18,22 +16,25 @@ export function AdminNavLinks() {
 
   return (
     <>
-      {navItems.map((item) => {
+      {navItems.map((item, i) => {
         const isActive =
           pathname === item.href || pathname.startsWith(item.href + '/');
         return (
-          <Button key={item.href} variant="ghost" size="sm" asChild>
+          <span key={item.href} className="flex items-center">
+            {i > 0 && (
+              <span className="w-px h-5 bg-[#FAF8F540] flex-shrink-0 mx-1" />
+            )}
             <Link
               href={item.href}
-              className={cn(
-                'text-primary-foreground hover:bg-primary-foreground/10',
-                isActive &&
-                  'bg-primary-foreground/15 ring-1 ring-primary-foreground/30 rounded'
-              )}
+              className={`py-1.5 px-3.5 rounded-md text-[14px] leading-[18px] transition-colors ${
+                isActive
+                  ? 'bg-[#FAF8F526] text-[#FAF8F5]'
+                  : 'text-[#FAF8F5CC] hover:text-[#FAF8F5] hover:bg-[#FAF8F526]'
+              }`}
             >
               {item.label}
             </Link>
-          </Button>
+          </span>
         );
       })}
     </>

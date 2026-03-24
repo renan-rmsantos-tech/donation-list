@@ -6,9 +6,11 @@ export default async function DashboardPage() {
   const stats = await getDashboardStats();
 
   return (
-    <div>
-      <h1 className="text-4xl font-bold mb-8 font-serif">Painel</h1>
-      <div className="space-y-6">
+    <div className="flex flex-col gap-8">
+      <h1 className="font-serif font-bold text-[36px] leading-[44px] text-[#1E3D59]">
+        Painel
+      </h1>
+      <div className="flex flex-col gap-6">
         <DashboardTransferAlert hasTransfersAvailable={stats.hasTransfersAvailable} />
         <DashboardStatsCards stats={stats} />
       </div>
