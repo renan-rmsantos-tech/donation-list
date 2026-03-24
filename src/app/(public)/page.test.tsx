@@ -85,7 +85,7 @@ describe('CatalogPage', () => {
         searchParams: Promise.resolve({}),
       });
       render(Page);
-      expect(screen.getByText('Doações para o')).toBeInTheDocument();
+      expect(screen.getByText('Doações para o Colégio São José')).toBeInTheDocument();
       expect(screen.getAllByText('Colégio São José').length).toBeGreaterThanOrEqual(1);
     });
 

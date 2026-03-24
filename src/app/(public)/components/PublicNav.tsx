@@ -9,9 +9,9 @@ export function PublicNav() {
           <Image
             src="/logo.png"
             alt="Colégio São José"
-            width={46}
-            height={46}
-            className="rounded-full"
+            width={140}
+            height={140}
+            className="rounded-full w-[140px] h-[140px] object-cover flex-shrink-0"
           />
           <span className="font-serif font-bold text-[20px] leading-6 text-[#1E3D59]">
             Colégio São José
