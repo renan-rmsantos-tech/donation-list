@@ -2,10 +2,8 @@
 
 import { useState } from 'react';
 import { createPhysicalPledge } from '../actions';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 
 type PhysicalPledgeFormProps = {
@@ -63,64 +61,69 @@ export function PhysicalPledgeForm({
   };
 
   return (
-    <Card className="border-primary/30 bg-primary/5">
-      <CardHeader>
-        <h2 className="text-xl font-semibold">Oferecer Este Item</h2>
-        <p className="text-sm text-muted-foreground">
-          Preencha seus dados de contato para registrar seu compromisso de doar
-          este item. Entraremos em contato para coordenar a entrega.
-        </p>
-      </CardHeader>
-      <CardContent className="space-y-6">
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor={donorNameInputId}>Seu Nome *</Label>
-            <Input
-              id={donorNameInputId}
-              type="text"
-              value={donorName}
-              onChange={(e) => setDonorName(e.target.value)}
-              placeholder="Nome completo"
-              maxLength={200}
-              required
-            />
-          </div>
+    <div className="flex flex-col gap-4">
+      <p className="text-[14px] leading-[1.6] text-[#5C4F43]">
+        Preencha seus dados de contato para registrar seu compromisso de oferecer este item. Entraremos em contato para coordenar a entrega.
+      </p>
 
-          <div className="space-y-2">
-            <Label htmlFor={donorPhoneInputId}>Telefone *</Label>
-            <Input
-              id={donorPhoneInputId}
-              type="tel"
-              value={donorPhone}
-              onChange={(e) => setDonorPhone(e.target.value)}
-              placeholder="Ex: (11) 98765-4321 ou +55 11 98765-4321"
-              required
-            />
-            <p className="text-xs text-muted-foreground">
-              Formato brasileiro: 10-11 dígitos com código do país +55 opcional
-            </p>
-          </div>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+        <div className="flex flex-col gap-1.5">
+          <Label htmlFor={donorNameInputId} className="text-[13px] text-[#5C4F43]">
+            Seu Nome <span className="text-[#B5824A]">*</span>
+          </Label>
+          <Input
+            id={donorNameInputId}
+            type="text"
+            value={donorName}
+            onChange={(e) => setDonorName(e.target.value)}
+            placeholder="Nome completo"
+            maxLength={200}
+            required
+            className="bg-[#FAFAF7] border-[#D9CFBE] text-[14px] text-[#2C4A5A] placeholder:text-[#8C7B6B]/60"
+          />
+        </div>
 
-          <div className="space-y-2">
-            <Label htmlFor={donorEmailInputId}>E-mail *</Label>
-            <Input
-              id={donorEmailInputId}
-              type="email"
-              value={donorEmail}
-              onChange={(e) => setDonorEmail(e.target.value)}
-              placeholder="email@example.com"
-              required
-            />
-            <p className="text-xs text-muted-foreground">
-              Usaremos seu e-mail para confirmar o recebimento do item.
-            </p>
-          </div>
+        <div className="flex flex-col gap-1.5">
+          <Label htmlFor={donorPhoneInputId} className="text-[13px] text-[#5C4F43]">
+            Telefone <span className="text-[#B5824A]">*</span>
+          </Label>
+          <Input
+            id={donorPhoneInputId}
+            type="tel"
+            value={donorPhone}
+            onChange={(e) => setDonorPhone(e.target.value)}
+            placeholder="(11) 98765-4321"
+            required
+            className="bg-[#FAFAF7] border-[#D9CFBE] text-[14px] text-[#2C4A5A] placeholder:text-[#8C7B6B]/60"
+          />
+          <p className="text-[12px] text-[#8C7B6B]">
+            Formato brasileiro: 10-11 dígitos (código de país +55 opcional)
+          </p>
+        </div>
 
-          <Button type="submit" disabled={loading} className="w-full">
-            {loading ? 'Enviando...' : 'Enviar Compromisso'}
-          </Button>
-        </form>
-      </CardContent>
-    </Card>
+        <div className="flex flex-col gap-1.5">
+          <Label htmlFor={donorEmailInputId} className="text-[13px] text-[#5C4F43]">
+            E-mail <span className="text-[#B5824A]">*</span>
+          </Label>
+          <Input
+            id={donorEmailInputId}
+            type="email"
+            value={donorEmail}
+            onChange={(e) => setDonorEmail(e.target.value)}
+            placeholder="seu@email.com"
+            required
+            className="bg-[#FAFAF7] border-[#D9CFBE] text-[14px] text-[#2C4A5A] placeholder:text-[#8C7B6B]/60"
+          />
+        </div>
+
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full bg-[#B5824A] text-white text-[16px] leading-[20px] py-3 rounded-lg hover:bg-[#B5824A]/90 transition-colors disabled:opacity-60 mt-2"
+        >
+          {loading ? 'Enviando...' : 'Registrar Compromisso'}
+        </button>
+      </form>
+    </div>
   );
 }

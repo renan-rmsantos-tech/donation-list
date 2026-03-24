@@ -1,12 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from '@/components/ui/tabs';
 import { MonetaryDonationForm } from './MonetaryDonationForm';
 import { PhysicalPledgeForm } from './PhysicalPledgeForm';
 
@@ -29,35 +23,48 @@ export function DonationTabs({
 
   return (
     <div className="w-full">
-      <Tabs
-        value={activeTab}
-        onValueChange={setActiveTab}
-        className="w-full"
-      >
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="monetary" type="button">
-            Dinheiro
-          </TabsTrigger>
-          <TabsTrigger value="physical" type="button">
-            Material
-          </TabsTrigger>
-        </TabsList>
+      {/* Tab bar */}
+      <div className="flex border-b-2 border-[#D9CFBE] mb-5">
+        <button
+          type="button"
+          onClick={() => setActiveTab('monetary')}
+          className={[
+            'px-6 py-2.5 text-[16px] leading-[20px] -mb-0.5 transition-colors',
+            activeTab === 'monetary'
+              ? 'border-b-2 border-[#B5824A] text-[#2C4A5A]'
+              : 'text-[#8C7B6B] hover:text-[#5C4F43]',
+          ].join(' ')}
+        >
+          Pix
+        </button>
+        <button
+          type="button"
+          onClick={() => setActiveTab('physical')}
+          className={[
+            'px-6 py-2.5 text-[16px] leading-[20px] -mb-0.5 transition-colors',
+            activeTab === 'physical'
+              ? 'border-b-2 border-[#B5824A] text-[#2C4A5A]'
+              : 'text-[#8C7B6B] hover:text-[#5C4F43]',
+          ].join(' ')}
+        >
+          Doação de Material
+        </button>
+      </div>
 
-        <TabsContent value="monetary" forceMount className="mt-4">
-          <MonetaryDonationForm
-            productId={productId}
-            targetAmount={targetAmount ?? 0}
-            currentAmount={currentAmount}
-            qrCodeImageUrl={qrCodeImageUrl}
-            copiaEColaCode={copiaEColaCode}
-            idPrefix="monetary-"
-          />
-        </TabsContent>
+      {activeTab === 'monetary' && (
+        <MonetaryDonationForm
+          productId={productId}
+          targetAmount={targetAmount ?? 0}
+          currentAmount={currentAmount}
+          qrCodeImageUrl={qrCodeImageUrl}
+          copiaEColaCode={copiaEColaCode}
+          idPrefix="monetary-"
+        />
+      )}
 
-        <TabsContent value="physical" forceMount className="mt-4">
-          <PhysicalPledgeForm productId={productId} idPrefix="physical-" />
-        </TabsContent>
-      </Tabs>
+      {activeTab === 'physical' && (
+        <PhysicalPledgeForm productId={productId} idPrefix="physical-" />
+      )}
     </div>
   );
 }

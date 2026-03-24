@@ -3,13 +3,9 @@
 import { useState, useRef } from 'react';
 import { createMonetaryDonation, uploadFile } from '../actions';
 import { formatCurrency } from '@/lib/utils/format';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
-import { Alert, AlertDescription } from '@/components/ui/alert';
 
 type MonetaryDonationFormProps = {
   productId: string;
@@ -34,9 +30,22 @@ export function MonetaryDonationForm({
   const [receiptFile, setReceiptFile] = useState<File | null>(null);
   const [receiptPath, setReceiptPath] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [copied, setCopied] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const remaining = Math.max(0, targetAmount - currentAmount);
+  const hasPixSettings = qrCodeImageUrl || copiaEColaCode;
+
+  const handleCopy = async () => {
+    if (!copiaEColaCode) return;
+    try {
+      await navigator.clipboard.writeText(copiaEColaCode);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      toast.error('Não foi possível copiar o código.');
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -120,139 +129,169 @@ export function MonetaryDonationForm({
     }
   };
 
-  const hasPixSettings = qrCodeImageUrl || copiaEColaCode;
   const amountInputId = `${idPrefix}amount`;
   const donorNameInputId = `${idPrefix}donorName`;
   const donorEmailInputId = `${idPrefix}donorEmail`;
   const receiptInputId = `${idPrefix}receipt`;
 
-  return (
-    <Card className="border-primary/30 bg-primary/5">
-      <CardHeader>
-        <h2 className="text-xl font-semibold">Faça uma Doação em Dinheiro</h2>
-        <p className="text-sm text-muted-foreground">
-          Escolha o valor que deseja contribuir e complete a transferência via
-          PIX. Envie o comprovante de pagamento para confirmar sua doação.
+  if (!hasPixSettings) {
+    return (
+      <div
+        className="rounded-lg px-4 py-3.5 border"
+        style={{
+          backgroundColor: 'rgba(181,130,74,0.08)',
+          borderColor: 'rgba(181,130,74,0.3)',
+        }}
+      >
+        <p className="text-[14px] text-[#7A5C2E]">
+          Os dados de pagamento PIX ainda não foram configurados. Entre em contato com o administrador.
         </p>
-      </CardHeader>
-      <CardContent className="space-y-6">
-        {!hasPixSettings && (
-          <Alert className="border-amber-200 bg-amber-50 dark:bg-amber-950/30 text-amber-800 dark:text-amber-200">
-            <AlertDescription>
-              Os dados de pagamento PIX ainda não foram configurados. Entre em
-              contato com o administrador.
-            </AlertDescription>
-          </Alert>
-        )}
+      </div>
+    );
+  }
 
-        {hasPixSettings && (
-          <Card className="bg-background">
-            <CardHeader className="pb-2">
-              <h3 className="font-medium">Dados de Pagamento PIX</h3>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {qrCodeImageUrl && (
-                <div>
-                  <p className="text-sm text-muted-foreground mb-2">
-                    QR Code:
-                  </p>
-                  <img
-                    src={qrCodeImageUrl}
-                    alt="PIX QR Code"
-                    className="max-w-[200px] h-auto border rounded"
-                  />
-                </div>
-              )}
-              {copiaEColaCode && (
-                <div className="space-y-2">
-                  <Label>Código PIX Copia e Cola:</Label>
-                  <Textarea
-                    readOnly
-                    value={copiaEColaCode}
-                    className="font-mono bg-muted"
-                    rows={3}
-                    onClick={(e) =>
-                      (e.target as HTMLTextAreaElement).select()
-                    }
-                  />
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        )}
+  return (
+    <div className="flex flex-col gap-5">
+      {/* QR Code + instructions + pix code */}
+      <div className="flex items-start gap-6">
+        {/* QR Code box */}
+        <div className="flex-shrink-0 w-[140px] h-[140px] rounded-lg border border-[#D9CFBE] bg-[#EDE9DE] flex flex-col items-center justify-center gap-2">
+          {qrCodeImageUrl ? (
+            <img
+              src={qrCodeImageUrl}
+              alt="QR Code PIX"
+              className="w-[110px] h-[110px] object-contain"
+            />
+          ) : (
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+              <rect x="4" y="4" width="16" height="16" rx="2" stroke="#B5824A" strokeWidth="2" />
+              <rect x="28" y="4" width="16" height="16" rx="2" stroke="#B5824A" strokeWidth="2" />
+              <rect x="4" y="28" width="16" height="16" rx="2" stroke="#B5824A" strokeWidth="2" />
+              <rect x="8" y="8" width="8" height="8" fill="#B5824A" rx="1" />
+              <rect x="32" y="8" width="8" height="8" fill="#B5824A" rx="1" />
+              <rect x="8" y="32" width="8" height="8" fill="#B5824A" rx="1" />
+              <rect x="28" y="28" width="4" height="4" fill="#B5824A" />
+              <rect x="34" y="28" width="4" height="4" fill="#B5824A" />
+              <rect x="28" y="34" width="4" height="4" fill="#B5824A" />
+              <rect x="34" y="34" width="4" height="4" fill="#B5824A" />
+              <rect x="40" y="28" width="4" height="4" fill="#B5824A" />
+              <rect x="40" y="34" width="4" height="4" fill="#B5824A" />
+            </svg>
+          )}
+          <span className="text-[11px] text-[#8C7B6B] leading-[14px]">QR Code</span>
+        </div>
 
-        {hasPixSettings && (
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor={amountInputId}>Valor da Doação (R$) *</Label>
-              <Input
+        {/* Instructions + copy code */}
+        <div className="flex-1 flex flex-col gap-3 pt-1">
+          <p className="text-[14px] leading-[1.6] text-[#5C4F43]">
+            Escaneie o QR Code com o aplicativo do seu banco ou use o código Pix abaixo para fazer sua doação.
+          </p>
+          {copiaEColaCode && (
+            <div className="flex items-center gap-2">
+              <div className="flex-1 min-w-0 bg-[#EDE9DE] border border-[#D9CFBE] rounded-md px-3.5 py-2.5 overflow-hidden">
+                <p className="text-[14px] text-[#2C4A5A] truncate">{copiaEColaCode}</p>
+              </div>
+              <button
+                type="button"
+                onClick={handleCopy}
+                className="flex-shrink-0 bg-[#2C4A5A] text-white text-[14px] leading-[18px] px-4 py-2.5 rounded-md hover:bg-[#2C4A5A]/90 transition-colors"
+              >
+                {copied ? 'Copiado!' : 'Copiar'}
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Form */}
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4 pt-1 border-t border-[#E4DDD1]">
+        {/* Amount */}
+        <div className="flex flex-col gap-2.5 pt-4">
+          <p className="text-[13px] font-medium uppercase tracking-[0.05em] text-[#8C7B6B] leading-[16px]">
+            Informe o valor que deseja doar
+          </p>
+          <div className="flex items-center gap-2">
+            <div className="flex-1 flex items-center gap-2 bg-[#FAFAF7] border border-[#D9CFBE] rounded-lg px-4 py-3">
+              <span className="text-[14px] text-[#8C7B6B] leading-[18px]">R$</span>
+              <input
                 id={amountInputId}
                 type="number"
                 step="0.01"
                 min="0.01"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
-                placeholder={`Restante: ${formatCurrency(remaining)}`}
+                placeholder={`${formatCurrency(remaining).replace('R$\u00a0', '')}`}
                 required
-              />
-              <p className="text-xs text-muted-foreground">
-                Mínimo R$ 1,00. Restante para atingir a meta:{' '}
-                {formatCurrency(remaining)}
-              </p>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor={donorNameInputId}>Seu Nome (opcional)</Label>
-              <Input
-                id={donorNameInputId}
-                type="text"
-                value={donorName}
-                onChange={(e) => setDonorName(e.target.value)}
-                placeholder="Deixe em branco para doar anonimamente"
-                maxLength={200}
+                className="flex-1 bg-transparent text-[14px] font-medium text-[#2C4A5A] leading-[18px] outline-none placeholder:text-[#8C7B6B]/60"
               />
             </div>
+            <button
+              type="submit"
+              disabled={loading}
+              className="flex-shrink-0 bg-[#B5824A] text-white text-[16px] leading-[20px] px-6 py-3 rounded-lg hover:bg-[#B5824A]/90 transition-colors disabled:opacity-60"
+            >
+              {loading ? 'Enviando...' : 'Registrar Doação'}
+            </button>
+          </div>
+          <p className="text-[12px] text-[#8C7B6B]">
+            Mínimo R$ 1,00 · Restante: {formatCurrency(remaining)}
+          </p>
+        </div>
 
-            <div className="space-y-2">
-              <Label htmlFor={donorEmailInputId}>E-mail *</Label>
-              <Input
-                id={donorEmailInputId}
-                type="email"
-                value={donorEmail}
-                onChange={(e) => setDonorEmail(e.target.value)}
-                placeholder="seu@email.com"
-                required
-              />
-              <p className="text-xs text-muted-foreground">
-                Usaremos seu e-mail para confirmar o recebimento da doação.
-              </p>
-            </div>
+        {/* Donor info */}
+        <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor={donorNameInputId} className="text-[13px] text-[#5C4F43]">
+              Seu Nome <span className="text-[#8C7B6B]">(opcional)</span>
+            </Label>
+            <Input
+              id={donorNameInputId}
+              type="text"
+              value={donorName}
+              onChange={(e) => setDonorName(e.target.value)}
+              placeholder="Deixe em branco para doar anonimamente"
+              maxLength={200}
+              className="bg-[#FAFAF7] border-[#D9CFBE] text-[14px] text-[#2C4A5A] placeholder:text-[#8C7B6B]/60"
+            />
+          </div>
 
-            <div className="space-y-2">
-              <Label htmlFor={receiptInputId}>Comprovante de Pagamento *</Label>
-              <Input
-                ref={fileInputRef}
-                id={receiptInputId}
-                type="file"
-                accept="image/*,.pdf"
-                onChange={(e) => {
-                  const file = e.target.files?.[0];
-                  setReceiptFile(file ?? null);
-                  setReceiptPath(null);
-                }}
-              />
-              <p className="text-xs text-muted-foreground">
-                Envie uma captura de tela ou foto do comprovante da transferência
-                PIX.
-              </p>
-            </div>
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor={donorEmailInputId} className="text-[13px] text-[#5C4F43]">
+              E-mail <span className="text-[#B5824A]">*</span>
+            </Label>
+            <Input
+              id={donorEmailInputId}
+              type="email"
+              value={donorEmail}
+              onChange={(e) => setDonorEmail(e.target.value)}
+              placeholder="seu@email.com"
+              required
+              className="bg-[#FAFAF7] border-[#D9CFBE] text-[14px] text-[#2C4A5A] placeholder:text-[#8C7B6B]/60"
+            />
+          </div>
 
-            <Button type="submit" disabled={loading} className="w-full">
-              {loading ? 'Enviando...' : 'Enviar Doação'}
-            </Button>
-          </form>
-        )}
-      </CardContent>
-    </Card>
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor={receiptInputId} className="text-[13px] text-[#5C4F43]">
+              Comprovante de Pagamento <span className="text-[#B5824A]">*</span>
+            </Label>
+            <Input
+              ref={fileInputRef}
+              id={receiptInputId}
+              type="file"
+              accept="image/*,.pdf"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                setReceiptFile(file ?? null);
+                setReceiptPath(null);
+              }}
+              className="bg-[#FAFAF7] border-[#D9CFBE] text-[13px] text-[#5C4F43]"
+            />
+            <p className="text-[12px] text-[#8C7B6B]">
+              Foto ou PDF do comprovante da transferência PIX.
+            </p>
+          </div>
+        </div>
+      </form>
+    </div>
   );
 }
