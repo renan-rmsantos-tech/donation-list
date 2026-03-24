@@ -26,10 +26,10 @@ export function PublicNav() {
             Mensagem
           </a>
           <a
-            href="#produtos"
+            href="#doacoes"
             className="px-4 py-2 rounded-full text-[13px] text-[#5A6D7E] hover:text-[#1E3D59] hover:bg-[#1E3D5914] transition-colors cursor-pointer"
           >
-            Produtos
+            Doações
           </a>
           <a
             href="#colegio"

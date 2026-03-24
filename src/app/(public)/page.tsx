@@ -26,9 +26,9 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
 
         {/* ── Mensagem ─────────────────────────────── */}
         <section id="mensagem" className="pt-9 pb-10 border-b border-[#D4C4A8]">
-          <div className="text-[11px] uppercase tracking-[1.6px] text-[#B8952E] mb-5">
+          <h2 className="font-serif font-bold text-[28px] leading-[34px] text-[#B8952E] mb-5">
             Mensagem
-          </div>
+          </h2>
 
           <div className="flex flex-col gap-[14px]">
             <p className="text-[16px] leading-[1.7] text-[#3D4F5F] m-0">
@@ -72,13 +72,9 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
         </section>
 
         {/* ── Produtos ─────────────────────────────── */}
-        <section id="produtos" className="pt-10">
-          <span className="block text-[11px] uppercase tracking-[1.6px] text-[#B8952E] mb-4">
-            Produtos
-          </span>
-
+        <section id="doacoes" className="pt-10">
           <div className="flex items-baseline gap-[14px] mb-5">
-            <h2 className="font-serif font-bold text-[28px] leading-[34px] text-[#1E3D59]">
+            <h2 className="font-serif font-bold text-[28px] leading-[34px] text-[#B8952E]">
               Itens para doação
             </h2>
             <span className="text-[13px] text-[#6B7D8E]">
@@ -94,7 +90,7 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
               </span>
               <div className="flex flex-wrap gap-2">
                 <Link
-                  href="/#produtos"
+                  href="/#doacoes"
                   className={`rounded-full py-2 px-5 text-[14px] transition-colors cursor-pointer ${
                     !categoryId
                       ? 'bg-[#1E3D59] text-[#F8F6F1]'
@@ -106,7 +102,7 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
                 {categories.map((cat) => (
                   <Link
                     key={cat.id}
-                    href={`/?category=${cat.id}#produtos`}
+                    href={`/?category=${cat.id}#doacoes`}
                     className={`rounded-full py-2 px-5 text-[14px] transition-colors cursor-pointer ${
                       categoryId === cat.id
                         ? 'bg-[#1E3D59] text-[#F8F6F1]'
@@ -132,10 +128,7 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
 
         {/* ── Conheça o Colégio ────────────────────── */}
         <section id="colegio" className="mt-12 pt-14 border-t-2 border-[#B8952E]">
-          <span className="block text-[11px] uppercase tracking-[1.6px] text-[#B8952E] mb-4">
-            Conheça o Colégio
-          </span>
-          <h2 className="font-serif font-bold text-[30px] leading-[36px] text-[#1E3D59] mb-4">
+          <h2 className="font-serif font-bold text-[30px] leading-[36px] text-[#B8952E] mb-4">
             Conheça o Colégio
           </h2>
           <p className="text-[16px] leading-[1.75] text-[#5A6D7E] max-w-[720px]">
