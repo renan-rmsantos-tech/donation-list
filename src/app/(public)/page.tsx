@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { getPublishedProducts, getProductsByCategory } from '@/features/products/queries';
 import { getCategories } from '@/features/categories/queries';
@@ -31,55 +30,43 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
             Mensagem
           </div>
 
-          <div className="flex items-start gap-[48px]">
-            {/* Logo */}
-            <Image
-              src="/logo.png"
-              alt="Colégio São José"
-              width={140}
-              height={140}
-              className="rounded-full w-[140px] h-[140px] object-cover flex-shrink-0"
-            />
+          <div className="flex flex-col gap-[14px]">
+            <p className="text-[16px] leading-[1.7] text-[#3D4F5F] m-0">
+              O nosso Colégio São José, finalmente nasceu e recorre à sua generosidade.
+            </p>
 
-            {/* Conteúdo */}
-            <div className="flex flex-col gap-[14px] flex-1 min-w-0">
-              <p className="text-[16px] leading-[1.7] text-[#3D4F5F] m-0">
-                O nosso Colégio São José, finalmente nasceu e recorre à sua generosidade.
+            <p className="text-[16px] leading-[1.7] text-[#3D4F5F] m-0">
+              Somos como uma grande família: &ldquo;em seus inícios, enfrenta muitos desafios, com
+              grandes esforços e gastos, até alcançar a estabilidade, quando os irmãos mais velhos
+              já podem ajudar os mais novos.&rdquo; Desde já, agradecemos sua liberalidade, pois dela
+              depende o futuro de nossas crianças, o crescimento de nossa Fraternidade e a esperança
+              do nosso Brasil.
+            </p>
+
+            {/* Blockquote */}
+            <div className="rounded-tr-[8px] rounded-br-[8px] py-3 px-5 bg-[#E8EEF4] border-l-[3px] border-l-[#B8952E]">
+              <p className="font-serif font-normal italic text-[15px] leading-[1.65] text-[#1E3D59] m-0">
+                &ldquo;Há quem dá liberalmente e se torna mais rico; há quem retém mais do que é justo e
+                acaba na pobreza.&rdquo;
               </p>
+              <cite className="block mt-2 text-[13px] text-[#6B7D8E] not-italic leading-[16px]">
+                Provérbios 11:24
+              </cite>
+            </div>
 
-              <p className="text-[16px] leading-[1.7] text-[#3D4F5F] m-0">
-                Somos como uma grande família: &ldquo;em seus inícios, enfrenta muitos desafios, com
-                grandes esforços e gastos, até alcançar a estabilidade, quando os irmãos mais velhos
-                já podem ajudar os mais novos.&rdquo; Desde já, agradecemos sua liberalidade, pois dela
-                depende o futuro de nossas crianças, o crescimento de nossa Fraternidade e a esperança
-                do nosso Brasil.
+            <p className="text-[16px] leading-[1.7] text-[#3D4F5F] m-0">
+              Aqui encontrarão gastos e objetos concretos que necessitamos. Podem ajudar em
+              dinheiro ou com o bem físico.
+            </p>
+
+            {/* Assinatura */}
+            <div className="pt-[6px]">
+              <p className="text-[15px] leading-[18px] text-[#3D4F5F] m-0">
+                Muito obrigado — Que Deus os abençoe
               </p>
-
-              {/* Blockquote */}
-              <div className="rounded-tr-[8px] rounded-br-[8px] py-3 px-5 bg-[#E8EEF4] border-l-[3px] border-l-[#B8952E]">
-                <p className="font-serif font-normal italic text-[15px] leading-[1.65] text-[#1E3D59] m-0">
-                  &ldquo;Há quem dá liberalmente e se torna mais rico; há quem retém mais do que é justo e
-                  acaba na pobreza.&rdquo;
-                </p>
-                <cite className="block mt-2 text-[13px] text-[#6B7D8E] not-italic leading-[16px]">
-                  Provérbios 11:24
-                </cite>
-              </div>
-
-              <p className="text-[16px] leading-[1.7] text-[#3D4F5F] m-0">
-                Aqui encontrarão gastos e objetos concretos que necessitamos. Podem ajudar em
-                dinheiro ou com o bem físico.
+              <p className="font-serif font-semibold text-[15px] leading-[18px] text-[#1E3D59] mt-1">
+                Pe. João Maria Ferreira da Costa, Diretor
               </p>
-
-              {/* Assinatura */}
-              <div className="pt-[6px]">
-                <p className="text-[15px] leading-[18px] text-[#3D4F5F] m-0">
-                  Muito obrigado — Que Deus os abençoe
-                </p>
-                <p className="font-serif font-semibold text-[15px] leading-[18px] text-[#1E3D59] mt-1">
-                  Pe. João Maria Ferreira da Costa, Diretor
-                </p>
-              </div>
             </div>
           </div>
         </section>

@@ -13,7 +13,7 @@ export function PublicNav() {
             height={140}
             className="rounded-full w-[140px] h-[140px] object-cover flex-shrink-0"
           />
-          <span className="font-serif font-bold text-[20px] leading-6 text-[#1E3D59]">
+          <span className="font-serif font-bold text-[35px] leading-[42px] text-[#1E3D59]">
             Colégio São José
           </span>
         </div>
