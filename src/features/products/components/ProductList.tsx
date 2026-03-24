@@ -1,9 +1,12 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState } from 'react';
 import { deleteProduct } from '../actions';
 import { formatCurrency } from '@/lib/utils/format';
+import { getPublicUrl } from '@/lib/storage/supabase';
+import { PlaceholderImage } from '@/components/ui/placeholder-image';
 import { toast } from 'sonner';
 import {
   AlertDialog,
@@ -24,6 +27,7 @@ type Product = {
   currentAmount: number;
   isFulfilled: boolean;
   isPublished: boolean;
+  imagePath?: string | null;
 };
 
 export function ProductList({ products }: { products: Product[] }) {
@@ -60,7 +64,10 @@ export function ProductList({ products }: { products: Product[] }) {
       {products.length > 0 ? (
         <div className="bg-white border border-[#D4C4A8] rounded-xl overflow-hidden">
           {/* Table header */}
-          <div className="flex bg-[#E8EEF4] border-b border-[#EDE5DA] py-3.5 px-6">
+          <div className="flex items-center bg-[#E8EEF4] border-b border-[#EDE5DA] py-3.5 px-6 gap-4">
+            <span className="w-12 h-12 flex-shrink-0 text-[11px] uppercase tracking-[1px] leading-[14px] text-[#9B7B5A]">
+              Foto
+            </span>
             <span className="flex-[2_1_0%] text-[11px] uppercase tracking-[1px] leading-[14px] text-[#9B7B5A]">
               Nome
             </span>
@@ -74,13 +81,32 @@ export function ProductList({ products }: { products: Product[] }) {
 
           {/* Rows */}
           <div className="flex flex-col">
-            {products.map((product, index) => (
+            {products.map((product, index) => {
+              const imageUrl = product.imagePath
+                ? getPublicUrl('product-photos', product.imagePath)
+                : null;
+
+              return (
               <div
                 key={product.id}
-                className={`flex items-center py-4 px-6 border-b border-[#F5F0EB] last:border-b-0 ${
+                className={`flex items-center gap-4 py-4 px-6 border-b border-[#F5F0EB] last:border-b-0 ${
                   index % 2 === 1 ? 'bg-[#FEFCFB]' : ''
                 }`}
               >
+                <div className="w-12 h-12 flex-shrink-0 rounded border border-[#D4C4A8] overflow-hidden bg-[#F5F2EA]">
+                  {imageUrl ? (
+                    <Image
+                      src={imageUrl}
+                      alt={product.name}
+                      width={48}
+                      height={48}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <PlaceholderImage className="w-full h-full" />
+                  )}
+                </div>
+
                 <span className="flex-[2_1_0%] text-[14px] leading-[18px] text-[#1C1410]">
                   {product.name}
                 </span>
@@ -141,7 +167,8 @@ export function ProductList({ products }: { products: Product[] }) {
                   </AlertDialog>
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       ) : (

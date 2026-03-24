@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation';
 import { getPublishedProductById } from '@/features/products/queries';
 import { getPixSettings } from '@/features/pix/queries';
 import { getPublicUrl } from '@/lib/storage/supabase';
-import { DonationTabs } from '@/features/donations/components/DonationTabs';
+import { DonationSection } from '@/features/donations/components/DonationSection';
 import { formatCurrency, calculateProgressPercentage } from '@/lib/utils/format';
 import { ThemeToggle } from '@/components/theme-toggle';
 
@@ -203,12 +203,13 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
               <h2 className="font-serif font-semibold text-[18px] leading-[22px] text-[#2C4A5A] mb-5">
                 Como deseja contribuir?
               </h2>
-              <DonationTabs
+              <DonationSection
                 productId={product.id}
                 targetAmount={product.targetAmount}
                 currentAmount={product.currentAmount}
                 qrCodeImageUrl={qrCodeImageUrl}
                 copiaEColaCode={pixSettings?.copiaEColaCode ?? null}
+                donationMode={product.donationMode}
               />
             </div>
           )}

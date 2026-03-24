@@ -141,6 +141,16 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
             Conteúdo em breve. Esta seção reunirá informações sobre a história, a missão e o dia a
             dia do Colégio São José.
           </p>
+          {process.env.NEXT_PUBLIC_COLLEGE_GALLERY_URL && (
+            <a
+              href={process.env.NEXT_PUBLIC_COLLEGE_GALLERY_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block mt-4 text-[16px] text-[#B8952E] hover:text-[#8A6920] transition-colors underline"
+            >
+              Visualizar galeria →
+            </a>
+          )}
         </section>
 
       </main>

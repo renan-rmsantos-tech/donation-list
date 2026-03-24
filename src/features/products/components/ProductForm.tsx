@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -22,6 +23,13 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { ProductPhotoUpload } from './ProductPhotoUpload';
 import { toast } from 'sonner';
 
@@ -35,6 +43,7 @@ const productFormSchema = z
     targetAmountDisplay: z.string().min(1, 'Valor alvo é obrigatório'),
     isPublished: z.boolean(),
     categoryIds: z.array(z.string()),
+    donationMode: z.enum(['monetary', 'physical', 'both']).default('both'),
   })
   .refine(
     (data) => parseBRLToNumber(data.targetAmountDisplay) > 0,
@@ -62,14 +71,17 @@ type ProductFormProps = {
     isFulfilled: boolean;
     isPublished: boolean;
     imagePath?: string | null;
+    donationMode?: 'monetary' | 'physical' | 'both';
     productCategories?: { categoryId: string }[];
   };
   imageUrl?: string | null;
 };
 
 export function ProductForm({ categories, product, imageUrl }: ProductFormProps) {
+  const router = useRouter();
   const isEdit = !!product;
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [isPhotoRemoved, setIsPhotoRemoved] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
 
   const form = useForm<ProductFormValues>({
@@ -83,6 +95,7 @@ export function ProductForm({ categories, product, imageUrl }: ProductFormProps)
           : '',
       isPublished: product?.isPublished ?? true,
       categoryIds: product?.productCategories?.map((pc) => pc.categoryId) ?? [],
+      donationMode: product?.donationMode ?? 'both',
     },
   });
 
@@ -152,10 +165,13 @@ export function ProductForm({ categories, product, imageUrl }: ProductFormProps)
         targetAmount: targetAmountCents,
         isPublished: values.isPublished,
         categoryIds: values.categoryIds,
+        donationMode: values.donationMode,
       };
 
       if (imagePath !== undefined) {
         payload.imagePath = imagePath;
+      } else if (isPhotoRemoved) {
+        payload.imagePath = null;
       }
 
       const result = isEdit
@@ -166,10 +182,13 @@ export function ProductForm({ categories, product, imageUrl }: ProductFormProps)
         if (isEdit) {
           toast.success('Produto atualizado com sucesso.');
           setSelectedFile(null);
+          setIsPhotoRemoved(false);
+          router.push('/admin/products');
         } else if (result.data?.id) {
           toast.success('Produto criado com sucesso. Redirecionando...');
           setSelectedFile(null);
-          window.location.href = `/admin/products/${result.data.id}/edit`;
+          setIsPhotoRemoved(false);
+          router.push('/admin/products');
         }
       } else {
         toast.error(
@@ -283,6 +302,29 @@ export function ProductForm({ categories, product, imageUrl }: ProductFormProps)
 
           <FormField
             control={form.control}
+            name="donationMode"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Modo de Doação</FormLabel>
+                <Select value={field.value} onValueChange={field.onChange}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Selecione o modo de doação" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="monetary">Dinheiro</SelectItem>
+                    <SelectItem value="physical">Material</SelectItem>
+                    <SelectItem value="both">Dinheiro + Material</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
             name="categoryIds"
             render={() => (
               <FormItem>
@@ -322,6 +364,7 @@ export function ProductForm({ categories, product, imageUrl }: ProductFormProps)
             currentImageUrl={imageUrl ?? null}
             onFileSelect={setSelectedFile}
             selectedFile={selectedFile}
+            onPhotoRemoved={() => setIsPhotoRemoved(true)}
           />
 
           <div className="flex gap-2">

@@ -12,12 +12,14 @@ interface ProductPhotoUploadProps {
   currentImageUrl: string | null;
   onFileSelect: (file: File | null) => void;
   selectedFile: File | null;
+  onPhotoRemoved?: () => void;
 }
 
 export function ProductPhotoUpload({
   currentImageUrl,
   onFileSelect,
   selectedFile,
+  onPhotoRemoved,
 }: ProductPhotoUploadProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
@@ -57,6 +59,10 @@ export function ProductPhotoUpload({
     onFileSelect(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
+    }
+    // If there was a current image, signal photo removal intent
+    if (currentImageUrl && onPhotoRemoved) {
+      onPhotoRemoved();
     }
   };
 

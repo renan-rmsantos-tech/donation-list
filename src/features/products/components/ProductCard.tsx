@@ -4,6 +4,7 @@ import { ImageIcon } from 'lucide-react';
 import type { products } from '@/lib/db/schema';
 import { getPublicUrl } from '@/lib/storage/supabase';
 import { formatCurrency } from '@/lib/utils/format';
+import { DonationModeBadge } from './DonationModeBadge';
 
 type Product = typeof products.$inferSelect;
 
@@ -67,6 +68,7 @@ export function ProductCard({ product }: ProductCardProps) {
           <h3 className="font-serif font-semibold text-[17px] leading-[22px] text-[#1E3D59] line-clamp-2">
             {product.name}
           </h3>
+          <DonationModeBadge donationMode={product.donationMode} />
           <p className="text-[13px] leading-[1.55] text-[#5A6D7E] line-clamp-2">
             {product.description}
           </p>
