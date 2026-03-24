@@ -7,6 +7,7 @@ import { deleteProduct } from '../actions';
 import { formatCurrency } from '@/lib/utils/format';
 import { getPublicUrl } from '@/lib/storage/public-url';
 import { PlaceholderImage } from '@/components/ui/placeholder-image';
+import { DonationModeBadge } from './DonationModeBadge';
 import { toast } from 'sonner';
 import {
   AlertDialog,
@@ -20,6 +21,8 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 
+type DonationMode = 'monetary' | 'physical' | 'both';
+
 type Product = {
   id: string;
   name: string;
@@ -28,6 +31,7 @@ type Product = {
   isFulfilled: boolean;
   isPublished: boolean;
   imagePath?: string | null;
+  donationMode: DonationMode;
 };
 
 export function ProductList({ products }: { products: Product[] }) {
@@ -111,20 +115,25 @@ export function ProductList({ products }: { products: Product[] }) {
                   {product.name}
                 </span>
 
-                <div className="flex-[1_1_0%] flex flex-col gap-0.5">
-                  {product.isFulfilled ? (
-                    <span className="text-[13px] leading-4 text-[#22A55A]">
-                      Meta atingida
-                    </span>
-                  ) : (
-                    <span className="text-[13px] leading-4 text-[#4A3728]">
-                      {formatCurrency(product.currentAmount)} de{' '}
-                      {formatCurrency(product.targetAmount ?? 0)}
+                <div className="flex-[1_1_0%] flex flex-col gap-1 items-start">
+                  <DonationModeBadge donationMode={product.donationMode} />
+                  {product.donationMode === 'monetary' && (
+                    <span className={`text-[12px] leading-4 ${product.isFulfilled ? 'text-[#22A55A]' : 'text-[#4A3728]'}`}>
+                      {product.isFulfilled
+                        ? 'Meta atingida'
+                        : `${formatCurrency(product.currentAmount)} de ${formatCurrency(product.targetAmount ?? 0)}`}
                     </span>
                   )}
-                  <span className="text-[12px] leading-4 text-[#9B7B5A]">
-                    Material: {product.isFulfilled ? 'Atendido' : 'Pendente'}
-                  </span>
+                  {product.donationMode === 'physical' && (
+                    <span className={`text-[12px] leading-4 ${product.isFulfilled ? 'text-[#22A55A]' : 'text-[#4A3728]'}`}>
+                      {product.isFulfilled ? 'Atendido' : 'Pendente'}
+                    </span>
+                  )}
+                  {product.donationMode === 'both' && (
+                    <span className="text-[12px] leading-4 text-[#4A3728]">
+                      {`${formatCurrency(product.currentAmount)} de ${formatCurrency(product.targetAmount ?? 0)} · Material: ${product.isFulfilled ? 'Atendido' : 'Pendente'}`}
+                    </span>
+                  )}
                 </div>
 
                 <div className="w-[140px] flex-shrink-0 flex items-center justify-end gap-3">

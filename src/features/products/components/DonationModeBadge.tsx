@@ -8,21 +8,21 @@ interface DonationModeBadgeProps {
   donationMode: DonationMode;
 }
 
-const modeConfig: Record<DonationMode, { label: string; bgClass: string; textClass: string }> = {
+const modeConfig: Record<DonationMode, { label: string; bg: string; color: string }> = {
   monetary: {
     label: 'Dinheiro',
-    bgClass: 'bg-green-100',
-    textClass: 'text-green-700',
+    bg: '#DCFCE7',
+    color: '#15803D',
   },
   physical: {
     label: 'Material',
-    bgClass: 'bg-blue-100',
-    textClass: 'text-blue-700',
+    bg: '#DBEAFE',
+    color: '#1D4ED8',
   },
   both: {
     label: 'Dinheiro + Material',
-    bgClass: 'bg-purple-100',
-    textClass: 'text-purple-700',
+    bg: '#F3E8FF',
+    color: '#7E22CE',
   },
 };
 
@@ -31,7 +31,8 @@ export function DonationModeBadge({ donationMode }: DonationModeBadgeProps) {
 
   return (
     <span
-      className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${config.bgClass} ${config.textClass}`}
+      style={{ backgroundColor: config.bg, color: config.color }}
+      className="inline-block rounded-full py-[2px] px-[10px] text-[11px] font-medium leading-[18px] w-fit"
     >
       {config.label}
     </span>
