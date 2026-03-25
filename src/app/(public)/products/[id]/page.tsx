@@ -127,60 +127,111 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
 
           {/* Status */}
           <div className="bg-[#EDE9DE] px-8 py-7 border-b border-[#E4DDD1]">
-            <h2 className="font-serif font-semibold text-[18px] leading-[22px] text-[#2C4A5A] mb-5">
+            <h2 className="font-serif font-semibold text-[18px] leading-[22px] text-[#2C4A5A] mb-1">
               Status
             </h2>
+            {product.donationMode === 'both' && (
+              <p className="text-[13px] text-[#8A7D6B] mb-5">Você pode contribuir de duas formas</p>
+            )}
+            {product.donationMode !== 'both' && <div className="mb-5" />}
 
-            {/* Money donations */}
-            <div className="mb-6">
-              <p className="text-[12px] font-medium uppercase tracking-[0.06em] text-[#8C7B6B] mb-2.5">
-                Doações em Dinheiro
-              </p>
-              <div className="h-[6px] bg-[#D9CFBE] rounded-[3px] mb-1 overflow-hidden">
+            <div className="flex gap-4">
+              {/* Money card */}
+              {(product.donationMode === 'monetary' || product.donationMode === 'both') && (
                 <div
-                  className="h-full bg-[#B5824A] rounded-[3px] transition-all"
-                  style={{ width: `${Math.min(percentage, 100)}%` }}
-                />
-              </div>
-              <p className="text-[12px] text-[#8C7B6B] mb-3">{percentage}%</p>
-              <div
-                className="rounded-lg px-4 py-3.5 border"
-                style={{
-                  backgroundColor: 'rgba(44, 74, 90, 0.05)',
-                  borderColor: 'rgba(44, 74, 90, 0.15)',
-                }}
-              >
-                <p className="text-[14px] font-semibold text-[#2C4A5A] mb-1">
-                  Meta: {formatCurrency(product.targetAmount || 0)}
-                </p>
-                <p className="text-[14px] text-[#5C4F43]">
-                  Valor arrecadado: {formatCurrency(product.currentAmount)}
-                </p>
-              </div>
-            </div>
-
-            {/* Material donations */}
-            <div>
-              <p className="text-[12px] font-medium uppercase tracking-[0.06em] text-[#8C7B6B] mb-2.5">
-                Doações de Material
-              </p>
-              <div
-                className="rounded-lg px-4 py-3.5 border"
-                style={
-                  product.isFulfilled
-                    ? { backgroundColor: 'rgba(34,197,94,0.08)', borderColor: 'rgba(34,197,94,0.3)' }
-                    : { backgroundColor: 'rgba(181,130,74,0.08)', borderColor: 'rgba(181,130,74,0.3)' }
-                }
-              >
-                <p
-                  className="text-[14px]"
-                  style={{ color: product.isFulfilled ? '#166534' : '#7A5C2E' }}
+                  className="flex-1 rounded-[10px] p-4 flex flex-col gap-3 border"
+                  style={{ backgroundColor: 'rgba(44,74,90,0.05)', borderColor: 'rgba(44,74,90,0.15)' }}
                 >
-                  {product.isFulfilled
-                    ? 'Este item foi atendido. Obrigado!'
-                    : 'Este item ainda é necessário. Você pode contribuir em dinheiro ou doando o material.'}
-                </p>
-              </div>
+                  <div className="flex items-center gap-2">
+                    <div
+                      className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0"
+                      style={{ backgroundColor: 'rgba(44,74,90,0.1)' }}
+                    >
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                        <rect x="1" y="3" width="12" height="8" rx="1.5" stroke="#2C4A5A" strokeWidth="1.2" />
+                        <circle cx="7" cy="7" r="1.5" stroke="#2C4A5A" strokeWidth="1.2" />
+                      </svg>
+                    </div>
+                    <span className="text-[11px] font-bold tracking-[0.07em] uppercase text-[#2C4A5A]">
+                      Em Dinheiro
+                    </span>
+                  </div>
+                  <div className="flex flex-col gap-1.5">
+                    <div
+                      className="h-[5px] rounded-[3px] overflow-hidden"
+                      style={{ backgroundColor: 'rgba(44,74,90,0.1)' }}
+                    >
+                      <div
+                        className="h-full rounded-[3px] bg-[#2C4A5A] transition-all"
+                        style={{ width: `${Math.min(percentage, 100)}%` }}
+                      />
+                    </div>
+                    <span className="text-[11px]" style={{ color: 'rgba(44,74,90,0.5)' }}>
+                      {percentage}% arrecadado
+                    </span>
+                  </div>
+                  <div className="flex flex-col gap-0.5">
+                    <span className="text-[15px] font-bold text-[#2C4A5A]">
+                      {formatCurrency(product.targetAmount || 0)}
+                    </span>
+                    <span className="text-[11px] text-[#8A7D6B]">meta de arrecadação</span>
+                  </div>
+                </div>
+              )}
+
+              {/* Material card */}
+              {(product.donationMode === 'physical' || product.donationMode === 'both') && (
+                <div
+                  className="flex-1 rounded-[10px] p-4 flex flex-col gap-3 border"
+                  style={
+                    product.isFulfilled
+                      ? { backgroundColor: 'rgba(34,197,94,0.05)', borderColor: 'rgba(34,197,94,0.2)' }
+                      : { backgroundColor: 'rgba(181,130,74,0.08)', borderColor: 'rgba(181,130,74,0.3)' }
+                  }
+                >
+                  <div className="flex items-center gap-2">
+                    <div
+                      className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0"
+                      style={{ backgroundColor: product.isFulfilled ? 'rgba(34,197,94,0.1)' : 'rgba(181,130,74,0.1)' }}
+                    >
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                        <rect x="1.5" y="4.5" width="11" height="8" rx="1" stroke={product.isFulfilled ? '#166534' : '#B5824A'} strokeWidth="1.2" />
+                        <path d="M1.5 7h11" stroke={product.isFulfilled ? '#166534' : '#B5824A'} strokeWidth="1.2" />
+                        <path d="M5.5 4.5V3a1.5 1.5 0 013 0v1.5" stroke={product.isFulfilled ? '#166534' : '#B5824A'} strokeWidth="1.2" strokeLinecap="round" />
+                      </svg>
+                    </div>
+                    <span
+                      className="text-[11px] font-bold tracking-[0.07em] uppercase"
+                      style={{ color: product.isFulfilled ? '#166534' : '#B5824A' }}
+                    >
+                      O Material
+                    </span>
+                  </div>
+                  <div
+                    className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 w-fit"
+                    style={{ backgroundColor: product.isFulfilled ? 'rgba(34,197,94,0.1)' : 'rgba(181,130,74,0.1)' }}
+                  >
+                    <div
+                      className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                      style={{ backgroundColor: product.isFulfilled ? '#22c55e' : '#B5824A' }}
+                    />
+                    <span
+                      className="text-[11px] font-semibold"
+                      style={{ color: product.isFulfilled ? '#166534' : '#B5824A' }}
+                    >
+                      {product.isFulfilled ? 'Já adquirido' : 'Ainda necessário'}
+                    </span>
+                  </div>
+                  <span
+                    className="text-[12px] leading-[18px]"
+                    style={{ color: product.isFulfilled ? '#166534' : '#5C4F3D' }}
+                  >
+                    {product.isFulfilled
+                      ? 'Obrigado! Este item já foi atendido.'
+                      : 'Adquira e entregue o item diretamente na escola.'}
+                  </span>
+                </div>
+              )}
             </div>
           </div>
 
