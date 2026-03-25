@@ -129,29 +129,6 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
           />
         </section>
 
-        {/* ── Conheça o Colégio ────────────────────── */}
-        <section
-          id="colegio"
-          className="scroll-mt-[188px] mt-12 pt-14 border-t-2 border-[#B8952E]"
-        >
-          <h2 className="font-serif font-bold text-[30px] leading-[36px] text-[#B8952E] mb-4">
-            Conheça o Colégio
-          </h2>
-          <p className="text-[16px] leading-[1.75] text-[#5A6D7E] max-w-[720px]">
-            Conteúdo em breve. Esta seção reunirá informações sobre a história, a missão e o dia a
-            dia do Colégio São José.
-          </p>
-          {process.env.NEXT_PUBLIC_COLLEGE_GALLERY_URL && (
-            <a
-              href={process.env.NEXT_PUBLIC_COLLEGE_GALLERY_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block mt-4 text-[16px] text-[#B8952E] hover:text-[#8A6920] transition-colors underline"
-            >
-              Visualizar galeria →
-            </a>
-          )}
-        </section>
 
       </main>
     </>
