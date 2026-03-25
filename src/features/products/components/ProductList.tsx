@@ -69,7 +69,7 @@ export function ProductList({ products }: { products: Product[] }) {
         <div className="bg-white border border-[#D4C4A8] rounded-xl overflow-hidden">
           {/* Table header */}
           <div className="flex items-center bg-[#E8EEF4] border-b border-[#EDE5DA] py-3.5 px-6 gap-4">
-            <span className="w-12 h-12 flex-shrink-0 text-[11px] uppercase tracking-[1px] leading-[14px] text-[#9B7B5A]">
+            <span className="w-12 flex-shrink-0 text-[11px] uppercase tracking-[1px] leading-[14px] text-[#9B7B5A]">
               Foto
             </span>
             <span className="flex-[2_1_0%] text-[11px] uppercase tracking-[1px] leading-[14px] text-[#9B7B5A]">

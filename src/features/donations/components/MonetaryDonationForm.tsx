@@ -153,9 +153,9 @@ export function MonetaryDonationForm({
   return (
     <div className="flex flex-col gap-5">
       {/* QR Code + instructions + pix code */}
-      <div className="flex items-start gap-6">
+      <div className="flex flex-col items-stretch gap-4 sm:flex-row sm:items-start sm:gap-6 min-w-0">
         {/* QR Code box */}
-        <div className="flex-shrink-0 w-[140px] h-[140px] rounded-lg border border-[#D9CFBE] bg-[#EDE9DE] flex flex-col items-center justify-center gap-2">
+        <div className="flex-shrink-0 w-[140px] h-[140px] mx-auto sm:mx-0 rounded-lg border border-[#D9CFBE] bg-[#EDE9DE] flex flex-col items-center justify-center gap-2">
           {qrCodeImageUrl ? (
             <img
               src={qrCodeImageUrl}
@@ -182,19 +182,19 @@ export function MonetaryDonationForm({
         </div>
 
         {/* Instructions + copy code */}
-        <div className="flex-1 flex flex-col gap-3 pt-1">
+        <div className="min-w-0 flex-1 flex flex-col gap-3 pt-0 sm:pt-1">
           <p className="text-[14px] leading-[1.6] text-[#5C4F43]">
             Escaneie o QR Code com o aplicativo do seu banco ou use o código Pix abaixo para fazer sua doação.
           </p>
           {copiaEColaCode && (
-            <div className="flex items-center gap-2">
-              <div className="flex-1 min-w-0 bg-[#EDE9DE] border border-[#D9CFBE] rounded-md px-3.5 py-2.5 overflow-hidden">
-                <p className="text-[14px] text-[#2C4A5A] break-words">{copiaEColaCode}</p>
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center min-w-0">
+              <div className="min-w-0 flex-1 bg-[#EDE9DE] border border-[#D9CFBE] rounded-md px-3.5 py-2.5 overflow-hidden">
+                <p className="text-[14px] text-[#2C4A5A] break-all">{copiaEColaCode}</p>
               </div>
               <button
                 type="button"
                 onClick={handleCopy}
-                className="flex-shrink-0 bg-[#2C4A5A] text-white text-[14px] leading-[18px] px-4 py-2.5 rounded-md hover:bg-[#2C4A5A]/90 transition-colors"
+                className="w-full sm:w-auto sm:min-w-[80px] flex-shrink-0 bg-[#2C4A5A] text-white text-[14px] leading-[18px] px-4 py-2.5 rounded-md hover:bg-[#2C4A5A]/90 transition-colors"
               >
                 {copied ? 'Copiado!' : 'Copiar'}
               </button>
