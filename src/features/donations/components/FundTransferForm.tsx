@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { createFundTransfer } from '../actions';
 import { formatCurrency } from '@/lib/utils/format';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
@@ -34,12 +35,14 @@ export function FundTransferForm({
   targetProducts,
   onSuccess,
 }: FundTransferFormProps) {
+  const router = useRouter();
   const [sourceProductId, setSourceProductId] = useState('');
   const [targetProductId, setTargetProductId] = useState('');
   const [amount, setAmount] = useState('');
   const [loading, setLoading] = useState(false);
 
   const sourceProduct = sourceProducts.find((p) => p.id === sourceProductId);
+  const maxAmountReais = sourceProduct ? sourceProduct.currentAmount / 100 : undefined;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -65,6 +68,14 @@ export function FundTransferForm({
         return;
       }
 
+      if (sourceProduct && amountCents > sourceProduct.currentAmount) {
+        toast.error(
+          `Valor excede o saldo disponível. Máximo: ${formatCurrency(sourceProduct.currentAmount)}`
+        );
+        setLoading(false);
+        return;
+      }
+
       const result = await createFundTransfer({
         sourceProductId,
         targetProductId,
@@ -77,6 +88,7 @@ export function FundTransferForm({
         setTargetProductId('');
         setAmount('');
         onSuccess?.();
+        router.refresh();
       } else {
         toast.error(
           result.error === 'INSUFFICIENT_BALANCE'
@@ -155,13 +167,16 @@ export function FundTransferForm({
               type="number"
               step="0.01"
               min="0.01"
+              max={maxAmountReais}
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
               placeholder="0.00"
               required
             />
             <p className="text-xs text-muted-foreground">
-              Mínimo R$ 1,00
+              {sourceProduct
+                ? `Mínimo R$ 1,00 · Máximo ${formatCurrency(sourceProduct.currentAmount)}`
+                : 'Mínimo R$ 1,00'}
             </p>
           </div>
 
