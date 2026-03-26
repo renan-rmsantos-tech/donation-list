@@ -34,6 +34,7 @@ export default async function EditProductPage({
           currentAmount: product.currentAmount,
           isFulfilled: product.isFulfilled,
           isPublished: product.isPublished,
+          donationMode: product.donationMode,
           imagePath: product.imagePath,
           productCategories: product.productCategories,
         }}

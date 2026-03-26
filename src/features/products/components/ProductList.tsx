@@ -97,7 +97,7 @@ export function ProductList({ products }: { products: Product[] }) {
                   index % 2 === 1 ? 'bg-[#FEFCFB]' : ''
                 }`}
               >
-                <div className="w-12 h-12 flex-shrink-0 rounded border border-[#D4C4A8] overflow-hidden bg-[#F5F2EA]">
+                <div className="relative w-12 h-12 flex-shrink-0 rounded border border-[#D4C4A8] overflow-hidden bg-[#F5F2EA]">
                   {imageUrl ? (
                     <Image
                       src={imageUrl}

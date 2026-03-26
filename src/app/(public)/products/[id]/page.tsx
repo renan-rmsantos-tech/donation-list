@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import { getPublishedProductById } from '@/features/products/queries';
 import { getPixSettings } from '@/features/pix/queries';
 import { getPublicUrl } from '@/lib/storage/public-url';
+import { PRODUCT_PLACEHOLDER_IMAGE } from '@/lib/constants';
 import { DonationSection } from '@/features/donations/components/DonationSection';
 import { formatCurrency, calculateProgressPercentage } from '@/lib/utils/format';
 import { ThemeToggle } from '@/components/theme-toggle';
@@ -31,7 +32,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
 
   const productImageUrl = product.imagePath
     ? getPublicUrl('product-photos', product.imagePath)
-    : null;
+    : PRODUCT_PLACEHOLDER_IMAGE;
 
   const categoryNames = product.productCategories
     .map((pc) => pc.categories.name)
@@ -79,40 +80,16 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
 
           {/* Photo */}
           <div className="px-8 py-6">
-            {productImageUrl ? (
-              <div className="w-full aspect-square rounded-lg overflow-hidden border border-[#D9CFBE]">
-                <Image
-                  src={productImageUrl}
-                  alt={product.name}
-                  width={600}
-                  height={600}
-                  className="w-full h-full object-cover"
-                  sizes="(max-width: 768px) 100vw, 600px"
-                />
-              </div>
-            ) : (
-              <div
-                className="w-full aspect-square rounded-lg overflow-hidden border border-[#D9CFBE] flex flex-col items-center justify-center gap-3"
-                style={{
-                  backgroundImage:
-                    'linear-gradient(135deg, #3D5A6C 0%, #2C3F4A 50%, #3A5C3E 100%)',
-                }}
-              >
-                <svg
-                  width="56"
-                  height="56"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="rgba(255,255,255,0.5)"
-                  strokeWidth="1.5"
-                >
-                  <rect x="3" y="3" width="18" height="18" rx="2" />
-                  <circle cx="8.5" cy="8.5" r="1.5" />
-                  <polyline points="21 15 16 10 5 21" />
-                </svg>
-                <span className="text-[13px] text-white/50">Foto do produto</span>
-              </div>
-            )}
+            <div className="w-full aspect-square rounded-lg overflow-hidden border border-[#D9CFBE]">
+              <Image
+                src={productImageUrl}
+                alt={product.name}
+                width={600}
+                height={600}
+                className="w-full h-full object-cover"
+                sizes="(max-width: 768px) 100vw, 600px"
+              />
+            </div>
           </div>
 
           {/* Description */}

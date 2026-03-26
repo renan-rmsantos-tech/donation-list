@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { ImageIcon } from 'lucide-react';
 import type { products } from '@/lib/db/schema';
+import { PRODUCT_PLACEHOLDER_IMAGE } from '@/lib/constants';
 import { getPublicUrl } from '@/lib/storage/public-url';
 import { formatCurrency } from '@/lib/utils/format';
 import { DonationModeBadge } from './DonationModeBadge';
@@ -35,32 +35,22 @@ export function ProductCard({ product }: ProductCardProps) {
 
   const imageUrl = product.imagePath
     ? getPublicUrl('product-photos', product.imagePath)
-    : null;
+    : PRODUCT_PLACEHOLDER_IMAGE;
 
   return (
     <Link href={`/products/${product.id}`} className="block cursor-pointer">
       <div className="rounded-[12px] border border-[#D4C4A8] overflow-hidden bg-white flex flex-col hover:shadow-lg transition-shadow">
 
         {/* Image area */}
-        <div
-          className="h-[200px] flex items-center justify-center flex-shrink-0"
-          style={{
-            background:
-              'linear-gradient(135deg, #1B2E3D 0%, #1E3D59 50%, #8A6920 100%)',
-          }}
-        >
-          {imageUrl ? (
-            <Image
-              src={imageUrl}
-              alt={product.name}
-              width={300}
-              height={200}
-              className="w-full h-full object-cover"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 300px"
-            />
-          ) : (
-            <ImageIcon className="w-12 h-12 text-white/40" strokeWidth={1.5} />
-          )}
+        <div className="relative h-[200px] flex-shrink-0 bg-[#F5F2EA]">
+          <Image
+            src={imageUrl}
+            alt={product.name}
+            width={300}
+            height={200}
+            className="w-full h-full object-cover"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 300px"
+          />
         </div>
 
         {/* Body */}

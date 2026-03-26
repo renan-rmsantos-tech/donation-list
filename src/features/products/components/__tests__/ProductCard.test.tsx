@@ -105,9 +105,10 @@ describe('ProductCard', () => {
       expect(img).toHaveAttribute('src', expect.stringContaining('product-photos'));
     });
 
-    it('should not render an img element when product has no imagePath', () => {
+    it('should render placeholder image when product has no imagePath', () => {
       render(<ProductCard product={mockMonetaryProduct} />);
-      expect(screen.queryByRole('img', { name: 'Monetary Product' })).not.toBeInTheDocument();
+      const img = screen.getByRole('img', { name: 'Monetary Product' });
+      expect(img).toHaveAttribute('src', expect.stringContaining('product-placeholder-sem-foto.svg'));
     });
 
     it('should use correct object-fit styling for images', () => {
